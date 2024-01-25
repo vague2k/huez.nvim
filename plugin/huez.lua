@@ -8,3 +8,5 @@ if vim.g.loaded_huez == 1 then
   return
 end
 vim.g.loaded_huez = 1
+
+vim.g.huez_version = "0.1.0"

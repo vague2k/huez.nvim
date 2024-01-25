@@ -41,7 +41,6 @@ actions.save_colorscheme = function(colorscheme)
   vim.cmd("hi clear")
   vim.cmd("syntax reset")
   vim.cmd("colorscheme " .. colorscheme)
-  persist.check_if_file_exists()
   persist._write_theme_to_file(colorscheme)
 end
 

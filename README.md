@@ -9,6 +9,7 @@ Color picker using [Telescope](https://github.com/nvim-telescope/telescope.nvim)
 - 🌄 Preview colorschemes.
 - 💾 Persistent colorscheme selection through Neovim session.
 
+https://github.com/vague2k/huez.nvim/assets/121782036/6f720919-6eef-479d-bc82-7450d8c51bdc
 
 ## 💥 Installation
 
@@ -23,7 +24,6 @@ Install with your preferred package manager
         "nvim-telescope/telescope.nvim",
     },
 },
-
 ```
     
 ## 🛠 Setup
@@ -105,40 +105,3 @@ Issues and PR's are always welcome and highly encouraged! as this is my first pl
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
-
-## ⚙️ Configuration
-Huez comes with the following defaults.
-
-```lua
--- fallback theme incase the plugin stops working
-fallback = "default",
-
--- a list of ugly themes that come with neovim, 
--- that are omitted from showing up in the telescope selection
-omit = {
-    "default",
-    "desert",
-    "evening",
-    "industry",
-    "koehler",
-    "morning",
-    "murphy",
-    "pablo",
-    "peachpuff",
-    "ron",
-    "shine",
-    "slate",
-    "torte",
-    "zellner",
-    "blue",
-    "darkblue",
-    "delek",
-    "quiet",
-    "elflord",
-    "habamax",
-    "lunaperche",
-},
-picker_opts = require("telescope.themes").get_dropdown({}),
-
-```

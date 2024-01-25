@@ -4,7 +4,7 @@ config.get_home_path = function()
   local home = ""
 
   local is_mac = vim.loop.os_uname().sysname == "Darwin"
-  local is_linux = vim.loop.os_uname().sysname == "Darwin"
+  local is_linux = vim.loop.os_uname().sysname == "Linux"
   local is_windows = vim.loop.os_uname().sysname:find("Windows") and true or false
 
   if is_mac or is_linux then
@@ -20,6 +20,7 @@ config.default_config = {
   file_path = config.get_home_path() .. "/.nvim.huez.lua",
   fallback = "default",
   omit = {
+    "default",
     "desert",
     "evening",
     "industry",

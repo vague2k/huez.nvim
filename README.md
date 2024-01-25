@@ -1,10 +1,9 @@
-
-# 🎨 huez.nvim *(hue ez, hues)*
+# 🎨 huez.nvim _(hue ez, hues)_
 
 Color picker using [Telescope](https://github.com/nvim-telescope/telescope.nvim) as a backend.
 
-
 ## ⭐️ Features
+
 - 🔭 Uses [Telescope](https://github.com/nvim-telescope/telescope.nvim) picking and selecting colorschemes.
 - 🌄 Preview colorschemes.
 - 💾 Persistent colorscheme selection through Neovim session.
@@ -25,9 +24,11 @@ Install with your preferred package manager
     },
 },
 ```
-    
+
 ## 🛠 Setup
+
 Reccommended setup. Without the colorscheme command, the plugin WILL use fallback theme.
+
 ```lua
 require("huez").setup({})
 
@@ -37,14 +38,16 @@ vim.cmd("colorscheme " .. colorscheme)
 vim.keymap.set("n", "<leader>co", "<cmd>Huez<CR>", {})
 
 ```
+
 ## ⚙️ Configuration
+
 Huez comes with the following defaults.
 
 ```lua
 -- fallback theme incase the plugin stops working
 fallback = "default",
 
--- a list of ugly themes that come with neovim, 
+-- a list of ugly themes that come with neovim,
 -- that are omitted from showing up in the telescope selection
 omit = {
     "default",
@@ -72,35 +75,36 @@ omit = {
 picker_opts = require("telescope.themes").get_dropdown({}),
 
 ```
+
 ## 💭 FAQ
 
 #### How is the selected colorscheme saved and be able to persist through nvim sessions?
 
-At setup time, a function is called to check if the file ".nvim.huez.lua" exists in your home directory. If it exists, nothing happens. If it does not exist, it will be created.
+At setup time, a function is called to check if the file ".nvim.huez.lua" exists in your `vim.fn.stdpath("config")` directory. If it exists, nothing happens. If it does not exist, it will be created with
 
-This file will only contain 1 line worth of content, being the colorscheme name (I.E gruvbox <EOF>). Setup is shown above. 
+the default fallback as it's colorscheme
 
-To see home directory run the following scripts in your terminal.
+This file will only contain 1 line worth of content, being the colorscheme name (I.E gruvbox <EOF>). Setup is shown above.
 
-Mac: `echo $HOME`
+To see config directory run the following command in neovim.
 
-Windows (powershell): `echo $Env:USERPROFILE`
+`:lua print(vim.inspect(vim.fn.stdpath("config")))`
+
 #### Can I change the directory where the colorscheme file is created?
 
-No.
-
+Technically... yes. But I highly encourage leaving the file_path and the dotfile's name as their default values.
 
 ## ❤️ Acknowledgements
-Plugin and it's code is highly inspired from the following.
- - [colorscheme-persist](https://github.com/propet/colorscheme-persist.nvim) on how to persist colorscheme.
- - [NvChad](https://github.com/NvChad/NvChad) for previewing theme before selection.
- - Reddit for the help on how to make a plugin :)
 
+Plugin and it's code is highly inspired from the following.
+
+- [colorscheme-persist](https://github.com/propet/colorscheme-persist.nvim) on how to persist colorscheme.
+- [NvChad](https://github.com/NvChad/NvChad) for previewing theme before selection.
+- Reddit for the help on how to make a plugin :)
 
 ## 📋 Contributing
 
 Issues and PR's are always welcome and highly encouraged! as this is my first plugin. I would love to learn more.
-
 
 ## License
 

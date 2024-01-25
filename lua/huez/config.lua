@@ -1,24 +1,7 @@
 local config = {}
 
-config.get_home_path = function()
-  local home = ""
-
-  local is_mac = vim.loop.os_uname().sysname == "Darwin"
-  local is_linux = vim.loop.os_uname().sysname == "Linux"
-  local is_windows = vim.loop.os_uname().sysname:find("Windows") and true or false
-
-  if is_mac or is_linux then
-    home = os.getenv("HOME") or ""
-  elseif is_windows then
-    home = os.getenv("USERPROFILE") or ""
-  end
-
-  return home
-end
-
 config.default_config = {
-  -- TODO: change where dotfile is saved as to not pollute $HOME dir
-  file_path = config.get_home_path() .. "/.nvim.huez.lua",
+  file_path = vim.fs.normalize(vim.fn.stdpath("config")) .. "/.nvim.huez.lua",
   fallback = "default",
   omit = {
     "default",

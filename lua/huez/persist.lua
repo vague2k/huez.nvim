@@ -7,13 +7,13 @@ local persist = {}
 persist.check_if_file_exists = function()
   local file = io.open(default_conf.file_path, "r")
   if file then
-    io.close(file)
-    return
+    file:close()
   else
+    -- If dotfile does not exist and needs to be created. We create it with fallback option as a default
     local new_file = io.open(default_conf.file_path, "w")
     if new_file then
-      io.close(new_file)
-      return
+      new_file:write(default_conf.fallback)
+      new_file:close()
     end
   end
 end

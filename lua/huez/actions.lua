@@ -24,12 +24,16 @@ actions.prev_color = function(bufnr)
 end
 
 actions.get_colorscheme = function()
-  local ok, colorscheme = pcall(__, default_conf.file_path)
-  if ok then
-    return colorscheme
-  else
-    return default_conf.fallback
+  local file, err = io.open(default_conf.file_path, "r")
+
+  if not file then
+    return nil, print("Error reading file: ", err)
   end
+
+  local line = file:read()
+  file:close()
+
+  return line
 end
 
 ---@param colorscheme string

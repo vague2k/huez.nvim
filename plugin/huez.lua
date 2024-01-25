@@ -9,4 +9,4 @@ if vim.g.loaded_huez == 1 then
 end
 vim.g.loaded_huez = 1
 
-vim.g.huez_version = "0.1.0"
+vim.g.huez_version = "0.1.1"

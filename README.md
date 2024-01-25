@@ -9,6 +9,7 @@ Color picker using [Telescope](https://github.com/nvim-telescope/telescope.nvim)
 - 🌄 Preview colorschemes.
 - 💾 Persistent colorscheme selection through Neovim session.
 
+https://github.com/vague2k/huez.nvim/assets/121782036/6f720919-6eef-479d-bc82-7450d8c51bdc
 
 ## 💥 Installation
 
@@ -23,7 +24,6 @@ Install with your preferred package manager
         "nvim-telescope/telescope.nvim",
     },
 },
-
 ```
     
 ## 🛠 Setup

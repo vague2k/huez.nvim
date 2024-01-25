@@ -17,6 +17,7 @@ config.get_home_path = function()
 end
 
 config.default_config = {
+  -- TODO: change where dotfile is saved as to not pollute $HOME dir
   file_path = config.get_home_path() .. "/.nvim.huez.lua",
   fallback = "default",
   omit = {

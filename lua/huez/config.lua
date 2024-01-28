@@ -38,8 +38,8 @@ local default_config = {
     "lunaperche",
   },
   -- optional: by default, picker will be vim.ui.select, you can also choose "telescope"
-  picker = "telescope",
-  -- optional: if using telescope, picker_opts controls the dropdown style
+  picker = "vim",
+  -- optional: only applies if using telescope, picker_opts controls the dropdown style
   picker_opts = require("telescope.themes").get_dropdown({}),
 }
 local config = {}

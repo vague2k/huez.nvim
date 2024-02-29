@@ -21,6 +21,7 @@ local function pick_colorscheme(opts)
           actions.close(bufnr)
 
           local selection = action_state.get_selected_entry().value
+
           if selection == nil then
             utils._logger("Huez: must choose valid colorscheme", "ERROR")
           else
@@ -34,11 +35,13 @@ local function pick_colorscheme(opts)
         map("i", "<C-p>", adapter_actions.prev_color)
         map("i", "<Up>", adapter_actions.prev_color)
         map("i", "<Down>", adapter_actions.next_color)
+        map("i", "<esc>", adapter_actions.reset_if_not_pick)
 
         map("n", "j", adapter_actions.next_color)
         map("n", "k", adapter_actions.prev_color)
         map("n", "<C-n>", adapter_actions.next_color)
         map("n", "<C-p>", adapter_actions.prev_color)
+        map("n", "<esc>", adapter_actions.reset_if_not_pick)
 
         return true
       end,

@@ -1,9 +1,3 @@
-> huez.actions will be deprecated in 0.2.1 or next semi-major version. Whichever comes first.
->
-> **PLEASE** use require("huez.api").get_colorscheme() in your Huez configuration in your neovim config instead.
->
-> See updated Setup section.
-
 # 🎨 huez.nvim _(hue ez, hues)_
 
 Color picker using [Telescope](https://github.com/nvim-telescope/telescope.nvim) as a backend.
@@ -31,6 +25,7 @@ Install with your preferred package manager
         -- reccomended, but optional dependency.
         -- Will use vim.ui as a default unless specified otherwise, or a fallback.
         -- Preview does not currently work in vim.ui.
+        -- If using vim.ui, it's also reccomended to use dressing.nvim.
         "nvim-telescope/telescope.nvim",
     },
 },

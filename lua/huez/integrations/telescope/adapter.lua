@@ -20,12 +20,13 @@ local function pick_colorscheme(opts)
         actions.select_default:replace(function()
           actions.close(bufnr)
 
-          local selection = action_state.get_selected_entry().value
+          -- .get_selected_entry could be nil, so we check for nil before accessing it's value.
+          local selection = action_state.get_selected_entry()
 
           if selection == nil then
-            utils._logger("Huez: must choose valid colorscheme", "ERROR")
+            utils.log_error("Huez: must choose valid colorscheme")
           else
-            api.save_colorscheme(selection)
+            api.save_colorscheme(selection.value)
           end
         end)
 

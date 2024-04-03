@@ -9,7 +9,7 @@ api.get_colorscheme = function()
   local file, err = io.open(config.file_path, "r")
 
   if not file then
-    return "", utils._logger("Huez: Error reading file: " .. err, "ERROR")
+    return "", utils.log_error("Huez: Error reading file: " .. err)
   end
 
   local line = file:read()

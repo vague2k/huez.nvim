@@ -5,7 +5,7 @@ local function pick_colorscheme()
   local success, _ = pcall(require, "telescope.pickers")
 
   if not success then
-    utils._logger("Huez: telescope not installed, falling back to vim.ui.select", "ERROR")
+    utils.log_error("Huez: telescope not installed, falling back to vim.ui.select")
   end
 
   if picker == "telescope" and success then

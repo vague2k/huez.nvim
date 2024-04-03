@@ -8,7 +8,7 @@ local function pick_colorscheme(opts)
     prompt = "Huez",
   }, function(colorscheme)
     if not colorscheme then
-      utils._logger("Huez: must choose valid colorscheme", "ERROR")
+      utils.log_error("Huez: must choose valid colorscheme")
     else
       api.save_colorscheme(colorscheme)
     end

@@ -4,7 +4,7 @@ Color picker using [Telescope](https://github.com/nvim-telescope/telescope.nvim)
 
 ## ⭐️ Features
 
-- 🔭 Optionally uses [Telescope](https://github.com/nvim-telescope/telescope.nvim) picking and selecting colorschemes. by default uses vim.ui!
+- 🔭 Optionally uses [Telescope](https://github.com/nvim-telescope/telescope.nvim) or you can also use vim.ui!
 - 🌄 Preview colorschemes. _if telescope is installed_
 - 💾 Persistent colorscheme selection through Neovim session.
 
@@ -21,28 +21,37 @@ Install with your preferred package manager
 {
     "vague2k/huez.nvim",
     dependencies = {
-        -- You probably already have this installed.
-        -- reccomended, but optional dependency.
-        -- Will use vim.ui as a default unless specified otherwise, or a fallback.
-        -- Preview does not currently work in vim.ui.
-        -- If using vim.ui, it's also reccomended to use dressing.nvim.
+        -- You probably already have this installed, highly reccomended you do.
         "nvim-telescope/telescope.nvim",
+        -- If using vim.ui, this plugin will give you a better experience
+        "stevearc/dressing.nvim",
     },
 },
 ```
 
+> NOTE: Preview does not currently work in vim.ui. Will be testing solutions in the future.
+
 ## 🛠 Setup
 
-Reccommended setup. Without the colorscheme command, the plugin WILL use fallback theme.
+> NOTE: Without the colorscheme command, the plugin WILL use fallback theme.
+
+If you're ok with defaults, this is all you need.
 
 ```lua
-require("huez").setup({})
-
 local colorscheme = require("huez.api").get_colorscheme()
 vim.cmd("colorscheme " .. colorscheme)
 
 vim.keymap.set("n", "<leader>co", "<cmd>Huez<CR>", {})
+```
 
+However if you'd like to tweak stuff, call setup with your tweaks.
+
+```lua
+require("huez").setup({<config here>})
+local colorscheme = require("huez.api").get_colorscheme()
+vim.cmd("colorscheme " .. colorscheme)
+
+vim.keymap.set("n", "<leader>co", "<cmd>Huez<CR>", {})
 ```
 
 ## ⚙️ Configuration
@@ -55,7 +64,7 @@ Huez comes with the following defaults.
   file_path = vim.fs.normalize(vim.fn.stdpath("config")) .. "/.nvim.huez.lua",
   -- the fallback theme in case Huez fails or bugs out for some reason
   fallback = "default",
-  -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker
+  -- a list of ugly themes that come with neovim that you probably don't want to choose from in the picker
   omit = {
     "default",
     "desert",
@@ -79,10 +88,12 @@ Huez comes with the following defaults.
     "habamax",
     "lunaperche",
   },
-  -- optional: by default, picker will be vim.ui.select, you can also choose "telescope"
-  picker = "vim",
+  -- optional: by default, uses telescope. If telescope is not installed, will fall back to "vim.ui"
+  -- you can also choose "vim"
+  picker = "telescope",
   -- optional: only applies if using telescope, picker_opts controls the dropdown style
-  picker_opts = require("telescope.themes").get_dropdown({}),
+  -- If nil, default is require("telescope.themes").get_dropdown({}).
+  picker_opts = nil,
 }
 
 ```

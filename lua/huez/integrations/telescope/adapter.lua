@@ -3,13 +3,14 @@ local finders = require("telescope.finders")
 local conf = require("telescope.config").values
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
+local telescope_themes = require("telescope.themes")
 
 local adapter_actions = require("huez.integrations.telescope.actions")
 local utils = require("huez.utils")
 local api = require("huez.api")
 
 local function pick_colorscheme(opts)
-  opts = vim.g.huez_config.picker_opts or {}
+  opts = vim.g.huez_config.picker_opts or telescope_themes.get_dropdown()
   local themes = api.filter_default_themes()
   pickers
     .new(opts, {

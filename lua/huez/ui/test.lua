@@ -1,4 +1,5 @@
 local n = require("nui-components")
+local api = require("huez.api")
 
 -- TODO: let create_renderer to take in a function or a table of acceptable values
 local renderer = n.create_renderer({
@@ -11,6 +12,8 @@ local renderer = n.create_renderer({
     col = vim.api.nvim_win_get_width(0) + 3,
   },
 })
+
+local theme_nodes = api.filter_default_themes({ adapter = "nui" })
 
 local body = n.columns(n.rows(
   { flex = 2 },
@@ -29,13 +32,8 @@ local body = n.columns(n.rows(
     flex = 1,
     autofocus = false,
     border_label = "Themes",
-    data = {
-      n.node({ text = "first node" }),
-      n.node({ text = "second node" }),
-      n.node({ text = "third node" }),
-    },
+    data = theme_nodes,
     prepare_node = function(node, line)
-      line:append(" ")
       line:append(node.text)
       return line
     end,

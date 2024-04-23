@@ -4,14 +4,12 @@
 ---@field file_path string
 ---@field fallback string
 ---@field omit string[]
----@field picker Huez.Integration
----@field picker_opts? table
 
 ---@type Huez.Config
 local default_config = {
   -- the filepath where your theme will be saved
-  file_path = vim.fs.normalize(vim.fn.stdpath("config")) .. "/.nvim.huez.lua",
-  -- the fallback theme in case Huez fails or bugs out for some reason
+  file_path = vim.fs.normalize(vim.fn.stdpath("config")) .. "/huez-theme",
+  -- the fallback theme in case Huez detects you deleted your "huez-theme" file
   fallback = "default",
   -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker
   omit = {
@@ -37,10 +35,6 @@ local default_config = {
     "habamax",
     "lunaperche",
   },
-  -- optional: by default, picker will be vim.ui.select, you can also choose "telescope"
-  picker = "telescope",
-  -- optional: only applies if using telescope, picker_opts controls the dropdown style
-  picker_opts = nil,
 }
 local config = {}
 

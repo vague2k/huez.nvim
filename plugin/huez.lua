@@ -9,9 +9,6 @@ if vim.g.loaded_huez == 1 then
 end
 vim.g.loaded_huez = 1
 
-require("huez").setup()
-local test = require("huez.ui.test")
-
-vim.api.nvim_create_user_command("Huez", test.pick_colorscheme, {})
+-- vim.api.nvim_create_user_command("Huez", require("huez.ui.test").pick_colorscheme, {})
 
 vim.g.huez_version = "0.2.2"

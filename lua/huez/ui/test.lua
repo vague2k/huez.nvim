@@ -23,33 +23,35 @@ local renderer = n.create_renderer({
   },
 })
 
-local body = n.columns(n.rows(
-  { flex = 2 },
-  n.prompt({
-    autofocus = true,
-    prefix = " ::: ",
-    size = 1,
-    border_label = {
-      text = "󰌁 Huez",
-      align = "center",
-    },
-  }),
+local body = function()
+  return n.columns(n.rows(
+    { flex = 2 },
+    n.prompt({
+      autofocus = true,
+      prefix = " ::: ",
+      size = 1,
+      border_label = {
+        text = "󰌁 Huez",
+        align = "center",
+      },
+    }),
 
-  n.select({
-    flex = 1,
-    autofocus = false,
-    border_label = "Themes",
-    data = tonode(api.get_installed_themes(vim.g.huez_config.exclude)),
-    on_change = function(theme)
-      vim.cmd("colorscheme " .. theme.name)
-    end,
-    on_select = function(theme)
-      api.save_colorscheme(theme.name)
-      renderer:close()
-      utils.log_info("Selected " .. theme.name)
-    end,
-  })
-))
+    n.select({
+      flex = 1,
+      autofocus = false,
+      border_label = "Themes",
+      data = tonode(api.get_installed_themes(vim.g.huez_config.exclude)),
+      on_change = function(theme)
+        vim.cmd("colorscheme " .. theme.name)
+      end,
+      on_select = function(theme)
+        api.save_colorscheme(theme.name)
+        renderer:close()
+        utils.log_info("Selected " .. theme.name)
+      end,
+    })
+  ))
+end
 
 renderer:add_mappings({
   {
@@ -65,13 +67,10 @@ renderer:on_unmount(function()
   vim.cmd("colorscheme " .. api.get_colorscheme())
 end)
 
--- FIXME: how can i get this to a usercommand without making it bug out
-renderer:render(body)
+local function pick_colorscheme()
+  renderer:render(body)
+end
 
--- local function pick_colorscheme()
---   renderer:render(body)
--- end
---
--- return {
---   pick_colorscheme = pick_colorscheme,
--- }
+return {
+  pick_colorscheme = pick_colorscheme,
+}

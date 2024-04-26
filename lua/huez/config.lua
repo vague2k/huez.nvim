@@ -57,7 +57,13 @@ config.setup = function(opts)
     local file = io.open(vim.g.huez_config.file_path, "w+")
     if file then
       file:write(vim.g.huez_config.fallback)
-      utils.log_error("No 'huez-theme' file was detected, so one was created at: " .. vim.g.huez_config.file_path)
+      utils.log_warning(
+        "No 'huez-theme' file was found, so one was created at \n"
+          .. vim.g.huez_config.file_path
+          .. " with the theme "
+          .. vim.g.huez_config.fallback
+          .. " as a fallback."
+      )
       file:close()
     end
   end

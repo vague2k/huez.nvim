@@ -1,7 +1,5 @@
 local utils = require("huez.utils")
 
----@alias Huez.Integration "telescope"|"vim"
-
 ---@class Huez.Config
 ---@field file_path string
 ---@field fallback string
@@ -60,11 +58,16 @@ config.setup = function(opts)
       utils.log_warning(
         "No 'huez-theme' file was found, so one was created at \n"
           .. vim.g.huez_config.file_path
-          .. " with the theme "
+          .. " with the theme '"
           .. vim.g.huez_config.fallback
-          .. " as a fallback."
+          .. "' as a fallback."
       )
       file:close()
+    end
+    local newly_created_file = io.open(vim.g.huez_config.file_path, "r")
+    if newly_created_file then
+      vim.cmd("colorscheme " .. newly_created_file:read())
+      newly_created_file:close()
     end
   end
 end

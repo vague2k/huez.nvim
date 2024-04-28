@@ -23,20 +23,32 @@ local renderer = n.create_renderer({
   },
 })
 
+local state = n.create_signal({
+  input = "",
+})
+
+-- TODO: rewrite this func with parameters
 local body = function()
   return n.columns(n.rows(
     { flex = 2 },
     n.prompt({
+      id = "theme_picker_prompt",
       autofocus = true,
       prefix = " ::: ",
+      value = state.input,
       size = 1,
       border_label = {
         text = "󰌁 Huez",
         align = "center",
       },
+      on_change = function(curr)
+        -- TODO: implement searching
+        state.input = curr
+      end,
     }),
 
     n.select({
+      id = "theme_picker_options",
       flex = 1,
       autofocus = false,
       border_label = "Themes",
@@ -53,6 +65,7 @@ local body = function()
   ))
 end
 
+-- TODO: extract this to a function that returns a table of mappings
 renderer:add_mappings({
   {
     mode = "n",
@@ -69,6 +82,8 @@ end)
 
 local function pick_colorscheme()
   renderer:render(body)
+  -- local options = renderer:get_component_by_id("theme_picker_options")
+  -- vim.print(options:get_props().data)
 end
 
 return {

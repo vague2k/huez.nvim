@@ -1,4 +1,6 @@
+local utils = require("huez.utils")
 local M = {}
+
 ---@class Huez.Config
 ---@field file_path string
 ---@field fallback string
@@ -40,8 +42,35 @@ M._DEFAULT_SETTINGS = DEFAULT_SETTINGS
 M.current = M._DEFAULT_SETTINGS
 
 ---@param user_opts Huez.Config
-M.setup_user_config = function(user_opts)
+M.set = function(user_opts)
   M.current = vim.tbl_deep_extend("force", vim.deepcopy(M.current), user_opts)
 end
 
+M.init_cache_file = function()
+  -- check if the file exists for persist the theme
+  local file = io.open(M.current.file_path, "r+")
+  if file then
+    local theme_name = file:read("*line") -- read first line
+    file:close()
+    if theme_name then
+      vim.cmd("colorscheme " .. theme_name)
+      return
+    end
+  end
+
+  -- if file doesn't exist or couldn't be read, create it with fallback theme
+  file = io.open(M.current.file_path, "w")
+  if file then
+    file:write(M.current.fallback)
+    file:close()
+    vim.cmd("colorscheme " .. M.current.fallback)
+    utils.log_warning(
+      "No 'huez-theme' file was found, so one was created at\n '"
+        .. M.current.file_path
+        .. "' with the theme '"
+        .. M.current.fallback
+        .. "' as a fallback."
+    )
+  end
+end
 return M

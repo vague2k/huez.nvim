@@ -1,12 +1,11 @@
-local utils = require("huez.utils")
-
+local M = {}
 ---@class Huez.Config
 ---@field file_path string
 ---@field fallback string
 ---@field exclude string[]
 
 ---@type Huez.Config
-local default_config = {
+local DEFAULT_SETTINGS = {
   -- the filepath where your theme will be saved
   file_path = vim.fs.normalize(vim.fn.stdpath("cache")) .. "/huez-theme",
   -- the fallback theme which will be written to a new "huez-theme" file in case the "huez-theme" file does not exist
@@ -36,40 +35,13 @@ local default_config = {
     "lunaperche",
   },
 }
-local config = {}
 
-vim.g.huez_config = default_config
+M._DEFAULT_SETTINGS = DEFAULT_SETTINGS
+M.current = M._DEFAULT_SETTINGS
 
----@param opts Huez.Config
-config.setup = function(opts)
-  opts = opts or {}
-  local prev_conf = vim.g.huez_config or default_config
-  vim.g.huez_config = vim.tbl_deep_extend("force", prev_conf, opts) or default_config
-
-  -- check if the "huez-theme" file exists, if it doesn't create it
-  local file_exist = io.open(vim.g.huez_config.file_path, "r")
-  if file_exist ~= nil then
-    vim.cmd("colorscheme " .. file_exist:read())
-    file_exist:close()
-  else
-    local file = io.open(vim.g.huez_config.file_path, "w+")
-    if file then
-      file:write(vim.g.huez_config.fallback)
-      utils.log_warning(
-        "No 'huez-theme' file was found, so one was created at \n"
-          .. vim.g.huez_config.file_path
-          .. " with the theme '"
-          .. vim.g.huez_config.fallback
-          .. "' as a fallback."
-      )
-      file:close()
-    end
-    local newly_created_file = io.open(vim.g.huez_config.file_path, "r")
-    if newly_created_file then
-      vim.cmd("colorscheme " .. newly_created_file:read())
-      newly_created_file:close()
-    end
-  end
+---@param user_opts Huez.Config
+M.setup_user_config = function(user_opts)
+  M.current = vim.tbl_deep_extend("force", vim.deepcopy(M.current), user_opts)
 end
 
-return config
+return M

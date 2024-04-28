@@ -1,4 +1,4 @@
-local api = require("huez").api
+local api = require("huez.api")
 
 local eq = assert.are.same
 
@@ -14,7 +14,7 @@ describe("api", function()
   end)
 
   it("can return default installed themes", function()
-    local themes = api.get_installed_themes()
+    local themes = api.get_installed_themes({})
 
     eq(21, #themes)
   end)

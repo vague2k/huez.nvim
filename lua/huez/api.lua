@@ -1,4 +1,5 @@
 local utils = require("huez.utils")
+local config = require("huez.config")
 local api = {}
 
 --- Gets the persisted colorscheme according to "huez-theme" file.
@@ -7,7 +8,7 @@ local api = {}
 ---@return string|nil
 api.get_colorscheme = function(path)
   if path == nil then
-    path = vim.g.huez_config.file_path
+    path = config.current.file_path
   end
 
   local file, err = io.open(path, "r")
@@ -30,7 +31,7 @@ end
 ---@return string[]
 api.get_installed_themes = function(exclude)
   if exclude == nil then
-    exclude = {}
+    exclude = exclude or config.current.exclude
   end
 
   local themes = vim.fn.getcompletion("", "color", true)
@@ -53,7 +54,7 @@ end
 ---@return boolean|nil
 api.save_colorscheme = function(colorscheme, path)
   if path == nil then
-    path = vim.g.huez_config.file_path
+    path = config.current.file_path
   end
 
   local file, err = io.open(path, "w+")

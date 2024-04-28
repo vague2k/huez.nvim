@@ -1,6 +1,7 @@
 local n = require("nui-components")
 local api = require("huez.api")
 local utils = require("huez.utils")
+local config = require("huez.config")
 
 local function tonode(themes)
   local nodes = {}
@@ -25,6 +26,7 @@ local renderer = n.create_renderer({
 
 local state = n.create_signal({
   input = "",
+  options = api.get_installed_themes(config.current.exclude),
 })
 
 -- TODO: rewrite this func with parameters
@@ -52,7 +54,7 @@ local body = function()
       flex = 1,
       autofocus = false,
       border_label = "Themes",
-      data = tonode(api.get_installed_themes(vim.g.huez_config.exclude)),
+      data = tonode(state.options),
       on_change = function(theme)
         vim.cmd("colorscheme " .. theme.name)
       end,

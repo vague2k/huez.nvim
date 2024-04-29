@@ -1,20 +1,18 @@
-local utils = require("huez.utils")
+local log = require("huez.utils.log")
 local config = require("huez.config")
-local api = {}
+local M = {}
 
 --- Gets the persisted colorscheme according to "huez-theme" file.
 ---
 ---@param path? string
 ---@return string|nil
-api.get_colorscheme = function(path)
-  if path == nil then
-    path = config.current.file_path
-  end
+M.get = function(path)
+  path = path or config.current.file_path
 
   local file, err = io.open(path, "r")
 
   if not file then
-    return nil, utils.log_error("api.get_colorscheme - Error reading file: \n" .. err)
+    return nil, log.notify("api.get_colorscheme - Error reading file: \n" .. err, "error")
   end
 
   local line = file:read()
@@ -25,14 +23,12 @@ end
 
 --- Returns an array of strings where each item is the theme name.
 ---
---- The array will contain all installed themes if {exclude} is nil or {}
+--- The array will contain all installed themes if {exclude} is {}
 ---
 ---@param exclude? string[]
 ---@return string[]
-api.get_installed_themes = function(exclude)
-  if exclude == nil then
-    exclude = exclude or config.current.exclude
-  end
+M.installed = function(exclude)
+  exclude = exclude or config.current.exclude
 
   local themes = vim.fn.getcompletion("", "color", true)
   local manually_installed = {}
@@ -47,20 +43,18 @@ api.get_installed_themes = function(exclude)
   return manually_installed
 end
 
---- Writes colorscheme to {path}, returns true if write was successful, nil otherwise
+--- Writes colorscheme to {path}, returns true if write was successful, false otherwise
 ---
 ---@param colorscheme string
 ---@param path? string
----@return boolean|nil
-api.save_colorscheme = function(colorscheme, path)
-  if path == nil then
-    path = config.current.file_path
-  end
+---@return boolean
+M.save = function(colorscheme, path)
+  path = config.current.file_path
 
   local file, err = io.open(path, "w+")
 
   if not file then
-    return nil, utils.log_error("api.save_colorscheme - Error writing to file: \n" .. err)
+    return false, log.notify("api.save_colorscheme - Error writing to file: \n" .. err, "error")
   end
 
   file:write(colorscheme)
@@ -68,4 +62,4 @@ api.save_colorscheme = function(colorscheme, path)
   return true
 end
 
-return api
+return M

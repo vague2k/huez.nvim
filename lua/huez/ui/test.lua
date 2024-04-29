@@ -1,16 +1,8 @@
 local n = require("nui-components")
-local api = require("huez.api")
-local utils = require("huez.utils")
-local config = require("huez.config")
-
-local function tonode(themes)
-  local nodes = {}
-  for _, theme in pairs(themes) do
-    local node = n.option(theme, { name = theme })
-    table.insert(nodes, node)
-  end
-  return nodes
-end
+local fn = require("nui-components.utils.fn")
+local colorscheme = require("huez.api").colorscheme
+local log = require("huez.utils.log")
+local helpers = require("huez.utils.helpers")
 
 -- TODO: let create_renderer to take in a function or a table of acceptable values
 local renderer = n.create_renderer({
@@ -24,28 +16,42 @@ local renderer = n.create_renderer({
   },
 })
 
-local state = n.create_signal({
-  input = "",
-  options = api.get_installed_themes(config.current.exclude),
+local signal = n.create_signal({
+  query = "",
+  data = helpers.tonodes(colorscheme.installed()),
 })
 
--- TODO: rewrite this func with parameters
+local get_data = function()
+  return signal.data:dup():combine_latest(signal.query:debounce(0):start_with(""), function(items, query)
+    return fn.ifilter(items, function(item)
+      return string.find(item.name:lower(), query:lower())
+    end)
+  end)
+end
+
 local body = function()
   return n.columns(n.rows(
-    { flex = 2 },
+    -- { flex = 1 },
     n.prompt({
       id = "theme_picker_prompt",
       autofocus = true,
       prefix = " ::: ",
-      value = state.input,
+      value = signal.query,
       size = 1,
       border_label = {
         text = "󰌁 Huez",
         align = "center",
       },
       on_change = function(curr)
-        -- TODO: implement searching
-        state.input = curr
+        signal.query = curr
+      end,
+      on_submit = function()
+        if signal.query:get_value() ~= "" then
+          local top_query_match = renderer:get_component_by_id("theme_picker_options"):get_props().data[1].name
+          colorscheme.save(top_query_match)
+          renderer:close()
+          log.notify("Selected " .. top_query_match, "info")
+        end
       end,
     }),
 
@@ -54,14 +60,21 @@ local body = function()
       flex = 1,
       autofocus = false,
       border_label = "Themes",
-      data = tonode(state.options),
+      data = get_data(),
       on_change = function(theme)
         vim.cmd("colorscheme " .. theme.name)
       end,
       on_select = function(theme)
-        api.save_colorscheme(theme.name)
+        colorscheme.save(theme.name)
         renderer:close()
-        utils.log_info("Selected " .. theme.name)
+        log.notify("Selected " .. theme.name, "info")
+      end,
+      on_focus = function(self)
+        local first_theme_from_options = self:get_props().data[1].name
+        vim.cmd("colorscheme " .. first_theme_from_options)
+      end,
+      on_blur = function()
+        vim.cmd("colorscheme " .. colorscheme.get())
       end,
     })
   ))
@@ -79,13 +92,11 @@ renderer:add_mappings({
 })
 
 renderer:on_unmount(function()
-  vim.cmd("colorscheme " .. api.get_colorscheme())
+  vim.cmd("colorscheme " .. colorscheme.get())
 end)
 
 local function pick_colorscheme()
   renderer:render(body)
-  -- local options = renderer:get_component_by_id("theme_picker_options")
-  -- vim.print(options:get_props().data)
 end
 
 return {

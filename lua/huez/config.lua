@@ -1,4 +1,3 @@
-local utils = require("huez.utils")
 local M = {}
 
 ---@class Huez.Config
@@ -64,12 +63,14 @@ M.init_cache_file = function()
     file:write(M.current.fallback)
     file:close()
     vim.cmd("colorscheme " .. M.current.fallback)
-    utils.log_warning(
+    vim.notify(
       "No 'huez-theme' file was found, so one was created at\n '"
         .. M.current.file_path
         .. "' with the theme '"
         .. M.current.fallback
-        .. "' as a fallback."
+        .. "' as a fallback.",
+      vim.log.levels.WARN,
+      { title = "Huez.nvim" }
     )
   end
 end

@@ -3,19 +3,21 @@ local fn = require("nui-components.utils.fn")
 local colorscheme = require("huez.api").colorscheme
 local log = require("huez.utils.log")
 local helpers = require("huez.utils.helpers")
+local config = require("huez.config")
 
 local SELECT_ID = "theme_picker_options"
 local PROMPT_ID = "theme_picker_prompt"
 
--- TODO: let create_renderer to take in a function or a table of acceptable values
+local picker_conf = config.current.picker
+
 local renderer = n.create_renderer({
-  width = 40,
-  height = vim.api.nvim_win_get_height(0),
+  width = picker_conf.width,
+  height = picker_conf.height or vim.api.nvim_win_get_height(0),
   relative = "editor",
   -- position starts from the left corner
   position = {
-    row = 0,
-    col = vim.api.nvim_win_get_width(0) - 3,
+    row = picker_conf.position.row,
+    col = picker_conf.position.col or vim.api.nvim_win_get_width(0) + picker_conf.width,
   },
 })
 

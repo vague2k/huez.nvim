@@ -73,12 +73,16 @@ M.init_cache_file = function()
   if file then
     local theme_name = file:read("*line") -- read first line
     file:close()
-    -- if the theme does not exist, resort to fallback
+    -- if the theme does not exist, resort to fallback, and write fallback to file
     if theme_name then
       local ok, _ = pcall(vim.cmd.colorscheme, theme_name)
       if not ok then
-        vim.cmd.colorscheme(M.current.fallback)
-        log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. M.current.fallback, "warn")
+        file = io.open(M.current.file_path, "w")
+        if file then
+          file:write(M.current.fallback)
+          vim.cmd.colorscheme(M.current.fallback)
+          log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. M.current.fallback, "warn")
+        end
         return
       end
       return

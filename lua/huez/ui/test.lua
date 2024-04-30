@@ -4,6 +4,9 @@ local colorscheme = require("huez.api").colorscheme
 local log = require("huez.utils.log")
 local helpers = require("huez.utils.helpers")
 
+local SELECT_ID = "theme_picker_options"
+local PROMPT_ID = "theme_picker_prompt"
+
 -- TODO: let create_renderer to take in a function or a table of acceptable values
 local renderer = n.create_renderer({
   width = 40,
@@ -33,7 +36,7 @@ local body = function()
   return n.columns(n.rows(
     -- { flex = 1 },
     n.prompt({
-      id = "theme_picker_prompt",
+      id = PROMPT_ID,
       autofocus = true,
       prefix = " ::: ",
       value = signal.query,
@@ -47,7 +50,7 @@ local body = function()
       end,
       on_submit = function()
         if signal.query:get_value() ~= "" then
-          local top_query_match = renderer:get_component_by_id("theme_picker_options"):get_props().data[1].name
+          local top_query_match = renderer:get_component_by_id(SELECT_ID):get_props().data[1].name
           colorscheme.save(top_query_match)
           renderer:close()
           log.notify("Selected " .. top_query_match, "info")
@@ -56,7 +59,7 @@ local body = function()
     }),
 
     n.select({
-      id = "theme_picker_options",
+      id = SELECT_ID,
       flex = 1,
       autofocus = false,
       border_label = "Themes",

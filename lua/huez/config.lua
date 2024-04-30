@@ -1,9 +1,20 @@
+local log = require("huez.utils.log")
 local M = {}
+
+---@class Huez.Config.Picker.Position
+---@field row number
+---@field col number|nil
+
+---@class Huez.Config.Picker
+---@field width number
+---@field height number|nil
+---@field position Huez.Config.Picker.Position
 
 ---@class Huez.Config
 ---@field file_path string
 ---@field fallback string
 ---@field exclude string[]
+---@field picker Huez.Config.Picker
 
 ---@type Huez.Config
 local DEFAULT_SETTINGS = {
@@ -35,6 +46,17 @@ local DEFAULT_SETTINGS = {
     "habamax",
     "lunaperche",
   },
+  -- configures how you want the theme picker to look, by default it will align to the "right"
+  picker = {
+    -- the dimensions of the picker itself
+    width = 40,
+    height = nil, -- if nil, use the entire window height
+    -- where you want to picker to render on the window, position's row and col start from the LEFT corner
+    position = {
+      row = 0,
+      col = nil, -- if nil, use width of window + picker.width
+    },
+  },
 }
 
 M._DEFAULT_SETTINGS = DEFAULT_SETTINGS
@@ -51,8 +73,14 @@ M.init_cache_file = function()
   if file then
     local theme_name = file:read("*line") -- read first line
     file:close()
+    -- if the theme does not exist, resort to fallback
     if theme_name then
-      vim.cmd("colorscheme " .. theme_name)
+      local ok, _ = pcall(vim.cmd.colorscheme, theme_name)
+      if not ok then
+        vim.cmd.colorscheme(M.current.fallback)
+        log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. M.current.fallback, "warn")
+        return
+      end
       return
     end
   end
@@ -63,14 +91,13 @@ M.init_cache_file = function()
     file:write(M.current.fallback)
     file:close()
     vim.cmd("colorscheme " .. M.current.fallback)
-    vim.notify(
+    log.notify(
       "No 'huez-theme' file was found, so one was created at\n '"
         .. M.current.file_path
         .. "' with the theme '"
         .. M.current.fallback
         .. "' as a fallback.",
-      vim.log.levels.WARN,
-      { title = "Huez.nvim" }
+      "warn"
     )
   end
 end

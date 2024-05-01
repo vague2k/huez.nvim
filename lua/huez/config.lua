@@ -6,6 +6,7 @@ local M = {}
 ---@field col number|nil
 
 ---@class Huez.Config.Picker
+---@field preset "left"|"center"|"right"|nil
 ---@field width number
 ---@field height number|nil
 ---@field position Huez.Config.Picker.Position
@@ -46,9 +47,12 @@ local DEFAULT_SETTINGS = {
     "habamax",
     "lunaperche",
   },
-  -- configures how you want the theme picker to look, by default it will align to the "right"
+  -- configures how you want the theme picker to look
   picker = {
-    -- the dimensions of the picker itself
+    -- if you don't wanna bother with specifics of positioning, you can always use the preset!
+    -- if nil, will use width, height... etc.
+    preset = "right",
+    -- the dimensions of the picker itself, these defaults are the equivalent of preset "right"
     width = 40,
     height = nil, -- if nil, use the entire window height
     -- where you want to picker to render on the window, position's row and col start from the LEFT corner

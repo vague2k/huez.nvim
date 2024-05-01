@@ -5,7 +5,7 @@ local M = {}
 local function setup_usercmds()
   local uc = vim.api.nvim_create_user_command
 
-  uc("Huez", require("huez.ui.test").pick_colorscheme, {})
+  uc("Huez", require("huez.picker.ui").pick_colorscheme, {})
 end
 
 ---@param user_opts Huez.Config?

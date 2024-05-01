@@ -3,23 +3,16 @@ local fn = require("nui-components.utils.fn")
 local colorscheme = require("huez.api").colorscheme
 local log = require("huez.utils.log")
 local helpers = require("huez.utils.helpers")
-local config = require("huez.config")
+
+local actions = require("huez.picker.actions")
 
 local SELECT_ID = "theme_picker_options"
 local PROMPT_ID = "theme_picker_prompt"
 
-local picker_conf = config.current.picker
+local test_conf = require("huez.picker.renderer")
 
-local renderer = n.create_renderer({
-  width = picker_conf.width,
-  height = picker_conf.height or vim.api.nvim_win_get_height(0),
-  relative = "editor",
-  -- position starts from the left corner
-  position = {
-    row = picker_conf.position.row,
-    col = picker_conf.position.col or vim.api.nvim_win_get_width(0) + picker_conf.width,
-  },
-})
+-- FIXME: why does select component randomly render different amount of options on each neovim instance
+local renderer = n.create_renderer(test_conf._calc_pos())
 
 local signal = n.create_signal({
   query = "",
@@ -34,7 +27,7 @@ local get_data = function()
   end)
 end
 
-local body = function()
+local theme_picker = function()
   return n.columns(n.rows(
     -- { flex = 1 },
     n.prompt({
@@ -47,17 +40,8 @@ local body = function()
         text = "󰌁 Huez",
         align = "center",
       },
-      on_change = function(curr)
-        signal.query = curr
-      end,
-      on_submit = function()
-        if signal.query:get_value() ~= "" then
-          local top_query_match = renderer:get_component_by_id(SELECT_ID):get_props().data[1].name
-          colorscheme.save(top_query_match)
-          renderer:close()
-          log.notify("Selected " .. top_query_match, "info")
-        end
-      end,
+      on_change = actions.prompt.current_input(signal),
+      on_submit = actions.prompt.save_theme_on_sumbit(colorscheme, signal, renderer, SELECT_ID, log),
     }),
 
     n.select({
@@ -66,21 +50,10 @@ local body = function()
       autofocus = false,
       border_label = "Themes",
       data = get_data(),
-      on_change = function(theme)
-        vim.cmd("colorscheme " .. theme.name)
-      end,
-      on_select = function(theme)
-        colorscheme.save(theme.name)
-        renderer:close()
-        log.notify("Selected " .. theme.name, "info")
-      end,
-      on_focus = function(self)
-        local first_theme_from_options = self:get_props().data[1].name
-        vim.cmd("colorscheme " .. first_theme_from_options)
-      end,
-      on_blur = function()
-        vim.cmd("colorscheme " .. colorscheme.get())
-      end,
+      on_change = actions.select.preview_theme_on_change,
+      on_select = actions.select.save_theme_on_select(colorscheme, renderer, log),
+      on_focus = actions.select.preview_first_theme_on_focus,
+      on_blur = actions.select.unload_theme_on_unfocus(colorscheme),
     })
   ))
 end
@@ -98,10 +71,12 @@ renderer:add_mappings({
 
 renderer:on_unmount(function()
   vim.cmd("colorscheme " .. colorscheme.get())
+  signal.query = "" -- clears the query state
 end)
 
+-- TODO: move this to a "builtin" dir similiar to telescope
 local function pick_colorscheme()
-  renderer:render(body)
+  renderer:render(theme_picker)
 end
 
 return {

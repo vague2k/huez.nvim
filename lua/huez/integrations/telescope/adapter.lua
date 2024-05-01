@@ -12,7 +12,8 @@ local api = require("huez.api")
 local function pick_colorscheme(opts)
   opts = vim.g.huez_config.picker_opts or telescope_themes.get_dropdown()
   local themes = api.filter_default_themes()
-
+  
+  -- set the current color scheme as a preselection in the picker for better UX
   local current_scheme = vim.g.colors_name or "default"
   local default_index = 1
   for i, theme in ipairs(themes) do

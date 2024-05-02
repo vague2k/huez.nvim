@@ -1,8 +1,7 @@
 local n = require("nui-components")
-local fn = require("nui-components.utils.fn")
 local colorscheme = require("huez.api").colorscheme
 local log = require("huez.utils.log")
-local helpers = require("huez.utils.helpers")
+local helpers = require("huez.picker.helpers")
 
 local actions = require("huez.picker.actions")
 
@@ -21,9 +20,9 @@ local signal = n.create_signal({
 
 local get_data = function()
   return signal.data:dup():combine_latest(signal.query:debounce(0):start_with(""), function(items, query)
-    return fn.ifilter(items, function(item)
-      return string.find(item.name:lower(), query:lower())
-    end)
+    return vim.tbl_filter(function(item)
+      return string.find(item.name:lower(), query:lower()) ~= nil
+    end, items)
   end)
 end
 

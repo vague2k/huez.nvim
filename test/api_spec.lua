@@ -11,6 +11,8 @@ describe("colorscheme api", function()
 
     eq(not nil, written)
     eq("test", read)
+
+    os.remove(mock_path)
   end)
 
   it("can return default installed themes", function()

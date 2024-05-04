@@ -49,7 +49,7 @@ end
 ---@param path? string
 ---@return boolean
 M.save = function(colorscheme, path)
-  path = config.current.file_path
+  path = path or config.current.file_path
 
   local file, err = io.open(path, "w+")
 

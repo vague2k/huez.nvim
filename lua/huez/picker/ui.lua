@@ -10,21 +10,12 @@ local PROMPT_ID = "theme_picker_prompt"
 
 local test_conf = require("huez.picker.renderer")
 
--- FIXME: why does select component randomly render different amount of options on each neovim instance
 local renderer = n.create_renderer(test_conf._calc_pos())
 
 local signal = n.create_signal({
   query = "",
   data = helpers.tonodes(colorscheme.installed()),
 })
-
-local get_data = function()
-  return signal.data:dup():combine_latest(signal.query:debounce(0):start_with(""), function(items, query)
-    return vim.tbl_filter(function(item)
-      return string.find(item.name:lower(), query:lower()) ~= nil
-    end, items)
-  end)
-end
 
 local theme_picker = function()
   return n.columns(n.rows(
@@ -48,7 +39,7 @@ local theme_picker = function()
       flex = 1,
       autofocus = false,
       border_label = "Themes",
-      data = get_data(),
+      data = actions.select.filtered_data(signal),
       on_change = actions.select.preview_theme_on_change,
       on_select = actions.select.save_theme_on_select(colorscheme, renderer, log),
       on_focus = actions.select.preview_first_theme_on_focus,

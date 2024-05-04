@@ -52,6 +52,14 @@ M.select = {
       vim.cmd.colorscheme(api.get())
     end
   end,
+
+  filtered_data = function(signal)
+    return signal.data:dup():combine_latest(signal.query:debounce(0):start_with(""), function(items, query)
+      return vim.tbl_filter(function(item)
+        return string.find(item.name:lower(), query:lower()) ~= nil
+      end, items)
+    end)
+  end,
 }
 
 return M

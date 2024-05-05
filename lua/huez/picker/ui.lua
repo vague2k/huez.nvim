@@ -2,15 +2,13 @@ local n = require("nui-components")
 local colorscheme = require("huez.api").colorscheme
 local log = require("huez.utils.log")
 local helpers = require("huez.picker.helpers")
-
 local actions = require("huez.picker.actions")
 
 local SELECT_ID = "theme_picker_options"
 local PROMPT_ID = "theme_picker_prompt"
 
-local test_conf = require("huez.picker.renderer")
-
-local renderer = n.create_renderer(test_conf._calc_pos())
+local renderer_position = require("huez.picker.renderer")
+local renderer = n.create_renderer(renderer_position.calc_pos())
 
 local signal = n.create_signal({
   query = "",

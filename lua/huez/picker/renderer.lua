@@ -2,7 +2,8 @@ local config = require("huez.config")
 local M = {}
 
 -- calculates dimensions and position of the picker based on config values
-M._calc_pos = function()
+-- TODO: implement swtich state
+M.calc_pos = function()
   local picker_conf = config.current.picker
   local win_width = vim.api.nvim_win_get_width(0)
   local win_height = vim.api.nvim_win_get_height(0)

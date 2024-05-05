@@ -12,15 +12,15 @@ local M = {}
 ---@field position Huez.Config.Picker.Position
 
 ---@class Huez.Config
----@field file_path string
+---@field path string
 ---@field fallback string
 ---@field exclude string[]
 ---@field picker Huez.Config.Picker
 
 ---@type Huez.Config
 local DEFAULT_SETTINGS = {
-  -- the filepath where your theme will be saved
-  file_path = vim.fs.normalize(vim.fn.stdpath("cache")) .. "/huez-theme",
+  -- the directory where huez place it's files to save the theme, or get current theme, things like that
+  path = vim.fs.normalize(vim.fn.stdpath("cache")) .. "/huez",
   -- the fallback theme which will be written to a new "huez-theme" file in case the "huez-theme" file does not exist
   fallback = "default",
   -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker
@@ -71,9 +71,20 @@ M.set = function(user_opts)
   M.current = vim.tbl_deep_extend("force", vim.deepcopy(M.current), user_opts)
 end
 
+--- setup the specific files according to path,
+-- currently not supporting windows cuz I'm not tryna deal with it lol
+-- someone will make a PR eventually
+
+M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing this doc string, this value exists
+M.current.favorites_json = M.current.path .. "/huez-favorites.json" -- If you're seeing this doc string, this value exists
+
 M.init_cache_file = function()
+  -- check if the plugin's cache dir exists, if not create it
+  if vim.fn.isdirectory(M.current.path) == 0 then
+    os.execute("mkdir " .. M.current.path)
+  end
   -- check if the file exists for persist the theme
-  local file = io.open(M.current.file_path, "r+")
+  local file = io.open(M.current.huez_theme_file, "r+")
   if file then
     local theme_name = file:read("*line") -- read first line
     file:close()
@@ -81,7 +92,7 @@ M.init_cache_file = function()
     if theme_name then
       local ok, _ = pcall(vim.cmd.colorscheme, theme_name)
       if not ok then
-        file = io.open(M.current.file_path, "w")
+        file = io.open(M.current.huez_theme_file, "w")
         if file then
           file:write(M.current.fallback)
           vim.cmd.colorscheme(M.current.fallback)
@@ -94,14 +105,14 @@ M.init_cache_file = function()
   end
 
   -- if file doesn't exist or couldn't be read, create it with fallback theme
-  file = io.open(M.current.file_path, "w")
+  file = io.open(M.current.huez_theme_file, "w")
   if file then
     file:write(M.current.fallback)
     file:close()
     vim.cmd("colorscheme " .. M.current.fallback)
     log.notify(
       "No 'huez-theme' file was found, so one was created at\n '"
-        .. M.current.file_path
+        .. M.current.huez_theme_file
         .. "' with the theme '"
         .. M.current.fallback
         .. "' as a fallback.",
@@ -109,4 +120,5 @@ M.init_cache_file = function()
     )
   end
 end
+
 return M

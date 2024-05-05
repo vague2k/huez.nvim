@@ -7,7 +7,7 @@ local M = {}
 ---@param path? string
 ---@return string|nil
 M.get = function(path)
-  path = path or config.current.file_path
+  path = path or config.current.huez_theme_file
 
   local file, err = io.open(path, "r")
 
@@ -49,7 +49,7 @@ end
 ---@param path? string
 ---@return boolean
 M.save = function(colorscheme, path)
-  path = path or config.current.file_path
+  path = path or config.current.huez_theme_file
 
   local file, err = io.open(path, "w+")
 

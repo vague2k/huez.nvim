@@ -10,6 +10,16 @@ local PROMPT_ID = "theme_picker_prompt"
 local renderer_position = require("huez.picker.renderer")
 local renderer = n.create_renderer(renderer_position.calc_pos())
 
+-- TODO:
+-- requirements for the "favorites picker"
+-- 1. theme_picker should have a "tag" mode that when enabled, changes the label of the prompt and select
+--    aswell as call notify to indicate the user has switched picker modes
+-- 2. an icon should be appened to the node line. i.e. ("-> current_focused_theme_name")
+-- 3. the `save_theme_on_select()` method should be the only thing that changes, when switching modes.
+-- 4. the component tree in "tag" mode has to be callable from a user cmd, as "HuezFavoritesAdd".
+--
+-- NOTE: would creating a custom component solve the issues above? see nui-components docs.
+
 local signal = n.create_signal({
   query = "",
   data = helpers.tonodes(colorscheme.installed()),

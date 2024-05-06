@@ -26,22 +26,42 @@ local signal = n.create_signal({
 })
 
 local theme_picker = function()
-  return n.columns(n.rows(
-    -- { flex = 1 },
-    n.prompt({
-      id = PROMPT_ID,
-      autofocus = true,
-      prefix = " ::: ",
-      value = signal.query,
-      size = 1,
-      border_label = {
-        text = "󰌁 Huez",
-        align = "center",
-      },
-      on_change = actions.prompt.current_input(signal),
-      on_submit = actions.prompt.save_theme_on_sumbit(colorscheme, signal, renderer, SELECT_ID, log),
-    }),
-
+  return n.rows(
+    n.columns(
+      { size = 3 },
+      n.prompt({
+        id = PROMPT_ID,
+        autofocus = true,
+        prefix = " ::: ",
+        value = signal.query,
+        flex = 1,
+        border_label = {
+          text = "Huez",
+          align = "center",
+        },
+        on_change = actions.prompt.current_input(signal),
+        on_submit = actions.prompt.save_theme_on_sumbit(colorscheme, signal, renderer, SELECT_ID, log),
+      }),
+      n.checkbox({
+        label = " Favorites ",
+        default_sign = "",
+        checked_sign = "",
+        border_style = "rounded",
+        on_focus = function()
+          -- FIXME: make cursor hide when focusing this component
+          helpers.set_hl_to_target("NuiComponentsCheckboxLabel", "WarningMsg", "fg")
+        end,
+        -- on_change = function(checked)
+        --   if checked then
+        --     vim.print("ENABLE")
+        --     helpers.set_hl_to_target("NuiComponentsCheckboxLabel", "@diff.plus", "fg")
+        --   else
+        --     vim.print("DISABLED")
+        --     helpers.set_hl_to_target("NuiComponentsCheckboxLabel", "WarningMsg", "fg")
+        --   end
+        -- end,
+      })
+    ),
     n.select({
       id = SELECT_ID,
       flex = 1,
@@ -53,7 +73,7 @@ local theme_picker = function()
       on_focus = actions.select.preview_first_theme_on_focus,
       on_blur = actions.select.unload_theme_on_unfocus(colorscheme),
     })
-  ))
+  )
 end
 
 -- TODO: extract this to a function that returns a table of mappings

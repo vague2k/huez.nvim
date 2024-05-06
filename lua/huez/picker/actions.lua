@@ -27,7 +27,7 @@ M.select = {
   -- Load the current hovered node.name (colorscheme) to be previewed
   preview_theme_on_change = function(node)
     vim.cmd.colorscheme(node.name)
-    help.set_cursor_line_hl()
+    help.set_hl_to_target("NuiComponentsSelectNodeFocused", "CursorLine", "bg")
   end,
 
   -- Picks and saves the current focused node (option) on the tree
@@ -43,7 +43,7 @@ M.select = {
   preview_first_theme_on_focus = function(component)
     local first_theme_from_options = component:get_props().data[1].name
     vim.cmd.colorscheme(first_theme_from_options)
-    help.set_cursor_line_hl()
+    help.set_hl_to_target("NuiComponentsSelectNodeFocused", "CursorLine", "bg")
   end,
 
   -- When exiting the select menu, revert back to the currently saved colorscheme

@@ -15,16 +15,18 @@ M.tonodes = function(themes)
   return nodes
 end
 
---- Sets the CursorLine hl of the currently previewed colorscheme of the current focused option
+--- Set's the hl {prop} from the {group_name} to a specific {target}
 ---
---- The following hl group for the node being `NuiComponentsSelectNodeFocused`
-M.set_cursor_line_hl = function()
-  local rgb_value = vim.api.nvim_get_hl(0, { name = "CursorLine" })
-  if rgb_value.bg then
-    local hl = string.format("#%06x", rgb_value.bg)
-    vim.api.nvim_set_hl(0, "NuiComponentsSelectNodeFocused", { bg = hl })
+---@param target string
+---@param group_name string
+---@param prop string
+M.set_hl_to_target = function(target, group_name, prop)
+  local rgb_value = vim.api.nvim_get_hl(0, { name = group_name })
+  if rgb_value[prop] then
+    local hl = string.format("#%06x", rgb_value[prop])
+    vim.api.nvim_set_hl(0, target, { [prop] = hl })
   else
-    -- if theme does not have a cursor line highlight, just return
+    -- if prop does not exist on that group_name, just return
     return
   end
 end

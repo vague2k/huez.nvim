@@ -13,7 +13,7 @@ M.prompt = {
   -- I found this to be a better UX
   save_theme_on_sumbit = function(api, signal, renderer, component_id, log)
     return function()
-      if signal.query:get_value() ~= "" then
+      if signal.query:get_value() ~= "" and #renderer:get_component_by_id(component_id):get_props().data > 0 then
         local top_query_match = renderer:get_component_by_id(component_id):get_props().data[1].name
         api.save(top_query_match)
         renderer:close()

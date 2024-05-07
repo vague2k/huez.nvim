@@ -2,7 +2,7 @@ local help = require("huez.picker.helpers")
 local M = {}
 
 M.prompt = {
-  -- Simply change the current state of `signal.query` to whatever the current `value` of input is
+  -- Update the signal.query state, and preview the top matched colorscheme based on the current query
   current_input = function(api, signal, renderer, component_id)
     return function(value)
       signal.query = value

@@ -39,7 +39,7 @@ local theme_picker = function()
           text = "Huez",
           align = "center",
         },
-        on_change = actions.prompt.current_input(signal),
+        on_change = actions.prompt.current_input(colorscheme, signal, renderer, SELECT_ID),
         on_submit = actions.prompt.save_theme_on_sumbit(colorscheme, signal, renderer, SELECT_ID, log),
       }),
       n.checkbox({

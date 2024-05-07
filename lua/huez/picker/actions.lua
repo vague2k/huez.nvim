@@ -3,9 +3,17 @@ local M = {}
 
 M.prompt = {
   -- Simply change the current state of `signal.query` to whatever the current `value` of input is
-  current_input = function(signal)
+  current_input = function(api, signal, renderer, component_id)
     return function(value)
       signal.query = value
+      local component = renderer:get_component_by_id(component_id)
+      if signal.query:get_value() ~= "" and #component:get_props().data > 0 then
+        local top_query_match = component:get_props().data[1].name
+        vim.cmd.colorscheme(top_query_match)
+      end
+      if value == "" or #component:get_props().data == 0 then
+        vim.cmd.colorscheme(api.get())
+      end
     end
   end,
 

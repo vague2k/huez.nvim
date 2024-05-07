@@ -20,7 +20,7 @@ local M = {}
 ---@type Huez.Config
 local DEFAULT_SETTINGS = {
   -- the directory where huez place it's files to save the theme, or get current theme, things like that
-  path = vim.fs.normalize(vim.fn.stdpath("cache")) .. "/huez",
+  path = vim.fs.normalize(vim.fn.stdpath("data")) .. "/huez",
   -- the fallback theme which will be written to a new "huez-theme" file in case the "huez-theme" file does not exist
   fallback = "default",
   -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker

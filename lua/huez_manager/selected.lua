@@ -18,6 +18,8 @@ function M.selected()
   return vim.tbl_extend("force", M.live_themes, M.favourites)
 end
 
+--- Adds a theme to the `huez-live-themes` file.
+---
 ---@param theme string
 ---@return nil
 function M.live_add(theme)
@@ -26,13 +28,17 @@ function M.live_add(theme)
   M.live_themes = utils.load_themes("live")
 end
 
+--- Removes a theme from the `huez-live-themes` file.
+---
 ---@param theme string
 ---@return nil
 function M.live_remove(theme)
-      utils.remove_theme("live", theme)
-      M.live_themes = utils.load_themes("live")
+  utils.remove_theme("live", theme)
+  M.live_themes = utils.load_themes("live")
 end
 
+--- Adds a theme to the `huez-favourites-themes` file.
+---
 ---@param theme string
 ---@return nil
 function M.favourite_add(theme)
@@ -41,11 +47,13 @@ function M.favourite_add(theme)
   M.favourites = utils.load_themes("favourites")
 end
 
+--- Removes a theme from the `huez-favourites-themes` file.
+---
 ---@param theme string
 ---@return nil
 function M.favourite_remove(theme)
-      utils.remove_theme("favourites", theme)
-      M.favourites = utils.load_themes("favourites")
+  utils.remove_theme("favourites", theme)
+  M.favourites = utils.load_themes("favourites")
 end
 
 ---@param plugins_list? InstalledThemes
@@ -72,6 +80,5 @@ M.lazy_flush = function(plugins_list)
   lazy.load({ show = false, plugins = pkgList })
   loader.reload("huez.nvim")
 end
-
 
 return M

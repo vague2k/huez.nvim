@@ -1,4 +1,5 @@
-local avail = require("huez.api.available")
+local registry = require("huez_manager.registry")
+local selected = require("huez_manager.selected").selected()
 
 -- TODO:
 -- 1. Select should come from user defined file
@@ -10,11 +11,11 @@ local avail = require("huez.api.available")
 -- the user navigates the registry menu.
 
 local return_spec = {}
-local selected = { "tokyonight", "nightfox" }
 for _, value in ipairs(selected) do
   local spec = {
-    url = avail.lib[value].url,
-    opts = avail.lib[value].opts,
+    url = registry[value].url,
+    opts = registry[value].opts,
+    event = "UiEnter",
   }
   table.insert(return_spec, spec)
 end

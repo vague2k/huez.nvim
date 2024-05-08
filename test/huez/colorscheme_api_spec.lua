@@ -2,7 +2,7 @@ local c = require("huez.api").colorscheme
 
 local eq = assert.are.same
 
-describe("colorscheme api", function()
+describe("HUEZ: colorscheme api", function()
   it("can read and write to a huez-theme file", function()
     local mock_path = vim.fs.normalize("~/.cache/nvim/huez-theme-test")
 

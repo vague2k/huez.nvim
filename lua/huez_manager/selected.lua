@@ -1,7 +1,7 @@
 local loader = require("lazy.core.loader")
 local lazy = require("lazy")
 local plugins = require("lazy.core.plugin")
-local registry = require("huez_manager.registry")
+local registry = require("huez_manager.manage.registry")
 local installed = require("huez.api.colorscheme").installed()
 local utils = require("huez_manager.utils")
 

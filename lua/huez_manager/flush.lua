@@ -48,7 +48,6 @@ M.lazy_flush = function(plugins_list)
     plugins = pkgList,
   })
 
-  -- finally, reload huez again with installed and loaded themes
   loader.reload("huez.nvim")
 end
 

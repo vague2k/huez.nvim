@@ -15,6 +15,7 @@ for _, value in ipairs(selected) do
   local spec = {
     url = registry[value].url,
     opts = registry[value].opts,
+    name = registry[value].pkgname,
     event = "UiEnter",
   }
   table.insert(return_spec, spec)

@@ -25,4 +25,4 @@ jobs:
         run: cargo install stylua
 
       - name: Format
-        run: stylua --check tests/ --config-path=stylua.toml
+        run: stylua --check test/ --config-path=stylua.toml

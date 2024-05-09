@@ -1,11 +1,8 @@
 ---
 name: Format Tests
 
-on:
-  push:
-    branches:
-      - "main"
-  pull_request:
+
+on: [push, pull_request]
 
 jobs:
   format:

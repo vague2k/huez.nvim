@@ -3,8 +3,8 @@ local registry = require("huez_manager.registry")
 
 local M = {}
 
---- Returns a `string[]` of themes if they are found in a `huez-favourites/live-themes` file or a custom path, and if they are found within
---- the registry.
+--- Returns a `string[]` of themes if they are found in a `huez-favourites/live-themes` file or a custom path, and if
+--- they are found within the registry.
 ---
 ---@param type "favourites" | "live"
 ---@param path? string

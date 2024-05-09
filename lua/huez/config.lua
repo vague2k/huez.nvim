@@ -20,7 +20,7 @@ local M = {}
 ---@type Huez.Config
 local DEFAULT_SETTINGS = {
   -- the directory where huez place it's files to save the theme, or get current theme, things like that
-  path = vim.fs.normalize(vim.fn.stdpath("data")) .. "/huez",
+  path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
   -- the fallback theme which will be written to a new "huez-theme" file in case the "huez-theme" file does not exist
   fallback = "default",
   -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker
@@ -64,6 +64,7 @@ local DEFAULT_SETTINGS = {
 }
 
 M._DEFAULT_SETTINGS = DEFAULT_SETTINGS
+---@class Huez.Config
 M.current = M._DEFAULT_SETTINGS
 
 ---@param user_opts Huez.Config
@@ -75,8 +76,8 @@ end
 -- currently not supporting windows cuz I'm not tryna deal with it lol
 -- someone will make a PR eventually
 
-M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing this doc string, this value exists
-M.current.favorites_json = M.current.path .. "/huez-favorites.json" -- If you're seeing this doc string, this value exists
+M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing this note, this value exists
+M.current.favorites_json = M.current.path .. "/huez-favorites.json" --If you're seeing this note, this value exists
 
 M.init_cache_file = function()
   -- check if the plugin's cache dir exists, if not create it

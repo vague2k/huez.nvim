@@ -5,9 +5,11 @@ local registry = require("huez_manager.registry")
 local installed = require("huez.api.colorscheme").installed()
 local M = {}
 
---- "Flushs" any themes that were added or removed INTO lazy, or OUT of lazy, according to the `huez-favorites/live-themes` files.
+--- "Flushs" any themes that were added or removed INTO lazy, or OUT of lazy, according to the
+--- `huez-favorites/live-themes` files.
 ---
---- This function acts as a sort of "self-cleaning" approach, when doing live previews and ensures themes marked as favorite are always installed.
+--- This function acts as a sort of "self-cleaning" approach, when doing live previews and ensures themes marked as
+--- favorite are always installed.
 ---@param plugins_list? InstalledThemes
 ---@return nil
 M.lazy_flush = function(plugins_list)

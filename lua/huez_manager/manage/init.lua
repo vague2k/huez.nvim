@@ -1,4 +1,4 @@
-local registry = require("huez_manager.manage.registry")
+local registry = require("huez_manager.registry")
 local selected = require("huez_manager.selected").selected()
 
 -- TODO:

@@ -1,4 +1,4 @@
-local r = require("huez_manager.manage.registry")
+local r = require("huez_manager.registry")
 
 describe("HUEZ-MANAGER: registry", function()
   it("entry follows the lazy plugin spec", function()

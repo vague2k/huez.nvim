@@ -1,8 +1,8 @@
 local R
 
---[[ 
+--[[
 
-This file is a registry of colorschemes, which follow the `Lazy.nvim` plugin spec. 
+This file is a registry of colorschemes, which follow the `Lazy.nvim` plugin spec.
 If you wish to add a colorscheme, the new entry must follow the spec of...
 
 ["colorscheme-name"] = {

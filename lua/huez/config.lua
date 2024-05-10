@@ -1,23 +1,18 @@
 local log = require("huez.utils.log")
 local M = {}
 
----@class Huez.Config.Picker.Position
----@field row number
----@field col number|nil
-
----@class Huez.Config.Picker
----@field preset "left"|"center"|"right"|nil
----@field width number
----@field height number|nil
----@field position Huez.Config.Picker.Position
+---@class Huez.Config.Pickers
+---@field layout "left"|"top"|"right"|"bottom"|nil
+---@field themes table
 
 ---@class Huez.Config
 ---@field path string
 ---@field fallback string
 ---@field exclude string[]
----@field picker Huez.Config.Picker
+---@field picker Huez.Config.Pickers
 
 ---@type Huez.Config
+-- TODO: write a config validator
 local DEFAULT_SETTINGS = {
   -- the directory where huez place it's files to save the theme, or get current theme, things like that
   path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
@@ -47,19 +42,15 @@ local DEFAULT_SETTINGS = {
     "habamax",
     "lunaperche",
   },
-  -- configures how you want the theme picker to look
+
+  -- configures how you want a certain picker to look.
   picker = {
-    -- if you don't wanna bother with specifics of positioning, you can always use the preset!
-    -- if nil, will use width, height... etc.
-    preset = "right",
-    -- the dimensions of the picker itself, these defaults are the equivalent of preset "right"
-    width = 40,
-    height = nil, -- if nil, use the entire window height
-    -- where you want to picker to render on the window, position's row and col start from the LEFT corner
-    position = {
-      row = 0,
-      col = nil, -- if nil, use width of window + picker.width
-    },
+    -- all pickers use telescope values, by default picker is anchored to the right.
+    -- you can use an out of the box layout. Options are "left", "top", "right", or "bottom" or nil
+    -- by default, the standalone layout used is "right"
+    layout = "right",
+    -- if you are using a predefined layout, any options you pass into the picker will be deep merged.
+    themes = {},
   },
 }
 

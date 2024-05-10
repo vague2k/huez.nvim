@@ -29,7 +29,7 @@ R = {
     opts = {},
     pkgname = "witch",
   },
-  ["Abstract-cs"] = {
+  ["abstract-cs"] = {
     url = "https://github.com/Abstract-IDE/Abstract-cs",
     opts = {},
     pkgname = "abstract-cs",
@@ -147,7 +147,7 @@ R = {
   ["hybrid"] = {
     url = "https://github.com/PHSix/nvim-hybrid",
     opts = {},
-    pkgname = "one",
+    pkgname = "hybrid",
   },
   ["space"] = {
     url = "https://github.com/Th3Whit3Wolf/space-nvim",

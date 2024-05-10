@@ -1,4 +1,3 @@
-
 ---NOTE: running this code will add the nightfox theme to the selected lists
 ---and reload the file making it available in the colorscheme list
 

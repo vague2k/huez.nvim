@@ -5,14 +5,14 @@ local M = {}
 --- Gets the persisted colorscheme according to "huez-theme" file.
 ---
 ---@param path? string
----@return string|nil
+---@return string
 M.get = function(path)
   path = path or config.current.huez_theme_file
 
   local file, err = io.open(path, "r")
 
-  if not file then
-    return nil, log.notify("api.get_colorscheme - Error reading file: \n" .. err, "error")
+  if file == nil then
+    return "", log.notify("api.get_colorscheme - Error reading file: \n" .. err, "error")
   end
 
   local line = file:read()
@@ -53,7 +53,7 @@ M.save = function(colorscheme, path)
 
   local file, err = io.open(path, "w+")
 
-  if not file then
+  if file == nil then
     return false, log.notify("api.save_colorscheme - Error writing to file: \n" .. err, "error")
   end
 

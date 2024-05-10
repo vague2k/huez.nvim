@@ -9,8 +9,8 @@ local huez_layout = require("huez.theme.layout")
 local log = require("huez.utils.log")
 local colorscheme = require("huez.api").colorscheme
 
-local function pick_colorscheme(opts)
-  opts = huez_layout.picker_pos()
+local function pick_colorscheme()
+  local opts = huez_layout.picker_pos()
   local themes = colorscheme.installed()
 
   -- set the current color scheme as a preselection in the picker for better UX

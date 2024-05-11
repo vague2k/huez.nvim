@@ -1,6 +1,7 @@
 local telescope_actions = require("telescope.actions")
 local telescope_actions_state = require("telescope.actions.state")
 local colorscheme = require("huez.api").colorscheme
+local log = require("huez.utils.log")
 
 local M = {}
 
@@ -26,6 +27,21 @@ M.unload_on_quit = function(bufnr)
   telescope_actions.close(bufnr)
   local prev_color = colorscheme.get()
   vim.cmd.colorscheme(prev_color)
+end
+
+M.save_on_select = function(action_state)
+  -- .get_selected_entry could be nil, so we check for nil before accessing it's value.
+  local selection = action_state.get_selected_entry()
+
+  if selection == nil then
+    log.notify("Must choose valid colorscheme", "error")
+    return
+  end
+
+  local theme = selection.value
+  colorscheme.save(theme)
+  vim.cmd.colorscheme(theme)
+  log.notify("Selected " .. theme, "info")
 end
 
 return M

@@ -2,7 +2,6 @@ local telescope_actions = require("telescope.actions")
 local state = require("telescope.actions.state")
 
 local registry = require("huez_manager.registry")
-local fn = require("huez.utils.fn")
 -- local manager = require("huez_manager.selected")
 -- local log = require("huez.utils.log")
 
@@ -41,8 +40,6 @@ M.optimistic_preview_next = function(bufnr)
       table.remove(window, 1)
       vim.print(window)
       break
-    else
-      index = 1
     end
     -- FIXME: errors when going past #pkgs in the results window
     table.insert(window, pkgs[i].pkgname)

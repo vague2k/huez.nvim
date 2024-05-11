@@ -6,6 +6,7 @@ local function setup_usercmds()
   local uc = vim.api.nvim_create_user_command
 
   uc("Huez", require("huez.pickers").themes, {})
+  uc("HuezLive", require("huez.pickers").live, {})
 end
 
 ---@param user_opts Huez.Config?

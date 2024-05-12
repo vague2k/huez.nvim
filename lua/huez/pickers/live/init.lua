@@ -21,7 +21,7 @@ local function render()
           return {
             value = entry,
             display = entry.pkgname,
-            ordinal = entry.url,
+            ordinal = entry.pkgname,
           }
         end,
       }),

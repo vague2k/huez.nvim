@@ -1,12 +1,13 @@
 local R
 
--- TODO: create a readme describing what themes require to be added to the registry.
+-- TODO: create a readme describing what themes can added to the registry.
 
 ---@class ThemeRegistryEntry
----@field url string
----@field opts table
----@field pkgname string
----@field dependencies? string[]
+---@field url string the repo's url
+---@field opts table (WIP) pending
+---@field pkgname string the repo/colorscheme's name
+---@field dependencies? string[] deps. the colorscheme may have, like lush for example
+---@field colorscheme? string the name of the arg to load colorscheme
 
 ---@type table<string, ThemeRegistryEntry>
 R = {
@@ -14,127 +15,109 @@ R = {
     url = "https://github.com/folke/tokyonight.nvim",
     opts = {},
     pkgname = "tokyonight",
-    dependencies = {},
   },
   ["nightfox"] = {
     url = "https://github.com/EdenEast/nightfox.nvim",
     opts = {},
     pkgname = "nightfox",
-    dependencies = {},
   },
   ["rose-pine"] = {
     url = "https://github.com/rose-pine/neovim",
     opts = {},
     pkgname = "rose-pine",
-    dependencies = {},
   },
   ["witch"] = {
     url = "https://github.com/sontungexpt/witch",
     opts = {},
     pkgname = "witch",
-    dependencies = {},
   },
   ["abstract-cs"] = {
     url = "https://github.com/Abstract-IDE/Abstract-cs",
     opts = {},
     pkgname = "abstract-cs",
-    dependencies = {},
+    colorscheme = "abscs",
   },
   ["neon"] = {
     url = "https://github.com/rafamadriz/neon",
     opts = {},
     pkgname = "neon",
-    dependencies = {},
   },
   ["vim-code-dark"] = {
     url = "https://github.com/tomasiser/vim-code-dark",
     opts = {},
     pkgname = "vim-code-dark",
-    dependencies = {},
+    colorscheme = "codedark",
   },
   ["vscode"] = {
     url = "https://github.com/Mofiqul/vscode.nvim",
     opts = {},
     pkgname = "vscode",
-    dependencies = {},
   },
   ["visual_studio_code"] = {
     url = "https://github.com/askfiy/visual_studio_code",
     opts = {},
     pkgname = "visual_studio_code",
-    dependencies = {},
   },
   ["material"] = {
     url = "https://github.com/marko-cerovac/material.nvim",
     opts = {},
     pkgname = "material",
-    dependencies = {},
   },
   ["nightfly"] = {
     url = "https://github.com/bluz71/vim-nightfly-colors",
     opts = {},
     pkgname = "nightfly",
-    dependencies = {},
   },
   ["moonfly"] = {
     url = "https://github.com/bluz71/vim-moonfly-colors",
     opts = {},
     pkgname = "moonfly",
-    dependencies = {},
   },
   ["nvcode"] = {
     url = "https://github.com/ChristianChiarulli/nvcode-color-schemes.vim",
     opts = {},
     pkgname = "nvcode",
-    dependencies = {},
   },
   ["evergarden"] = {
     url = "https://github.com/comfysage/evergarden",
     opts = {},
     pkgname = "evergarden",
-    dependencies = {},
   },
   ["sonokai"] = {
     url = "https://github.com/sainnhe/sonokai",
     opts = {},
     pkgname = "sonokai",
-    dependencies = {},
   },
   ["oxocarbon"] = {
     url = "https://github.com/nyoom-engineering/oxocarbon.nvim",
     opts = {},
     pkgname = "oxocarbon",
-    dependencies = {},
   },
   ["blue-moon"] = {
     url = "https://github.com/kyazdani42/blue-moon",
     opts = {},
     pkgname = "blue-moon",
-    dependencies = {},
   },
   ["oceanic-next"] = {
     url = "https://github.com/mhartington/oceanic-next",
     opts = {},
     pkgname = "oceanic-next",
-    dependencies = {},
+    colorscheme = "OceanicNext",
   },
   ["zephyr"] = {
     url = "https://github.com/nvimdev/zephyr-nvim",
     opts = {},
     pkgname = "zephyr",
-    dependencies = {},
   },
   ["boo"] = {
     url = "https://github.com/rockerBOO/boo-colorscheme-nvim",
     opts = {},
     pkgname = "boo",
-    dependencies = {},
   },
   ["ariake"] = {
     url = "https://github.com/jim-at-jibba/ariake.nvim",
     opts = {},
     pkgname = "ariake",
-    dependencies = {},
   },
   ["onebuddy"] = {
     url = "https://github.com/Th3Whit3Wolf/onebuddy",
@@ -142,23 +125,15 @@ R = {
     pkgname = "onebuddy",
     dependencies = { "tjdevries/colorbuddy.vim" },
   },
-  ["modus"] = {
-    url = "https://github.com/ishan9299/modus-theme-vim",
-    opts = {},
-    pkgname = "modus",
-    dependencies = {},
-  },
   ["edge"] = {
     url = "https://github.com/sainnhe/edge",
     opts = {},
     pkgname = "edge",
-    dependencies = {},
   },
   ["deus"] = {
     url = "https://github.com/theniceboy/nvim-deus",
     opts = {},
     pkgname = "deus",
-    dependencies = {},
   },
   ["gloombuddy"] = {
     url = "https://github.com/bkegley/gloombuddy",
@@ -170,85 +145,70 @@ R = {
     url = "https://github.com/Th3Whit3Wolf/one-nvim",
     opts = {},
     pkgname = "one",
-    dependencies = {},
+    colorscheme = "doom-one",
   },
   ["hybrid"] = {
     url = "https://github.com/PHSix/nvim-hybrid",
     opts = {},
     pkgname = "hybrid",
-    dependencies = {},
+    colorscheme = "nvim-hybrid",
   },
   ["space"] = {
     url = "https://github.com/Th3Whit3Wolf/space-nvim",
     opts = {},
     pkgname = "space",
-    dependencies = {},
+    colorscheme = "space-nvim",
   },
   ["omni"] = {
     url = "https://github.com/yonlu/omni.vim",
     opts = {},
     pkgname = "omni",
-    dependencies = {},
   },
   ["aurora"] = {
     url = "https://github.com/ray-x/aurora",
     opts = {},
     pkgname = "aurora",
-    dependencies = {},
   },
   ["starry"] = {
     url = "https://github.com/ray-x/starry.nvim",
     opts = {},
     pkgname = "starry",
-    dependencies = {},
   },
   ["monokai"] = {
     url = "https://github.com/tanvirtin/monokai.nvim",
     opts = {},
     pkgname = "monokai",
-    dependencies = {},
   },
   ["ofirkai"] = {
     url = "https://github.com/ofirgall/ofirkai.nvim",
     opts = {},
     pkgname = "ofirkai",
-    dependencies = {},
   },
   ["melange"] = {
     url = "https://github.com/savq/melange-nvim",
     opts = {},
     pkgname = "melange",
-    dependencies = {},
   },
   ["base16"] = {
     url = "https://github.com/RRethy/base16-nvim",
     opts = {},
     pkgname = "base16",
-    dependencies = {},
+    colorscheme = "base16-default-dark",
   },
   ["falcon"] = {
     url = "https://github.com/fenetikm/falcon",
     opts = {},
     pkgname = "falcon",
-    dependencies = {},
-  },
-  ["nord-esque"] = {
-    url = "https://github.com/andersevenrud/nordic.nvim",
-    opts = {},
-    pkgname = "nord-esque",
-    dependencies = {},
   },
   ["nordic"] = {
     url = "https://github.com/AlexvZyl/nordic.nvim",
     opts = {},
     pkgname = "nordic",
-    dependencies = {},
   },
   ["nord"] = {
     url = "https://github.com/shaunsingh/nord.nvim",
     opts = {},
     pkgname = "nord",
-    dependencies = {},
   },
   ["neosolarized"] = {
     url = "https://github.com/svrana/neosolarized.nvim",
@@ -260,73 +220,60 @@ R = {
     url = "https://github.com/ishan9299/nvim-solarized-lua",
     opts = {},
     pkgname = "solarized",
-    dependencies = {},
   },
   ["lavender"] = {
     url = "https://codeberg.org/jthvai/lavender.nvim",
     opts = {},
     pkgname = "lavender",
-    dependencies = {},
-  },
-  ["onedark"] = {
-    url = "https://github.com/navarasu/onedark.nvim",
-    opts = {},
-    pkgname = "onedark",
-    dependencies = {},
   },
   ["github"] = {
     url = "https://github.com/projekt0n/github-nvim-theme",
     opts = {},
     pkgname = "github",
-    dependencies = {},
+    colorscheme = "github_dark_default",
   },
   ["gruvbox-material"] = {
     url = "https://github.com/sainnhe/gruvbox-material",
     opts = {},
     pkgname = "gruvbox-material",
-    dependencies = {},
   },
   ["everforest"] = {
     url = "https://github.com/sainnhe/everforest",
     opts = {},
     pkgname = "everforest",
-    dependencies = {},
   },
   ["everforest-lua"] = {
     url = "https://github.com/neanias/everforest-nvim",
     opts = {},
     pkgname = "everforest-lua",
-    dependencies = {},
+    colorscheme = "everforest",
   },
   ["doom-one"] = {
     url = "https://github.com/NTBBloodbath/doom-one.nvim",
     opts = {},
     pkgname = "doom-one",
-    dependencies = {},
   },
   ["dracula"] = {
     url = "https://github.com/dracula/vim",
     opts = {},
     pkgname = "dracula",
-    dependencies = {},
   },
   ["dracula-lua"] = {
     url = "https://github.com/Mofiqul/dracula.nvim",
     opts = {},
     pkgname = "dracula-lua",
-    dependencies = {},
+    colorscheme = "dracula",
   },
   ["calvera-dark"] = {
     url = "https://github.com/niyabits/calvera-dark.nvim",
     opts = {},
     pkgname = "calvera-dark",
-    dependencies = {},
+    colorscheme = "calvera",
   },
   ["vn-night"] = {
     url = "https://github.com/nxvu699134/vn-night.nvim",
     opts = {},
     pkgname = "vn-night",
-    dependencies = {},
   },
   ["codeschool"] = {
     url = "https://github.com/adisen99/codeschool.nvim",
@@ -338,7 +285,6 @@ R = {
     url = "https://github.com/kdheepak/monochrome.nvim",
     opts = {},
     pkgname = "monochrome",
-    dependencies = {},
   },
   ["zenbones"] = {
     url = "https://github.com/mcchrish/zenbones.nvim",
@@ -350,31 +296,26 @@ R = {
     url = "https://github.com/catppuccin/nvim",
     opts = {},
     pkgname = "catppuccin",
-    dependencies = {},
   },
   ["aquarium"] = {
     url = "https://github.com/FrenzyExists/aquarium-vim",
     opts = {},
     pkgname = "aquarium",
-    dependencies = {},
   },
   ["substrata"] = {
     url = "https://github.com/kvrohit/substrata.nvim",
     opts = {},
     pkgname = "substrata",
-    dependencies = {},
   },
   ["vimdark"] = {
     url = "https://github.com/ldelossa/vimdark",
     opts = {},
     pkgname = "vimdark",
-    dependencies = {},
   },
   ["everblush"] = {
     url = "https://github.com/Everblush/nvim",
     opts = {},
     pkgname = "everblush",
-    dependencies = {},
   },
   ["apprentice"] = {
     url = "https://github.com/adisen99/apprentice.nvim",
@@ -386,13 +327,12 @@ R = {
     url = "https://github.com/olimorris/onedarkpro.nvim",
     opts = {},
     pkgname = "onedarkpro",
-    dependencies = {},
+    colorscheme = "onedark",
   },
   ["onenord"] = {
     url = "https://github.com/rmehri01/onenord.nvim",
     opts = {},
     pkgname = "onenord",
-    dependencies = {},
   },
   ["gruvy"] = {
     url = "https://github.com/RishabhRD/gruvy",
@@ -404,43 +344,36 @@ R = {
     url = "https://github.com/luisiacc/gruvbox-baby",
     opts = {},
     pkgname = "gruvbox-baby",
-    dependencies = {},
   },
   ["zephyrium"] = {
     url = "https://github.com/titanzero/zephyrium",
     opts = {},
     pkgname = "zephyrium",
-    dependencies = {},
   },
   ["kanagawa"] = {
     url = "https://github.com/rebelot/kanagawa.nvim",
     opts = {},
     pkgname = "kanagawa",
-    dependencies = {},
   },
   ["kurayami"] = {
     url = "https://github.com/kevinm6/kurayami.nvim",
     opts = {},
     pkgname = "kurayami",
-    dependencies = {},
   },
   ["tokyodark"] = {
     url = "https://github.com/tiagovla/tokyodark.nvim",
     opts = {},
     pkgname = "tokyodark",
-    dependencies = {},
   },
-  ["one-monokai"] = {
+  ["one_monokai"] = {
     url = "https://github.com/cpea2506/one_monokai.nvim",
     opts = {},
-    pkgname = "one-monokai",
-    dependencies = {},
+    pkgname = "one_monokai",
   },
   ["rasmus"] = {
     url = "https://github.com/kvrohit/rasmus.nvim",
     opts = {},
     pkgname = "rasmus",
-    dependencies = {},
   },
   ["paramount-ng"] = {
     url = "https://github.com/chrsm/paramount-ng.nvim",
@@ -452,13 +385,11 @@ R = {
     url = "https://github.com/kaiuri/nvim-juliana",
     opts = {},
     pkgname = "juliana",
-    dependencies = {},
   },
   ["kimbox"] = {
     url = "https://github.com/lmburns/kimbox",
     opts = {},
     pkgname = "kimbox",
-    dependencies = {},
   },
   ["arctic"] = {
     url = "https://github.com/rockyzhang24/arctic.nvim",
@@ -470,85 +401,67 @@ R = {
     url = "https://github.com/ramojus/mellifluous.nvim",
     opts = {},
     pkgname = "mellifluous",
-    dependencies = {},
   },
   ["minimal"] = {
     url = "https://github.com/Yazeed1s/minimal.nvim",
     opts = {},
     pkgname = "minimal",
-    dependencies = {},
-  },
-  ["sherbet"] = {
-    url = "https://github.com/lewpoly/sherbet.nvim",
-    opts = {},
-    pkgname = "sherbet",
-    dependencies = {},
   },
   ["adwaita"] = {
     url = "https://github.com/Mofiqul/adwaita.nvim",
     opts = {},
     pkgname = "adwaita",
-    dependencies = {},
   },
   ["poimandres"] = {
     url = "https://github.com/olivercederborg/poimandres.nvim",
     opts = {},
     pkgname = "poimandres",
-    dependencies = {},
   },
   ["mellow"] = {
     url = "https://github.com/mellow-theme/mellow.nvim",
     opts = {},
     pkgname = "mellow",
-    dependencies = {},
   },
   ["lucy"] = {
     url = "https://github.com/Yazeed1s/oh-lucy.nvim",
     opts = {},
     pkgname = "lucy",
-    dependencies = {},
+    colorscheme = "oh-lucy",
   },
   ["embark"] = {
     url = "https://github.com/embark-theme/vim",
     opts = {},
     pkgname = "embark",
-    dependencies = {},
   },
   ["nvimgelion"] = {
     url = "https://github.com/nyngwang/nvimgelion",
     opts = {},
     pkgname = "nvimgelion",
-    dependencies = {},
   },
   ["fluoromachine"] = {
     url = "https://github.com/maxmx03/fluoromachine.nvim",
     opts = {},
     pkgname = "fluoromachine",
-    dependencies = {},
   },
   ["midnight"] = {
     url = "https://github.com/dasupradyumna/midnight.nvim",
     opts = {},
     pkgname = "midnight",
-    dependencies = {},
   },
   ["yawnc"] = {
     url = "https://github.com/sonjiku/yawnc.nvim",
     opts = {},
     pkgname = "yawnc",
-    dependencies = {},
   },
-  ["dark-flat"] = {
+  ["dark_flat"] = {
     url = "https://github.com/uncleTen276/dark_flat.nvim",
     opts = {},
-    pkgname = "dark-flat",
-    dependencies = {},
+    pkgname = "dark_flat",
   },
   ["citruszest"] = {
     url = "https://github.com/zootedb0t/citruszest.nvim",
     opts = {},
     pkgname = "citruszest",
-    dependencies = {},
   },
   ["vitesse"] = {
     url = "https://github.com/2nthony/vitesse.nvim",
@@ -560,85 +473,72 @@ R = {
     url = "https://github.com/xero/miasma.nvim",
     opts = {},
     pkgname = "miasma",
-    dependencies = {},
   },
   ["deepwhite"] = {
     url = "https://github.com/Verf/deepwhite.nvim",
     opts = {},
     pkgname = "deepwhite",
-    dependencies = {},
   },
   ["ronny"] = {
     url = "https://github.com/judaew/ronny.nvim",
     opts = {},
     pkgname = "ronny",
-    dependencies = {},
   },
   ["bamboo"] = {
     url = "https://github.com/ribru17/bamboo.nvim",
     opts = {},
     pkgname = "bamboo",
-    dependencies = {},
   },
   ["nightcity"] = {
     url = "https://github.com/cryptomilk/nightcity.nvim",
     opts = {},
     pkgname = "nightcity",
-    dependencies = {},
   },
   ["monokai-nightasty"] = {
     url = "https://github.com/polirritmico/monokai-nightasty.nvim",
     opts = {},
     pkgname = "monokai-nightasty",
-    dependencies = {},
   },
   ["night-owl"] = {
     url = "https://github.com/oxfist/night-owl.nvim",
     opts = {},
     pkgname = "night-owl",
-    dependencies = {},
   },
-  ["modus-contrast"] = {
+  ["modus"] = {
     url = "https://github.com/miikanissi/modus-themes.nvim",
     opts = {},
-    pkgname = "modus-contrast",
-    dependencies = {},
+    pkgname = "modus",
   },
   ["palenight"] = {
     url = "https://github.com/alexmozaidze/palenight.nvim",
     opts = {},
     pkgname = "palenight",
-    dependencies = {},
   },
   ["cyberdream"] = {
     url = "https://github.com/scottmckendry/cyberdream.nvim",
     opts = {},
     pkgname = "cyberdream",
-    dependencies = {},
   },
   ["hybrid-dark"] = {
     url = "https://github.com/HoNamDuong/hybrid.nvim",
     opts = {},
     pkgname = "hybrid-dark",
-    dependencies = {},
+    colorscheme = "hybrid",
   },
   ["halfspace"] = {
     url = "https://gitlab.com/sxwpb/halfspace.nvim",
     opts = {},
     pkgname = "halfspace",
-    dependencies = {},
   },
   ["distinct"] = {
     url = "https://gitlab.com/bartekjaszczak/distinct-nvim",
     opts = {},
     pkgname = "distinct",
-    dependencies = {},
   },
   ["synthweave"] = {
     url = "https://github.com/samharju/synthweave.nvim",
     opts = {},
     pkgname = "synthweave",
-    dependencies = {},
   },
   ["darkearth"] = {
     url = "https://github.com/ptdewey/darkearth-nvim",
@@ -656,25 +556,24 @@ R = {
     url = "https://github.com/ellisonleao/gruvbox.nvim",
     opts = {},
     pkgname = "gruvbox",
-    dependencies = {},
   },
   ["jellybeans"] = {
     url = "https://github.com/metalelf0/jellybeans-nvim",
     opts = {},
     pkgname = "jellybeans",
     dependencies = { "rktjmp/lush.nvim" },
+    colorscheme = "jellybeans-nvim",
   },
-  ["cobalt"] = {
+  ["cobalt2"] = {
     url = "https://github.com/lalitmee/cobalt2.nvim",
     opts = {},
-    pkgname = "cobalt",
+    pkgname = "cobalt2",
     dependencies = { "tjdevries/colorbuddy.vim" },
   },
   ["selenized"] = {
     url = "https://github.com/calind/selenized.nvim",
     opts = {},
     pkgname = "selenized",
-    dependencies = {},
   },
   ["sunburn"] = {
     url = "https://github.com/loganswartz/sunburn.nvim",

@@ -17,7 +17,14 @@ for _, value in ipairs(selected) do
     url = registry[value].url,
     opts = registry[value].opts,
     name = registry[value].pkgname,
+    dependencies = registry[value].dependencies,
     event = "UiEnter",
+    -- config = function()
+    --   local ok, _ = pcall(require(registry[value].pkgname).setup())
+    --   if not ok then
+    --     return
+    --   end
+    -- end,
   }
   table.insert(return_spec, spec)
 end

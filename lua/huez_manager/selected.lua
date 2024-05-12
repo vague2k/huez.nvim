@@ -23,7 +23,7 @@ end
 ---@param theme string
 ---@return nil
 function M.live_add(theme)
-  vim.notify("Adding " .. theme .. " to live themes")
+  -- vim.notify("Adding " .. theme .. " to live themes")
   utils.add_theme("live", theme)
   M.live_themes = utils.load_themes("live")
 end
@@ -42,7 +42,7 @@ end
 ---@param theme string
 ---@return nil
 function M.favourite_add(theme)
-  vim.notify("Adding " .. theme .. " to favourites")
+  -- vim.notify("Adding " .. theme .. " to favourites")
   utils.add_theme("favourites", theme)
   M.favourites = utils.load_themes("favourites")
 end
@@ -61,14 +61,14 @@ end
 M.lazy_flush = function(plugins_list)
   loader.reload("huez.nvim")
   plugins_list = plugins_list or M.selected()
-  vim.notify("analyzing plugins" .. vim.inspect(plugins_list))
+  -- vim.notify("analyzing plugins" .. vim.inspect(plugins_list))
   local pkgList = {}
   for _, value in ipairs(plugins_list) do
     if not vim.tbl_contains(installed, value) then
       table.insert(pkgList, registry[value].pkgname)
     end
   end
-  vim.notify("Flushing plugins" .. vim.inspect(pkgList))
+  -- vim.notify("Flushing plugins" .. vim.inspect(pkgList))
   if #pkgList == 0 then
     -- No plugins to flush
     -- Anything that is temporary will be flushed on next nvim restart

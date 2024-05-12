@@ -29,7 +29,6 @@ local function render()
       attach_mappings = function(bufnr, map)
         telescope_actions.select_default:replace(function()
           telescope_actions.close(bufnr)
-
           local selection = action_state.get_selected_entry()
 
           if selection == nil then

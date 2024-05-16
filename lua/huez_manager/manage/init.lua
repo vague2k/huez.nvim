@@ -6,7 +6,7 @@ for _, value in ipairs(selected) do
   local spec = {
     url = registry[value].url,
     -- FIXME: when opts is passed, lazy attempts to call setup, which not all themes have
-    opts = registry[value].opts,
+    -- opts = registry[value].opts,
     name = registry[value].pkgname,
     dependencies = registry[value].dependencies,
     event = "UiEnter",

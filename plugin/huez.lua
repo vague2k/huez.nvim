@@ -14,4 +14,4 @@ local integrations = require("huez.integrations")
 
 vim.api.nvim_create_user_command("Huez", integrations.pick_colorscheme, {})
 
-vim.g.huez_version = "0.2.2"
+vim.g.huez_version = "0.2.4"

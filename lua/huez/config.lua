@@ -15,7 +15,6 @@ local default_config = {
   fallback = "default",
   -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker
   omit = {
-    "default",
     "desert",
     "evening",
     "industry",
@@ -36,6 +35,9 @@ local default_config = {
     "elflord",
     "habamax",
     "lunaperche",
+    "zaibatsu",
+    "wildcharm",
+    "sorbet",
   },
   -- optional: by default, picker will be vim.ui.select, you can also choose "telescope"
   picker = "telescope",

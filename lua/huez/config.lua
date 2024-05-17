@@ -20,7 +20,6 @@ local DEFAULT_SETTINGS = {
   fallback = "default",
   -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker
   exclude = {
-    "default",
     "desert",
     "evening",
     "industry",
@@ -41,6 +40,10 @@ local DEFAULT_SETTINGS = {
     "elflord",
     "habamax",
     "lunaperche",
+    "zaibatsu",
+    "wildcharm",
+    "sorbet",
+    "vim",
   },
 
   -- configures how you want a certain picker to look.

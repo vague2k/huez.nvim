@@ -4,6 +4,8 @@ https://github.com/vague2k/huez.nvim/assets/121782036/c4837430-781b-46c9-8b3d-94
 
 ## ⭐️ Features
 
+Planned features can be found in [TODO.md](https://github.com/vague2k/huez.nvim/blob/manager/TODO.md)
+
 - 🔭 Uses telescope for customization and fuzzy finding of themes!
 - 🌄 Preview colorschemes.
 - 💾 Persistent colorscheme selection through Neovim session.

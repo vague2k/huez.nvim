@@ -7,12 +7,12 @@ local action_state = require("telescope.actions.state")
 local actions = require("huez.pickers.themes.actions")
 local layout = require("huez.pickers.themes.layout")
 local mappings = require("huez.pickers.themes.mappings")
-local colorscheme = require("huez.api").colorscheme
+local api = require("huez_manager.api")
 
 local function render()
   -- TODO: let users change pickers opts directly from function
   local opts = layout.picker_pos()
-  local themes = colorscheme.installed()
+  local themes = api.colorscheme.installed()
 
   -- set the current color scheme as a preselection in the picker for better UX
   local current_scheme = vim.g.colors_name or "default"

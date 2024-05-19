@@ -1,8 +1,8 @@
 local telescope_actions = require("telescope.actions")
 local telescope_state = require("telescope.actions.state")
 
-local registry = require("huez_manager.registry")
-local manager = require("huez_manager.selected")
+local registry = require("huez-manager.registry")
+local manager = require("huez-manager.selected")
 local live_utils = require("huez.pickers.live.utils")
 
 local M = {}

@@ -1,6 +1,7 @@
 local M = {}
 
 M.attach = function(attach_map, actions)
+  -- TODO: create usercmd to unload live themes, otherwise, unload on vim exit instead of when we leave the picker
   attach_map("i", "<esc>", actions.unload_live_themes)
 
   attach_map("n", "j", actions.optimistic_preview_next)

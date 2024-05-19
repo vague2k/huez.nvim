@@ -9,13 +9,15 @@ local actions = require("huez.pickers.live.actions")
 local layout = require("huez.pickers.themes.layout")
 
 local function render()
+  -- TODO: let users change pickers opts directly from function
   local opts = layout.picker_pos()
+  local pkgs = actions.get_pkgs()
 
   pickers
     .new(opts, {
       prompt_title = "Huez",
       finder = finders.new_table({
-        results = actions.get_pkgs(),
+        results = pkgs,
         ---@param entry ThemeRegistryEntry
         entry_maker = function(entry)
           return {

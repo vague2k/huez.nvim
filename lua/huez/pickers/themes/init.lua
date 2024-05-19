@@ -10,6 +10,7 @@ local mappings = require("huez.pickers.themes.mappings")
 local colorscheme = require("huez.api").colorscheme
 
 local function render()
+  -- TODO: let users change pickers opts directly from function
   local opts = layout.picker_pos()
   local themes = colorscheme.installed()
 

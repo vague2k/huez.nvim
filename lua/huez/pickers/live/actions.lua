@@ -1,12 +1,13 @@
 local telescope_actions = require("telescope.actions")
-local state = require("telescope.actions.state")
+local telescope_state = require("telescope.actions.state")
 
 local registry = require("huez_manager.registry")
 local manager = require("huez_manager.selected")
--- local log = require("huez.utils.log")
+local live_utils = require("huez.pickers.live.utils")
 
 local M = {}
 
+---@return ThemeRegistryEntry[]
 M.get_pkgs = function()
   local pkgs = {}
   for key, value in pairs(registry) do
@@ -24,53 +25,15 @@ end
 M.optimistic_preview_next = function(bufnr)
   telescope_actions.move_selection_next(bufnr)
   ---@type ThemeRegistryEntry
-  local entry = state.get_selected_entry().value
-
-  -- TODO: needs a refactor
-  if vim.tbl_contains(manager.live_themes, entry.pkgname) then
-    if not entry.colorscheme then
-      vim.cmd.colorscheme(entry.pkgname)
-      return
-    else
-      vim.cmd.colorscheme(entry.colorscheme)
-    end
-    return
-  end
-
-  manager.live_add(entry.pkgname)
-  manager.lazy_flush()
-
-  if entry.colorscheme then
-    vim.cmd.colorscheme(entry.colorscheme)
-  else
-    vim.cmd.colorscheme(entry.pkgname)
-  end
+  local entry = telescope_state.get_selected_entry().value
+  live_utils.load_currently_installed(entry)
 end
 
 M.optimistic_preview_prev = function(bufnr)
   telescope_actions.move_selection_previous(bufnr)
   ---@type ThemeRegistryEntry
-  local entry = state.get_selected_entry().value
-
-  -- TODO: needs a refactor
-  if vim.tbl_contains(manager.live_themes, entry.pkgname) then
-    if not entry.colorscheme then
-      vim.cmd.colorscheme(entry.pkgname)
-      return
-    else
-      vim.cmd.colorscheme(entry.colorscheme)
-    end
-    return
-  end
-
-  manager.live_add(entry.pkgname)
-  manager.lazy_flush()
-
-  if entry.colorscheme then
-    vim.cmd.colorscheme(entry.colorscheme)
-  else
-    vim.cmd.colorscheme(entry.pkgname)
-  end
+  local entry = telescope_state.get_selected_entry().value
+  live_utils.load_currently_installed(entry)
 end
 
 M.unload_live_themes = function(bufnr)

@@ -1,4 +1,4 @@
-local log = require("huez.utils.log")
+local log = require("huez-manager.utils.log")
 local M = {}
 
 ---@class Huez.Config.Pickers

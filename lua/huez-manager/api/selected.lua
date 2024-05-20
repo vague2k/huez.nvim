@@ -2,13 +2,12 @@ local loader = require("lazy.core.loader")
 local lazy = require("lazy")
 local plugins = require("lazy.core.plugin")
 
-local registry = require("huez_manager.registry")
-local api = require("huez_manager.api")
-
----@alias InstalledThemes string[]
+local registry = require("huez-manager.registry")
+local api = require("huez-manager.api.init")
 
 local M = {}
 
+---@alias InstalledThemes string[]
 ---@return InstalledThemes
 M.selected = function()
   return vim.tbl_extend("force", api.live.installed, api.favorites.installed)
@@ -40,7 +39,7 @@ M.lazy_flush = function(plugins_list)
   end
   plugins.load()
   vim.api.nvim_exec_autocmds("User", { pattern = "LazyReload", modeline = false })
-  pcall(lazy.install({ show = false, plugins = pkgList, wait = true })) ---@diagnostic disable-line
+  lazy.install({ show = false, plugins = pkgList, wait = true }) ---@diagnostic disable-line
   lazy.load({ show = false, plugins = pkgList })
   loader.reload("huez.nvim")
 end

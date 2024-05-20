@@ -1,4 +1,4 @@
-local log = require("huez_manager.utils.log")
+local log = require("huez-manager.utils.log")
 local config = require("huez.config")
 local M = {}
 

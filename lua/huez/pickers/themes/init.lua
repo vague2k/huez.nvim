@@ -7,7 +7,7 @@ local action_state = require("telescope.actions.state")
 local actions = require("huez.pickers.themes.actions")
 local layout = require("huez.pickers.themes.layout")
 local mappings = require("huez.pickers.themes.mappings")
-local api = require("huez_manager.api")
+local api = require("huez-manager.api.init")
 
 local function render()
   -- TODO: let users change pickers opts directly from function

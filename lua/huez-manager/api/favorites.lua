@@ -1,4 +1,4 @@
-local api_utils = require("huez_manager.utils.api_utils")
+local api_utils = require("huez-manager.utils.api_utils")
 
 local M = {}
 
@@ -12,7 +12,7 @@ M.installed = api_utils.load_themes("favourites")
 M.add = function(theme)
   -- vim.notify("Adding " .. theme .. " to favourites")
   api_utils.add_theme("favourites", theme)
-  M.favourites = api_utils.load_themes("favourites")
+  M.installed = api_utils.load_themes("favourites")
 end
 
 --- Removes a theme from the `huez-favourites-themes` file.
@@ -21,7 +21,7 @@ end
 ---@return nil
 M.remove = function(theme)
   api_utils.remove_theme("favourites", theme)
-  M.favourites = api_utils.load_themes("favourites")
+  M.installed = api_utils.load_themes("favourites")
 end
 
 return M

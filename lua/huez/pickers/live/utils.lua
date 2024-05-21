@@ -1,4 +1,4 @@
-local api = require("huez-manager.api.init")
+local api = require("huez-manager.api")
 local selected = require("huez-manager.api.selected")
 local M = {}
 

@@ -1,6 +1,6 @@
 local telescope_actions = require("telescope.actions")
 local telescope_actions_state = require("telescope.actions.state")
-local api = require("huez-manager.api.init")
+local api = require("huez-manager.api")
 local log = require("huez-manager.utils.log")
 
 local M = {}

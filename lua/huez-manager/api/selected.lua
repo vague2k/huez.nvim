@@ -3,7 +3,7 @@ local lazy = require("lazy")
 local plugins = require("lazy.core.plugin")
 
 local registry = require("huez-manager.registry")
-local api = require("huez-manager.api.init")
+local api = require("huez-manager.api")
 
 local M = {}
 

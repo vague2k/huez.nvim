@@ -48,7 +48,7 @@ M.remove_from_ensured = function()
   local entry = registry[pkgname]
 
   api.ensured.remove(entry.pkgname)
-  log.notify("Removed '" .. entry.pkgname .. "'. It will no longer be installed.", "warn")
+  log.notify("Removed '" .. entry.pkgname .. "'. It will no longer be installed after the next reload.", "warn")
 end
 
 return M

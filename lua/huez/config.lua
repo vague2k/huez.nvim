@@ -1,9 +1,16 @@
 local log = require("huez-manager.utils.log")
 local M = {}
 
+---@alias Huez.Config.PickerLayout "left"|"top"|"right"|"bottom"|nil
+
+---@class Huez.Config.PickersOpts
+---@field layout Huez.Config.PickerLayout
+---@field opts table
+
 ---@class Huez.Config.Pickers
----@field layout "left"|"top"|"right"|"bottom"|nil
----@field themes table
+---@field themes Huez.Config.PickersOpts
+---@field live Huez.Config.PickersOpts
+---@field ensured Huez.Config.PickersOpts
 
 ---@class Huez.Config
 ---@field path string
@@ -49,11 +56,21 @@ local DEFAULT_SETTINGS = {
   -- configures how you want a certain picker to look.
   picker = {
     -- all pickers use telescope values, by default picker is anchored to the right.
-    -- you can use an out of the box layout. Options are "left", "top", "right", or "bottom" or nil
-    -- by default, the standalone layout used is "right"
-    layout = "right",
+    -- predefines layout ptions are "left", "top", "right", or "bottom" or nil
+    -- if layout is nil, the opts field for this specific picker will be the only thing that will be used
     -- if you are using a predefined layout, any options you pass into the picker will be deep merged.
-    themes = {},
+    themes = {
+      layout = "right",
+      opts = {},
+    },
+    live = {
+      layout = "right",
+      opts = {},
+    },
+    ensured = {
+      layout = "right",
+      opts = {},
+    },
   },
 }
 

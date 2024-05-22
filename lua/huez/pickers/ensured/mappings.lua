@@ -15,7 +15,7 @@ M.attach = function(attach_map, actions)
   attach_map("n", "<C-p>", actions.prev_theme)
   attach_map("n", "<esc>", actions.unload_on_quit)
 
-  attach_map("n", "<leader>", actions.remove_from_ensured)
+  attach_map("n", "<space>", actions.remove_from_ensured)
 end
 
 return M

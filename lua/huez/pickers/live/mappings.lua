@@ -8,7 +8,7 @@ M.attach = function(attach_map, actions)
   attach_map("n", "k", actions.optimistic_preview_prev)
   attach_map("n", "<esc>", actions.unload_live_themes)
 
-  attach_map("n", "<leader>", actions.add_to_ensured)
+  attach_map("n", "<space>", actions.add_to_ensured)
 end
 
 return M

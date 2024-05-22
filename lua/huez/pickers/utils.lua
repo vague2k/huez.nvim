@@ -7,6 +7,9 @@ local config = require("huez.config")
 
 local M = {}
 
+--- Builds a layout for a specific picker based on a preset.
+---
+--- If layout is nil, use purely the opts passed to the picker, otherwise merge layout and opt table
 ---@param picker "themes"|"live"|"ensured"
 M.layout_builder = function(picker)
   ---@type Huez.Config.PickersOpts
@@ -59,6 +62,7 @@ end
 ---@field default_action? function
 ---@field mappings function
 
+--- Builds a picker
 ---@param opts Huez.PickerBuilder
 M.picker_builder = function(opts)
   local telescope_opts = M.layout_builder(opts.picker)

@@ -29,6 +29,7 @@ M.unload_on_quit = function(bufnr)
   vim.cmd.colorscheme(prev_color)
 end
 
+--- Saves the selected colorscheme to `huez-theme`
 M.save_on_select = function(action_state)
   -- .get_selected_entry could be nil, so we check for nil before accessing it's value.
   local selection = action_state.get_selected_entry()

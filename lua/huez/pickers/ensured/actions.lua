@@ -33,6 +33,7 @@ M.unload_on_quit = function(bufnr)
   vim.cmd.colorscheme(prev_color)
 end
 
+--- Saves the selected colorscheme to `huez-theme`
 M.save_on_select = function(action_state)
   local pkgname = action_state.get_selected_entry().value
   local entry = registry[pkgname]
@@ -43,6 +44,7 @@ M.save_on_select = function(action_state)
   log.notify("Selected " .. theme, "info")
 end
 
+--- Removes a theme from `huez-ensured-themes` to keep it from installing automatically
 M.remove_from_ensured = function()
   local pkgname = telescope_action_state.get_selected_entry().value
   local entry = registry[pkgname]

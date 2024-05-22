@@ -3,6 +3,7 @@ local config = require("huez.config")
 local M = {}
 
 local function setup_usercmds()
+  --- TODO: implement cmp for user commands
   local uc = vim.api.nvim_create_user_command
 
   uc("Huez", require("huez.pickers").themes, {})

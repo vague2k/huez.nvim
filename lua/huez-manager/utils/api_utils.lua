@@ -6,7 +6,7 @@ local M = {}
 --- Returns a `string[]` of themes if they are found in a `huez-favourites/live-themes` file or a custom path, and if
 --- they are found within the registry.
 ---
----@param type "favourites" | "live"
+---@param type "ensured" | "live"
 ---@param path? string
 ---@return InstalledThemes
 M.load_themes = function(type, path)
@@ -33,7 +33,7 @@ end
 
 --- Adds a theme to the `huez-favourites/live-themes` file by appending a new line (being the theme).
 ---
----@param type "favourites" | "live"
+---@param type "ensured" | "live"
 ---@param theme string
 ---@return nil
 M.add_theme = function(type, theme)
@@ -60,7 +60,7 @@ end
 
 --- Removes a theme from the `huez-favourites/live-themes` file by rewriting the file excluding {theme}.
 ---
----@param type "favourites" | "live"
+---@param type "ensured" | "live"
 ---@param theme string
 ---@return nil
 M.remove_theme = function(type, theme)

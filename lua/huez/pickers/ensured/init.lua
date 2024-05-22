@@ -1,18 +1,17 @@
 local telescope_action_state = require("telescope.actions.state")
 
-local actions = require("huez.pickers.themes.actions")
+local actions = require("huez.pickers.ensured.actions")
 local picker_utils = require("huez.pickers.utils")
-local mappings = require("huez.pickers.themes.mappings")
+local mappings = require("huez.pickers.ensured.mappings")
 local api = require("huez-manager.api")
 
 local function render()
-  local themes = api.colorscheme.installed()
-
+  local ensured_installed = api.ensured.installed
   picker_utils.picker_builder({
-    picker = "themes",
-    prompt_title = "Huez",
+    picker = "ensured",
+    prompt_title = "Huez | Ensured",
     finder = {
-      results = themes,
+      results = ensured_installed,
     },
     default_action = function()
       actions.save_on_select(telescope_action_state)

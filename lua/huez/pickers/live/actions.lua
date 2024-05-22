@@ -1,10 +1,11 @@
 local telescope_actions = require("telescope.actions")
-local telescope_state = require("telescope.actions.state")
+local telescope_action_state = require("telescope.actions.state")
 
 local registry = require("huez-manager.registry")
 local selected = require("huez-manager.api.selected")
 local live_utils = require("huez.pickers.live.utils")
 local api = require("huez-manager.api")
+local log = require("huez-manager.utils.log")
 
 local M = {}
 
@@ -26,14 +27,14 @@ end
 M.optimistic_preview_next = function(bufnr)
   telescope_actions.move_selection_next(bufnr)
   ---@type ThemeRegistryEntry
-  local entry = telescope_state.get_selected_entry().value
+  local entry = telescope_action_state.get_selected_entry().value
   live_utils.load_currently_installed(entry)
 end
 
 M.optimistic_preview_prev = function(bufnr)
   telescope_actions.move_selection_previous(bufnr)
   ---@type ThemeRegistryEntry
-  local entry = telescope_state.get_selected_entry().value
+  local entry = telescope_action_state.get_selected_entry().value
   live_utils.load_currently_installed(entry)
 end
 
@@ -45,6 +46,14 @@ M.unload_live_themes = function(bufnr)
     end
   end
   selected.lazy_flush()
+end
+
+M.add_to_ensured = function()
+  ---@type ThemeRegistryEntry
+  local entry = telescope_action_state.get_selected_entry().value
+
+  api.ensured.add(entry.pkgname)
+  log.notify("Added the '" .. entry.pkgname .. "' Theme to ensure installed!", "info")
 end
 
 return M

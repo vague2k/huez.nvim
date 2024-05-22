@@ -1,7 +1,7 @@
 local telescope_actions = require("telescope.actions")
 local telescope_actions_state = require("telescope.actions.state")
-local colorscheme = require("huez.api").colorscheme
-local log = require("huez.utils.log")
+local api = require("huez-manager.api")
+local log = require("huez-manager.utils.log")
 
 local M = {}
 
@@ -25,7 +25,7 @@ end
 ---@param bufnr integer
 M.unload_on_quit = function(bufnr)
   telescope_actions.close(bufnr)
-  local prev_color = colorscheme.get()
+  local prev_color = api.colorscheme.get()
   vim.cmd.colorscheme(prev_color)
 end
 
@@ -39,7 +39,7 @@ M.save_on_select = function(action_state)
   end
 
   local theme = selection.value
-  colorscheme.save(theme)
+  api.colorscheme.save(theme)
   vim.cmd.colorscheme(theme)
   log.notify("Selected " .. theme, "info")
 end

@@ -1,4 +1,4 @@
-local c = require("huez.api").colorscheme
+local c = require("huez-manager.api").colorscheme
 
 local eq = assert.are.same
 local path = vim.fs.normalize("/tmp/huez-theme-test")

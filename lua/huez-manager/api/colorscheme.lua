@@ -1,18 +1,20 @@
-local log = require("huez.utils.log")
+local log = require("huez-manager.utils.log")
 local config = require("huez.config")
 local M = {}
 
---- Gets the persisted colorscheme according to "huez-theme" file.
+--- Reads and returns the persisted colorscheme as a `string` according to {path} or "huez-theme" file.
+---
+--- If reading failed, returns `nil`
 ---
 ---@param path? string
----@return string
+---@return string|nil
 M.get = function(path)
   path = path or config.current.huez_theme_file
 
   local file, err = io.open(path, "r")
 
   if file == nil then
-    return "", log.notify("api.get_colorscheme - Error reading file: \n" .. err, "error")
+    return nil, log.notify("From colorscheme.get() - Error reading file: \n" .. err, "error")
   end
 
   local line = file:read()
@@ -21,7 +23,7 @@ M.get = function(path)
   return line
 end
 
---- Returns an array of strings where each item is the theme name.
+--- Returns string[] where each item is the theme name.
 ---
 --- The array will contain all installed themes if {exclude} is {}
 ---
@@ -54,7 +56,7 @@ M.save = function(colorscheme, path)
   local file, err = io.open(path, "w+")
 
   if file == nil then
-    return false, log.notify("api.save_colorscheme - Error writing to file: \n" .. err, "error")
+    return false, log.notify("From colorscheme.save() - Error writing to file: \n" .. err, "error")
   end
 
   file:write(colorscheme)

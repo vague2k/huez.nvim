@@ -1,4 +1,4 @@
-local r = require("huez_manager.registry")
+local r = require("huez-manager.registry")
 
 local eq = assert.are.same
 

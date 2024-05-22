@@ -1,9 +1,10 @@
 local telescope_actions = require("telescope.actions")
 local telescope_state = require("telescope.actions.state")
 
-local registry = require("huez_manager.registry")
-local manager = require("huez_manager.selected")
+local registry = require("huez-manager.registry")
+local selected = require("huez-manager.api.selected")
 local live_utils = require("huez.pickers.live.utils")
+local api = require("huez-manager.api")
 
 local M = {}
 
@@ -39,11 +40,11 @@ end
 M.unload_live_themes = function(bufnr)
   telescope_actions.close(bufnr)
   for _, value in ipairs(M.get_pkgs()) do
-    if vim.tbl_contains(manager.live_themes, value.pkgname) then
-      manager.live_remove(value.pkgname)
+    if vim.tbl_contains(api.live.installed, value.pkgname) then
+      api.live.remove(value.pkgname)
     end
   end
-  manager.lazy_flush()
+  selected.lazy_flush()
 end
 
 return M

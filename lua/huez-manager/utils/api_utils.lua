@@ -1,5 +1,5 @@
 local config = require("huez.config")
-local registry = require("huez_manager.registry")
+local registry = require("huez-manager.registry")
 
 local M = {}
 

@@ -16,7 +16,7 @@ local function render()
 
   pickers
     .new(opts, {
-      prompt_title = "Huez",
+      prompt_title = "Huez | Ensured",
       finder = finders.new_table({
         results = ensured_installed,
       }),

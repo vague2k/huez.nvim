@@ -15,7 +15,7 @@ local function render()
 
   pickers
     .new(opts, {
-      prompt_title = "Huez",
+      prompt_title = "Huez | Registry",
       finder = finders.new_table({
         results = pkgs,
         ---@param entry ThemeRegistryEntry

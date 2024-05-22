@@ -4,9 +4,9 @@
 > I'm redesigning the plugin's current implementation as I see fit and planning new features.
 >
 > I will focus on maintainability, stability, and UI/UX in that order.
-> When v1.0.0 is ready to be officially released and you would like to stay on v0.2.2, You can pin the 0.2.2 tag in your preferred Plugin manager
+> When v1.0.0 is ready to be officially released and you would like to stay on v0.2.4, You can pin the 0.2.4 tag in your preferred Plugin manager
 >
-> You can check out development in the "nui" branch
+> You can check out development in the "manager" branch
 
 # 🎨 huez.nvim _(hue ez, hues)_
 

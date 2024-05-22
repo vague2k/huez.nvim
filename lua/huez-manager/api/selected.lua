@@ -10,7 +10,7 @@ local M = {}
 ---@alias InstalledThemes string[]
 ---@return InstalledThemes
 M.selected = function()
-  return vim.tbl_extend("force", api.live.installed, api.favorites.installed)
+  return vim.tbl_extend("force", api.live.installed, api.ensured.installed)
 end
 
 --- "Flushs" any themes that were added or removed INTO lazy, or OUT of lazy, according to the

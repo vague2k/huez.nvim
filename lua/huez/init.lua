@@ -7,6 +7,7 @@ local function setup_usercmds()
 
   uc("Huez", require("huez.pickers").themes, {})
   uc("HuezLive", require("huez.pickers").live, {})
+  uc("HuezEnsured", require("huez.pickers").ensured, {})
 end
 
 ---@param user_opts Huez.Config?

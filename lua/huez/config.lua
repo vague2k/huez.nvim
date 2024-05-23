@@ -88,7 +88,6 @@ end
 -- someone will make a PR eventually
 
 M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing this note, this value exists
-M.current.favorites_json = M.current.path .. "/huez-favorites.json" --If you're seeing this note, this value exists
 
 M.init_cache_file = function()
   -- check if the plugin's cache dir exists, if not create it

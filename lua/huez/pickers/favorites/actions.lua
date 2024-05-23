@@ -45,7 +45,7 @@ M.save_on_select = function(action_state)
   log.notify("Selected " .. theme, "info")
 end
 
-M.add_to_favorites = function()
+M.remove_from_favorites = function()
   local selection = telescope_actions_state.get_selected_entry()
 
   if selection == nil then
@@ -54,8 +54,8 @@ M.add_to_favorites = function()
   end
 
   local theme = selection.value
-  api.favorites.add(theme)
-  log.notify("Added '" .. theme .. "' to your favorites!", "info")
+  api.favorites.remove(theme)
+  log.notify("Removed '" .. theme .. "' from your favorites", "warn")
 end
 
 return M

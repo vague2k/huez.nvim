@@ -2,7 +2,7 @@ local r = require("huez-manager.registry")
 
 local eq = assert.are.same
 
-describe("HUEZ-MANAGER: registry", function()
+describe("HUEZ-MANAGER | REGISTRY:", function()
   it("entry follows the lazy plugin spec", function()
     local function validate_spec(url, opts, pkgname)
       vim.validate({

@@ -27,9 +27,11 @@ M.list = function(path)
 end
 
 --- Add a theme to the `huez-favorite-themes` file, marking it as favorited
+--- If addition was successful, returns true, otherwise returns false
 ---
 ---@param theme string
 ---@param path? string
+---@return boolean
 M.add = function(theme, path)
   path = path or M.file
   local favorites = M.list()
@@ -37,19 +39,21 @@ M.add = function(theme, path)
   -- if theme is already marked as favorite return
   if vim.tbl_contains(favorites, theme) then
     log.notify("The theme, '" .. theme .. "' is already marked as favorited", "error")
-    return
+    return false
   end
 
   local file = io.open(path, "a")
   if file == nil then
-    return
+    return false
   end
 
   file:write(theme .. "\n")
   file:close()
+  return true
 end
 
 --- Remove a theme to the `huez-favorite-themes` file, unmarking it as favorited
+--- If removal was successful, returns true, otherwise returns false
 ---
 ---@param theme string
 ---@param path? string
@@ -58,7 +62,7 @@ M.remove = function(theme, path)
 
   local file = io.open(path, "r")
   if file == nil then
-    return
+    return false
   end
 
   -- create a new array of the {type} file lines excluding where line == {theme}
@@ -73,7 +77,7 @@ M.remove = function(theme, path)
 
   file = io.open(path, "w")
   if file == nil then
-    return
+    return false
   end
 
   -- rewrite the {type} file with the `themes` table and excluding {theme}
@@ -82,6 +86,7 @@ M.remove = function(theme, path)
   end
 
   file:close()
+  return true
 end
 
 return M

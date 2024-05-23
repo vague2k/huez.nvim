@@ -581,6 +581,12 @@ R = {
     pkgname = "sunburn",
     dependencies = { "loganswartz/polychrome.nvim" },
   },
+  ["neomodern"] = {
+    url = "https://github.com/cdmill/neomodern.nvim",
+    opts = {},
+    pkgname = "neomodern",
+    colorscheme = "roseprime",
+  },
 }
 
 return R

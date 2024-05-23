@@ -49,7 +49,7 @@ M.add = function(theme, path)
   file:close()
 end
 
---- Add a theme to the `huez-favorite-themes` file, marking it as favorited
+--- Remove a theme to the `huez-favorite-themes` file, unmarking it as favorited
 ---
 ---@param theme string
 ---@param path? string

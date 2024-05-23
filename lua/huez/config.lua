@@ -89,6 +89,7 @@ end
 
 M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing this note, this value exists
 
+-- REFACTOR: in DIRE need of a refactor, this shit's getting disgustingly hard to follow
 M.init_cache_file = function()
   -- check if the plugin's cache dir exists, if not create it
   if vim.fn.isdirectory(M.current.path) == 0 then
@@ -106,6 +107,7 @@ M.init_cache_file = function()
         file = io.open(M.current.huez_theme_file, "w")
         if file then
           file:write(M.current.fallback)
+          -- FIXME: edge case where fallback colorscheme may or may not exist
           vim.cmd.colorscheme(M.current.fallback)
           log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. M.current.fallback, "warn")
         end

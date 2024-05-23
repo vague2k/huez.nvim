@@ -12,7 +12,6 @@ for _, value in ipairs(selected) do
     -- FIXME: dependencies do not install,
     --
     dependencies = registry[value].dependencies,
-    event = "UiEnter",
     -- FIXME: commented out for now, but we need a way to derive a config from the colorscheme, metatables?
     --
     -- config = function()

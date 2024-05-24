@@ -91,25 +91,41 @@ M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing 
 
 -- REFACTOR: in DIRE need of a refactor, this shit's getting disgustingly hard to follow
 M.init_cache_file = function()
+  local path = M.current.path
+  local huez_file = M.current.huez_theme_file
+  local fallback = M.current.fallback
   -- check if the plugin's cache dir exists, if not create it
-  if vim.fn.isdirectory(M.current.path) == 0 then
-    os.execute("mkdir " .. M.current.path)
+  if vim.fn.isdirectory(path) == 0 then
+    os.execute("mkdir " .. path)
   end
   -- check if the file exists for persist the theme
-  local file = io.open(M.current.huez_theme_file, "r+")
+  local file = io.open(huez_file, "r+")
+
   if file then
     local theme_name = file:read("*line") -- read first line
     file:close()
+
     -- if the theme does not exist, resort to fallback, and write fallback to file
     if theme_name then
       local ok, _ = pcall(vim.cmd.colorscheme, theme_name)
+
       if not ok then
-        file = io.open(M.current.huez_theme_file, "w")
+        file = io.open(huez_file, "w")
+
         if file then
-          file:write(M.current.fallback)
-          -- FIXME: edge case where fallback colorscheme may or may not exist
-          vim.cmd.colorscheme(M.current.fallback)
-          log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. M.current.fallback, "warn")
+          ok, _ = pcall(vim.cmd.colorscheme, fallback)
+
+          if not ok then
+            file:write("default")
+            vim.cmd.colorscheme("default")
+            log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. fallback, "warn")
+            log.notify("The theme " .. fallback .. " does not exist, fell back to nvim's default theme", "warn")
+            return
+          end
+
+          file:write(fallback)
+          vim.cmd.colorscheme(fallback)
+          log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. fallback, "warn")
         end
         return
       end
@@ -118,16 +134,16 @@ M.init_cache_file = function()
   end
 
   -- if file doesn't exist or couldn't be read, create it with fallback theme
-  file = io.open(M.current.huez_theme_file, "w")
+  file = io.open(huez_file, "w")
   if file then
-    file:write(M.current.fallback)
+    file:write(fallback)
     file:close()
-    vim.cmd("colorscheme " .. M.current.fallback)
+    vim.cmd("colorscheme " .. fallback)
     log.notify(
       "No 'huez-theme' file was found, so one was created at\n '"
-        .. M.current.huez_theme_file
+        .. huez_file
         .. "' with the theme '"
-        .. M.current.fallback
+        .. fallback
         .. "' as a fallback.",
       "warn"
     )

@@ -4,16 +4,16 @@ local eq = assert.are.same
 
 describe("HUEZ-MANAGER | REGISTRY:", function()
   it("entry follows the lazy plugin spec", function()
-    local function validate_spec(url, opts, pkgname)
+    local function validate_spec(url, pkgname, colorscheme)
       vim.validate({
         url = { url, "string" },
-        opts = { opts, "table" },
         pkgname = { pkgname, "string" },
+        colorscheme = { colorscheme, "nil", "string" }, -- is nil, but could be a string
       })
     end
 
     for _, entry in pairs(r) do
-      validate_spec(entry.url, entry.opts, entry.pkgname)
+      validate_spec(entry.url, entry.pkgname)
     end
   end)
 

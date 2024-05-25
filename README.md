@@ -1,23 +1,30 @@
 # 🎨 huez.nvim _(hue ez, hues)_
 
-https://github.com/vague2k/huez.nvim/assets/121782036/c4837430-781b-46c9-8b3d-946c883bbb7f
-
 ## ⭐️ Features
 
-Planned features can be found in [TODO.md](https://github.com/vague2k/huez.nvim/blob/manager/TODO.md)
+- 🥱 Uses [lazy.nvim](https://github.com/folke/lazy.nvim) as a backend for handling registry operations.
+- 🔭 Uses [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim).
+- 💯 Huge registry with 400+ colorschemes, 80+ packages
+- 🌄 Preview installed colorschemes.
+- 🛍️ Preview registry colorschemes live without affecting startup times!
+- 💾 Persistent colorschemes selection through Neovim sessions.
+- 🌟 Mark themes as favorites!
+- 🔌 Automatic handling of installed colorschemes through the registry!
 
-- 🔭 Uses telescope for customization and fuzzy finding of themes!
-- 🌄 Preview colorschemes.
-- 💾 Persistent colorscheme selection through Neovim session.
+## 💭 Requires
+
+[lazy.nvim](https://github.com/folke/lazy.nvim) _if you plan on using the management aspect. very much still a WIP_
+
+[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 
 ## 💥 Installation
-
-Install with your preferred package manager
 
 ```lua
 -- Lazy
 {
     "vague2k/huez.nvim",
+    -- if you want registry related features, uncomment this
+    -- import = "huez-manager.import"
     config = function()
         require("huez").setup({})
     end,
@@ -30,13 +37,11 @@ Huez comes with the following defaults. You can find different predefined layout
 
 ```lua
 {
-  -- the directory where huez place it's files to save the theme, or get current theme, things like that
-  -- not reccommended that you change this directory, but the option is there.
-  -- if you change it and find a bug please submit an issue.
+  -- the default plugin directory
   path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
-  -- the fallback theme which will be written to a new "huez-theme" file in case the "huez-theme" file does not exist
+  -- the colorscheme Huez will fallback to incase something goes wrong
   fallback = "default",
-  -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker
+  -- a list of ugly theme that come with neovim that you probably don't want to choose from in the theme picker
   exclude = {
     "desert",
     "evening",
@@ -63,15 +68,27 @@ Huez comes with the following defaults. You can find different predefined layout
     "sorbet",
     "vim",
   },
-
   -- configures how you want a certain picker to look.
   picker = {
     -- all pickers use telescope values, by default picker is anchored to the right.
     -- you can use an out of the box layout. Options are "left", "top", "right", or "bottom" or nil
-    -- by default, the standalone layout used is "right"
-    layout = "right",
     -- if you are using a predefined layout, any options you pass into the picker will be deep merged.
-    themes = {},
+    themes = {
+      layout = "right",
+      opts = {},
+    },
+    favorites = {
+      layout = "right",
+      opts = {},
+    },
+    live = {
+      layout = "right",
+      opts = {},
+    },
+    ensured = {
+      layout = "right",
+      opts = {},
+    },
   },
 }
 ```

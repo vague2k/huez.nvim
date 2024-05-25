@@ -19,7 +19,7 @@ M.setup = function(user_opts)
     config.set(user_opts)
   end
 
-  config.init_cache_file() -- sets up the 'huez-theme' file in nvim cache
+  config.handle_theme_on_setup()
   -- without scheduling, some vim api calls will not return accurate values
   vim.schedule(setup_usercmds)
 end

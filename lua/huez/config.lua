@@ -1,10 +1,8 @@
 local log = require("huez-manager.utils.log")
 local M = {}
 
----@alias Huez.Config.PickerLayout "left"|"top"|"right"|"bottom"|nil
-
 ---@class Huez.Config.PickersOpts
----@field layout Huez.Config.PickerLayout
+---@field layout "left"|"top"|"right"|"bottom"|nil
 ---@field opts table
 
 ---@class Huez.Config.Pickers
@@ -13,19 +11,19 @@ local M = {}
 ---@field ensured Huez.Config.PickersOpts
 
 ---@class Huez.Config
----@field path string
----@field fallback string
----@field exclude string[]
----@field picker Huez.Config.Pickers
+---@field path? string
+---@field fallback? string
+---@field exclude? string[]
+---@field picker? Huez.Config.Pickers
 
----@type Huez.Config
+---@class Huez.InternalConfig
 -- TODO: write a config validator
 local DEFAULT_SETTINGS = {
-  -- the directory where huez place it's files to save the theme, or get current theme, things like that
+  ---@type string
   path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
-  -- the fallback theme which will be written to a new "huez-theme" file in case the "huez-theme" file does not exist
+  ---@type string
   fallback = "default",
-  -- a list of ugly theme that come with neovim that you probably don't want to choose from in the picker
+  ---@type string[]
   exclude = {
     "desert",
     "evening",
@@ -53,12 +51,8 @@ local DEFAULT_SETTINGS = {
     "vim",
   },
 
-  -- configures how you want a certain picker to look.
+  ---@type Huez.Config.Pickers
   picker = {
-    -- all pickers use telescope values, by default picker is anchored to the right.
-    -- predefines layout ptions are "left", "top", "right", or "bottom" or nil
-    -- if layout is nil, the opts field for this specific picker will be the only thing that will be used
-    -- if you are using a predefined layout, any options you pass into the picker will be deep merged.
     themes = {
       layout = "right",
       opts = {},
@@ -75,8 +69,12 @@ local DEFAULT_SETTINGS = {
 }
 
 M._DEFAULT_SETTINGS = DEFAULT_SETTINGS
----@class Huez.Config
+
+---@class Huez.InternalConfig
 M.current = M._DEFAULT_SETTINGS
+
+---@type string
+M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing this note, this value exists
 
 ---@param user_opts Huez.Config
 M.set = function(user_opts)
@@ -87,10 +85,8 @@ end
 -- currently not supporting windows cuz I'm not tryna deal with it lol
 -- someone will make a PR eventually
 
-M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing this note, this value exists
-
 -- REFACTOR: in DIRE need of a refactor, this shit's getting disgustingly hard to follow
-M.init_cache_file = function()
+M.handle_theme_on_setup = function()
   local path = M.current.path
   local huez_file = M.current.huez_theme_file
   local fallback = M.current.fallback

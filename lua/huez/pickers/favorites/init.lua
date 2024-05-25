@@ -9,7 +9,7 @@ local function render()
   local favorited_themes = api.favorites.list()
 
   picker_utils.picker_builder({
-    picker = "themes",
+    picker = "favorites",
     prompt_title = "Huez | Favorites",
     finder = {
       results = favorited_themes,

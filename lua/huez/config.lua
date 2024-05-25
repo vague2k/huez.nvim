@@ -7,6 +7,7 @@ local M = {}
 
 ---@class Huez.Config.Pickers
 ---@field themes Huez.Config.PickersOpts
+---@field favorites Huez.Config.PickersOpts
 ---@field live Huez.Config.PickersOpts
 ---@field ensured Huez.Config.PickersOpts
 
@@ -54,6 +55,10 @@ local DEFAULT_SETTINGS = {
   ---@type Huez.Config.Pickers
   picker = {
     themes = {
+      layout = "right",
+      opts = {},
+    },
+    favorites = {
       layout = "right",
       opts = {},
     },

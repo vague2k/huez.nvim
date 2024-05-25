@@ -10,7 +10,7 @@ local M = {}
 --- Builds a layout for a specific picker based on a preset.
 ---
 --- If layout is nil, use purely the opts passed to the picker, otherwise merge layout and opt table
----@param picker "themes"|"live"|"ensured"
+---@param picker "themes"|"favorites"|"live"|"ensured"
 M.layout_builder = function(picker)
   ---@type Huez.Config.PickersOpts
   local picker_conf = config.current.picker[picker]

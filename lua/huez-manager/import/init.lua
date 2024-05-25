@@ -5,15 +5,12 @@ local return_spec = {}
 for _, value in ipairs(selected) do
   local spec = {
     url = registry[value].url,
-    -- FIXME: when opts is passed, lazy attempts to call setup, which not all themes have
-    --
-    -- opts = registry[value].opts,
     name = registry[value].pkgname,
+    -- FIXME: when opts is passed, lazy attempts to call setup, which not all themes have
+    -- opts = registry[value].opts,
     -- FIXME: dependencies do not install,
-    --
-    dependencies = registry[value].dependencies,
+    -- dependencies = registry[value].dependencies,
     -- FIXME: commented out for now, but we need a way to derive a config from the colorscheme, metatables?
-    --
     -- config = function()
     --   local ok, _ = pcall(require(registry[value].pkgname).setup())
     --   if not ok then

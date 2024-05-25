@@ -9,7 +9,8 @@ M.load_currently_installed = function(entry)
     return
   end
 
-  vim.notify_once("Loading " .. entry.pkgname, nil, {
+  vim.notify("Loading " .. entry.pkgname, nil, {
+    title = "Huez.nvim",
     hidden = vim.tbl_contains(api.live.installed, entry.pkgname),
     ttl = 2,
   })

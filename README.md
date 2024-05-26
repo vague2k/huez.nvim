@@ -1,5 +1,10 @@
 # 🎨 huez.nvim _(hue ez, hues)_
 
+> This demo shows the persistent, registry/ensure installed and favorites features
+
+https://github.com/vague2k/huez.nvim/assets/121782036/98cdbc8d-9fef-4238-a386-1dab798f41bc
+
+
 ## ⭐️ Features
 
 - 🥱 Uses [lazy.nvim](https://github.com/folke/lazy.nvim) as a backend for handling registry operations.

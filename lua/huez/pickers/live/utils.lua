@@ -4,12 +4,7 @@ local M = {}
 
 ---@param entry ThemeRegistryEntry
 M.load_currently_installed = function(entry)
-  if vim.tbl_contains(api.live.installed, entry.pkgname) then
-    vim.cmd.colorscheme(entry.colorscheme or entry.pkgname)
-    return
-  end
-
-  vim.notify("Loading " .. entry.pkgname, nil, {
+  vim.notify_once("Loading " .. entry.pkgname, nil, {
     title = "Huez.nvim",
     hidden = vim.tbl_contains(api.live.installed, entry.pkgname),
     ttl = 2,

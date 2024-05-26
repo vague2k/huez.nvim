@@ -10,7 +10,6 @@ M.installed = api_utils.load_themes("ensured")
 ---@param theme string
 ---@return nil
 M.add = function(theme)
-  -- vim.notify("Adding " .. theme .. " to favourites")
   api_utils.add_theme("ensured", theme)
   M.installed = api_utils.load_themes("ensured")
 end

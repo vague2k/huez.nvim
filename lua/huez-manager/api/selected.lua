@@ -23,7 +23,7 @@ end
 M.lazy_flush = function(plugins_list)
   loader.reload("huez.nvim")
   plugins_list = plugins_list or M.selected()
-  -- vim.notify("analyzing plugins" .. vim.inspect(plugins_list))
+
   local pkgList = {}
   local installed = api.colorscheme.installed()
   for _, value in ipairs(plugins_list) do
@@ -31,12 +31,13 @@ M.lazy_flush = function(plugins_list)
       table.insert(pkgList, registry[value].pkgname)
     end
   end
-  -- vim.notify("Flushing plugins" .. vim.inspect(pkgList))
+
   if #pkgList == 0 then
     -- No plugins to flush
     -- Anything that is temporary will be flushed on next nvim restart
     return
   end
+
   plugins.load()
   vim.api.nvim_exec_autocmds("User", { pattern = "LazyReload", modeline = false })
   lazy.install({ show = false, plugins = pkgList, wait = true }) ---@diagnostic disable-line

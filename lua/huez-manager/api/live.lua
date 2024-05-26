@@ -10,7 +10,6 @@ M.installed = api_utils.load_themes("live")
 ---@param theme string
 ---@return nil
 M.add = function(theme)
-  -- vim.notify("Adding " .. theme .. " to live themes")
   api_utils.add_theme("live", theme)
   M.installed = api_utils.load_themes("live")
 end

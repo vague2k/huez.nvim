@@ -44,7 +44,6 @@ M.add_theme = function(type, theme)
 
   local existing = M.load_themes(type)
   if vim.tbl_contains(existing, theme) then
-    vim.notify("Theme " .. theme .. " already exists in " .. type)
     return
   end
 

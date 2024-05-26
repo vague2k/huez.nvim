@@ -10,73 +10,54 @@
 
 # 🎨 huez.nvim _(hue ez, hues)_
 
-Color picker using [Telescope](https://github.com/nvim-telescope/telescope.nvim) as a backend.
+> This demo shows the persistent, registry/ensure installed and favorites features
+
+https://github.com/vague2k/huez.nvim/assets/121782036/98cdbc8d-9fef-4238-a386-1dab798f41bc
+
 
 ## ⭐️ Features
 
-- 🔭 Optionally uses [Telescope](https://github.com/nvim-telescope/telescope.nvim) or you can also use vim.ui!
-- 🌄 Preview colorschemes. _if telescope is installed_
-- 💾 Persistent colorscheme selection through Neovim session.
+- 🥱 Uses [lazy.nvim](https://github.com/folke/lazy.nvim) as a backend for handling registry operations.
+- 🔭 Uses [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim).
+- 💯 Huge registry with 400+ colorschemes, 80+ packages
+- 🌄 Preview installed colorschemes.
+- 🛍️ Preview registry colorschemes live without affecting startup times!
+- 💾 Persistent colorschemes selection through Neovim sessions.
+- 🌟 Mark themes as favorites!
+- 🔌 Automatic handling of installed colorschemes through the registry!
 
-In this demo I'm using telescope.
+## 💭 Requires
 
-https://github.com/vague2k/huez.nvim/assets/121782036/6f720919-6eef-479d-bc82-7450d8c51bdc
+[lazy.nvim](https://github.com/folke/lazy.nvim) _if you plan on using the management aspect. very much still a WIP_
+
+[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 
 ## 💥 Installation
-
-Install with your preferred package manager
 
 ```lua
 -- Lazy
 {
     "vague2k/huez.nvim",
-    dependencies = {
-        -- You probably already have this installed, highly reccomended you do.
-        "nvim-telescope/telescope.nvim",
-        -- If using vim.ui, this plugin will give you a better experience
-        "stevearc/dressing.nvim",
-    },
-},
-```
-
-> NOTE: Preview does not currently work in vim.ui. Will be testing solutions in the future.
-
-## 🛠 Setup
-
-> NOTE: Without the colorscheme command, the plugin WILL use fallback theme.
-
-If you're ok with defaults, this is all you need.
-
-```lua
-local colorscheme = require("huez.api").get_colorscheme()
-vim.cmd("colorscheme " .. colorscheme)
-
-vim.keymap.set("n", "<leader>co", "<cmd>Huez<CR>", {})
-```
-
-However if you'd like to tweak stuff, call setup with your tweaks.
-
-```lua
-require("huez").setup({<config here>})
-local colorscheme = require("huez.api").get_colorscheme()
-vim.cmd("colorscheme " .. colorscheme)
-
-vim.keymap.set("n", "<leader>co", "<cmd>Huez<CR>", {})
+    -- if you want registry related features, uncomment this
+    -- import = "huez-manager.import"
+    config = function()
+        require("huez").setup({})
+    end,
+}
 ```
 
 ## ⚙️ Configuration
 
-Huez comes with the following defaults.
+Huez comes with the following defaults. You can find different predefined layouts [here](#premade-layouts)
 
 ```lua
 {
-  -- the filepath where your theme will be saved
-  file_path = vim.fs.normalize(vim.fn.stdpath("config")) .. "/.nvim.huez.lua",
-  -- the fallback theme in case Huez fails or bugs out for some reason
+  -- the default plugin directory
+  path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
+  -- the colorscheme Huez will fallback to incase something goes wrong
   fallback = "default",
-  -- a list of ugly themes that come with neovim that you probably don't want to choose from in the picker
-  omit = {
-    "default",
+  -- a list of ugly theme that come with neovim that you probably don't want to choose from in the theme picker
+  exclude = {
     "desert",
     "evening",
     "industry",
@@ -97,45 +78,57 @@ Huez comes with the following defaults.
     "elflord",
     "habamax",
     "lunaperche",
+    "zaibatsu",
+    "wildcharm",
+    "sorbet",
+    "vim",
   },
-  -- optional: by default, uses telescope. If telescope is not installed, will fall back to "vim.ui"
-  -- you can also choose "vim"
-  picker = "telescope",
-  -- optional: only applies if using telescope, picker_opts controls the dropdown style
-  -- If nil, default is require("telescope.themes").get_dropdown({}).
-  picker_opts = nil,
+  -- configures how you want a certain picker to look.
+  picker = {
+    -- all pickers use telescope values, by default picker is anchored to the right.
+    -- you can use an out of the box layout. Options are "left", "top", "right", or "bottom" or nil
+    -- if you are using a predefined layout, any options you pass into the picker will be deep merged.
+    themes = {
+      layout = "right",
+      opts = {},
+    },
+    favorites = {
+      layout = "right",
+      opts = {},
+    },
+    live = {
+      layout = "right",
+      opts = {},
+    },
+    ensured = {
+      layout = "right",
+      opts = {},
+    },
+  },
 }
-
 ```
 
-## 💭 FAQ
+### Premade layouts
 
-#### How is the selected colorscheme saved and be able to persist through nvim sessions?
+<details>
+  <summary>anchor top</summary>
+  <img src="https://github.com/vague2k/huez.nvim/assets/121782036/36e72653-b3d7-44c8-83e7-c0e983f06b7a" alt="anchor top"/>
+</details>
 
-At setup time, a function is called to check if the file ".nvim.huez.lua" exists in your `vim.fn.stdpath("config")` directory. If it exists, nothing happens. If it does not exist, it will be created with the default fallback as it's colorscheme.
+<details>
+  <summary>anchor right</summary>
+  <img src="https://github.com/vague2k/huez.nvim/assets/121782036/3a343940-b857-43d9-96b2-719127a6b509" alt="anchor right"/>
+</details>
 
-This file will only contain 1 line worth of content, being the colorscheme name (I.E gruvbox <EOF>). Setup is shown above.
+<details>
+  <summary>anchor left</summary>
+  <img src="https://github.com/vague2k/huez.nvim/assets/121782036/0d076bc2-13b4-4423-ae41-c0e74b8cc54d" alt="anchor left"/>
+</details>
 
-To see config directory run the following command in neovim.
-
-`:lua print(vim.inspect(vim.fn.stdpath("config")))`
-
-#### Can I change the directory where the colorscheme file is created?
-
-Yes. But I reccommend leaving the file_path and the dotfile's name as their default values, but if you end up changing it and find a bug, please file an issue!
-
-## ❤️ Acknowledgements
-
-Plugin and it's code is highly inspired from the following.
-
-- [colorscheme-persist](https://github.com/propet/colorscheme-persist.nvim) on how to persist colorscheme.
-- [NvChad](https://github.com/NvChad/NvChad) for previewing theme before selection.
-- [cd-project](https://github.com/LintaoAmons/cd-project.nvim) for being used as a great model for a refactor _(as of 0.2.0)_
-- Reddit for the help on how to make a plugin as this is my first :)
-
-## 📋 Contributing
-
-Issues and PR's are always welcome and highly encouraged! as this is my first plugin. I would love to learn more.
+<details>
+  <summary>anchor bottom</summary>
+  <img src="https://github.com/vague2k/huez.nvim/assets/121782036/e5ee0c02-9e52-4d09-9890-08d757beaa4e" alt="anchor bottom"/>
+</details>
 
 ## License
 

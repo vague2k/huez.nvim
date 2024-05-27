@@ -4,6 +4,19 @@
 
 https://github.com/vague2k/huez.nvim/assets/121782036/98cdbc8d-9fef-4238-a386-1dab798f41bc
 
+## Table of Contents
+
+- [Features](#features)
+- [Requires](#requires)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+  - [Commands](#commands)
+    - [Huez](#huez)
+    - [HuezFavorites](#huezfavorites)
+    - [HuezLive](#huezlive)
+    - [HuezEnsured](#huezensured)
+
 ## Features
 
 - 🥱 Uses [lazy.nvim](https://github.com/folke/lazy.nvim) as a backend for handling registry operations.

@@ -1,4 +1,3 @@
-local log = require("huez-manager.utils.log")
 local M = {}
 
 ---@class Huez.Config.PickersOpts
@@ -14,6 +13,7 @@ local M = {}
 ---@class Huez.Config
 ---@field path? string
 ---@field fallback? string
+---@field suppress_messages? boolean
 ---@field exclude? string[]
 ---@field picker? Huez.Config.Pickers
 
@@ -24,6 +24,8 @@ local DEFAULT_SETTINGS = {
   path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
   ---@type string
   fallback = "default",
+  ---@type boolean
+  suppress_messages = true,
   ---@type string[]
   exclude = {
     "desert",
@@ -95,6 +97,7 @@ M.handle_theme_on_setup = function()
   local path = M.current.path
   local huez_file = M.current.huez_theme_file
   local fallback = M.current.fallback
+  local notify_opts = { title = "Huez.nvim" }
   -- check if the plugin's cache dir exists, if not create it
   if vim.fn.isdirectory(path) == 0 then
     os.execute("mkdir " .. path)
@@ -119,14 +122,14 @@ M.handle_theme_on_setup = function()
           if not ok then
             file:write("default")
             vim.cmd.colorscheme("default")
-            log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. fallback, "warn")
-            log.notify("The theme " .. fallback .. " does not exist, fell back to nvim's default theme", "warn")
+            vim.notify("The theme " .. theme_name .. " does not exist, fell back to " .. fallback, 3, notify_opts)
+            vim.notify("The theme " .. fallback .. " does not exist, fell back to nvim's default theme", 3, notify_opts)
             return
           end
 
           file:write(fallback)
           vim.cmd.colorscheme(fallback)
-          log.notify("The theme " .. theme_name .. " does not exist, fell back to " .. fallback, "warn")
+          vim.notify("The theme " .. theme_name .. " does not exist, fell back to " .. fallback, 3, notify_opts)
         end
         return
       end
@@ -140,13 +143,14 @@ M.handle_theme_on_setup = function()
     file:write(fallback)
     file:close()
     vim.cmd("colorscheme " .. fallback)
-    log.notify(
+    vim.notify(
       "No 'huez-theme' file was found, so one was created at\n '"
         .. huez_file
         .. "' with the theme '"
         .. fallback
         .. "' as a fallback.",
-      "warn"
+      3,
+      notify_opts
     )
   end
 end

@@ -1,11 +1,10 @@
-# 🎨 huez.nvim _(hue ez, hues)_
+# huez.nvim
 
 > This demo shows the persistent, registry/ensure installed and favorites features
 
 https://github.com/vague2k/huez.nvim/assets/121782036/98cdbc8d-9fef-4238-a386-1dab798f41bc
 
-
-## ⭐️ Features
+## Features
 
 - 🥱 Uses [lazy.nvim](https://github.com/folke/lazy.nvim) as a backend for handling registry operations.
 - 🔭 Uses [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim).
@@ -16,13 +15,13 @@ https://github.com/vague2k/huez.nvim/assets/121782036/98cdbc8d-9fef-4238-a386-1d
 - 🌟 Mark themes as favorites!
 - 🔌 Automatic handling of installed colorschemes through the registry!
 
-## 💭 Requires
+## Requires
 
 [lazy.nvim](https://github.com/folke/lazy.nvim) _if you plan on using the management aspect. very much still a WIP_
 
 [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 
-## 💥 Installation
+## Installation
 
 ```lua
 -- Lazy
@@ -36,48 +35,17 @@ https://github.com/vague2k/huez.nvim/assets/121782036/98cdbc8d-9fef-4238-a386-1d
 }
 ```
 
-## ⚙️ Configuration
+## Configuration
 
-Huez comes with the following defaults. You can find different predefined layouts [here](#premade-layouts)
+Huez comes with the following defaults
 
 ```lua
 {
-  -- the default plugin directory
   path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
-  -- the colorscheme Huez will fallback to incase something goes wrong
   fallback = "default",
-  -- a list of ugly theme that come with neovim that you probably don't want to choose from in the theme picker
-  exclude = {
-    "desert",
-    "evening",
-    "industry",
-    "koehler",
-    "morning",
-    "murphy",
-    "pablo",
-    "peachpuff",
-    "ron",
-    "shine",
-    "slate",
-    "torte",
-    "zellner",
-    "blue",
-    "darkblue",
-    "delek",
-    "quiet",
-    "elflord",
-    "habamax",
-    "lunaperche",
-    "zaibatsu",
-    "wildcharm",
-    "sorbet",
-    "vim",
-  },
-  -- configures how you want a certain picker to look.
+  suppress_messages = true,
+  exclude = { "desert", "evening", "industry", "koehler", "morning", "murphy", "pablo", "peachpuff", "ron", "shine", "slate", "torte", "zellner", "blue", "darkblue", "delek", "quiet", "elflord", "habamax", "lunaperche", "zaibatsu", "wildcharm", "sorbet", "vim", },
   picker = {
-    -- all pickers use telescope values, by default picker is anchored to the right.
-    -- you can use an out of the box layout. Options are "left", "top", "right", or "bottom" or nil
-    -- if you are using a predefined layout, any options you pass into the picker will be deep merged.
     themes = {
       layout = "right",
       opts = {},
@@ -98,27 +66,117 @@ Huez comes with the following defaults. You can find different predefined layout
 }
 ```
 
-### Premade layouts
+## Usage
 
-<details>
-  <summary>anchor top</summary>
-  <img src="https://github.com/vague2k/huez.nvim/assets/121782036/36e72653-b3d7-44c8-83e7-c0e983f06b7a" alt="anchor top"/>
-</details>
+All of these commands currently use telescope and opens pickers to...
 
-<details>
-  <summary>anchor right</summary>
-  <img src="https://github.com/vague2k/huez.nvim/assets/121782036/3a343940-b857-43d9-96b2-719127a6b509" alt="anchor right"/>
-</details>
+| Command          | Description                                  |
+| ---------------- | -------------------------------------------- |
+| `:Huez`          | Preview installed colorschemes               |
+| `:HuezFavorites` | Preview colorschemes marked as favorites     |
+| `:HuezLive`      | Preview and install themes from a registry   |
+| `:HuezEnsured`   | Preview colorschemes ensured to be installed |
 
-<details>
-  <summary>anchor left</summary>
-  <img src="https://github.com/vague2k/huez.nvim/assets/121782036/0d076bc2-13b4-4423-ae41-c0e74b8cc54d" alt="anchor left"/>
-</details>
+If you're using Lua:
 
-<details>
-  <summary>anchor bottom</summary>
-  <img src="https://github.com/vague2k/huez.nvim/assets/121782036/e5ee0c02-9e52-4d09-9890-08d757beaa4e" alt="anchor bottom"/>
-</details>
+```lua
+local pickers = require("huez.pickers")
+
+vim.keymap.set("n", "<leader>co", pickers.themes, {})
+vim.keymap.set("n", "<leader>cof", pickers.favorites, {})
+vim.keymap.set("n", "<leader>col", pickers.live, {})
+vim.keymap.set("n", "<leader>coe", pickers.ensured, {})
+```
+
+Huez handles loading and dynamically installing/uninstalling colorschemes using file located (by default) in `~/.local/share/nvim/huez/` or
+if you're using lua `vim.fn.stdpath("data") .. "/huez"`. If you changed the [configuration](#configuration) opt `path`, this path is different
+for you.
+
+On setup, Huez while read the `huez-theme` file in this directory, and loads that colorscheme. If for some reason that colorscheme can't be loaded,
+Huez will fallback to using the very appropriately named [configuration](#configuration) opt `fallback`. In the case that your fallback colorscheme also cannot be loaded, huez will resort
+to neovim's "default" colorscheme.
+
+## Commands
+
+##### Huez
+
+`:Huez` will open a picker of colorschemes that are currently installed, omitting any colorschemes passed to [configuration](#configuration) opt `exclude`,
+where `exclude` is usually a list of default themes that come with preinstalled with Neovim, that are not so appealing. If you prefer one of these themes,
+
+you can always add or remove themes from this list to change what results are shown in the picker.
+
+This single command has always been and always be Huez's main and most practical functionality
+
+| Mapping        | Action                                                          |
+| -------------- | --------------------------------------------------------------- |
+| `<C-n>/<Down>` | Preview next colorscheme                                        |
+| `<C-p>/<Up>`   | Preview previous colorscheme                                    |
+| `<j>/<k>`      | Preview next/previous colorscheme respectively (in normal mode) |
+| `<esc>`        | Close the picker and load the persisted colorscheme             |
+| `<CR>`         | Select colorscheme and persist this through neovim sessions     |
+| `<space>`      | Add the selected colorscheme to favorites                       |
+
+##### HuezFavorites
+
+Works exactly like [`:Huez`](#huez) except you're dealing with colorschemes marked as favorites.
+The only thing that differs is what the action the `<space>` mapping performs
+
+The file that contains a list of these themes can be found in `~/.local/share/nvim/huez/huez-favorite-themes`
+
+| Mapping   | Action                                         |
+| --------- | ---------------------------------------------- |
+| `<space>` | Remove the selected colorscheme from favorites |
+
+##### HuezLive
+
+`:HuezLive` opens a picker of colorschemes plugins from the registry. The idea is you don't have to leave Neovim
+to look for a new theme to try out.
+
+A colorscheme plugin from the registry can include multiple colorschemes, a good example is cattpuccin.
+cattpuccin is the plugin itself, but there are 4 colorschemes that come with cattpuccin.
+
+While traversing the picker's results, if a colorscheme plugin only has 1 colorscheme, that will be the colorscheme
+that will be loaded. If the plugin has more than 1 colorscheme, a predefined colorscheme from the plugin will be previewed, For example
+
+```lua
+-- base16, is the plugin that will be installed, but since it contains hundreds of colorschemes
+-- I chose "base16-default-dark" to be an appropriate default to preview
+["base16"] = {
+    url = "https://github.com/RRethy/base16-nvim",
+    pkgname = "base16",
+    colorscheme = "base16-default-dark",
+  },
+```
+
+Traversing the picker also writes the new colorscheme plugin to be previewed to `~/.local/share/nvim/huez/huez-favorite-themes`
+When exiting the picker, this is file is wiped clean, effectively uninstalling all of these themes.
+
+Note that lazy will not show that these plugins are ready to be cleaned until the next neovim reload
+
+| Mapping        | Action                                                                      |
+| -------------- | --------------------------------------------------------------------------- |
+| `<C-n>/<Down>` | Install and preview next colorscheme                                        |
+| `<C-p>/<Up>`   | Install and preview previous colorscheme                                    |
+| `<j>/<k>`      | Install and preview next/previous colorscheme respectively (in normal mode) |
+| `<esc>`        | Close the picker and unload all installed colorschemes                      |
+| `<space>`      | Install the selected colorscheme plugin (ensure installed)                  |
+
+##### HuezEnsured
+
+`:HuezEnsured` opens a picker of colorschemes plugins that are ensured to be installed if they are found in the registry.
+
+The mappings are similiar to [`:Huez`](#huez) with the same characteristics describe in [`:HuezLive`](#huezlive)
+
+The file that contains the list of these themes can be found in `~/.local/share/nvim/huez/huez-ensured-themes`
+
+| Mapping        | Action                                                          |
+| -------------- | --------------------------------------------------------------- |
+| `<C-n>/<Down>` | Preview next colorscheme                                        |
+| `<C-p>/<Up>`   | Preview previous colorscheme                                    |
+| `<j>/<k>`      | Preview next/previous colorscheme respectively (in normal mode) |
+| `<esc>`        | Close the picker and load the persisted colorscheme             |
+| `<CR>`         | Select colorscheme and persist this through neovim sessions     |
+| `<space>`      | Uninstall the selected colorscheme plugin                       |
 
 ## License
 

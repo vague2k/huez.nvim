@@ -161,7 +161,7 @@ that will be loaded. If the plugin has more than 1 colorscheme, a predefined col
   },
 ```
 
-Traversing the picker also writes the new colorscheme plugin to be previewed to `~/.local/share/nvim/huez/huez-favorite-themes`
+Traversing the picker also writes the new colorscheme plugin to be previewed to `~/.local/share/nvim/huez/huez-live-themes`
 When exiting the picker, this is file is wiped clean, effectively uninstalling all of these themes.
 
 Note that lazy will not show that these plugins are ready to be cleaned until the next neovim reload

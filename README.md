@@ -145,6 +145,17 @@ The file that contains a list of these themes can be found in `~/.local/share/nv
 `:HuezLive` opens a picker of colorschemes plugins from the registry. The idea is you don't have to leave Neovim
 to look for a new theme to try out.
 
+To be able to use `:HuezLive` and `:HuezEnsured` without throwing errors,
+you must add this line to the lazy config wherever you setup Huez.
+
+```lua
+{
+-- ...
+import = "huez-manager.import"
+-- ...
+}
+```
+
 A colorscheme plugin from the registry can include multiple colorschemes, a good example is cattpuccin.
 cattpuccin is the plugin itself, but there are 4 colorschemes that come with cattpuccin.
 

@@ -120,14 +120,14 @@ you can always add or remove themes from this list to change what results are sh
 
 This single command has always been and always be Huez's main and most practical functionality
 
-| Mapping        | Action                                                          |
-| -------------- | --------------------------------------------------------------- |
-| `<C-n>/<Down>` | Preview next colorscheme                                        |
-| `<C-p>/<Up>`   | Preview previous colorscheme                                    |
-| `<j>/<k>`      | Preview next/previous colorscheme respectively (in normal mode) |
-| `<esc>`        | Close the picker and load the persisted colorscheme             |
-| `<CR>`         | Select colorscheme and persist this through neovim sessions     |
-| `<space>`      | Add the selected colorscheme to favorites                       |
+| Mapping        | Action                                                            |
+| -------------- | ----------------------------------------------------------------- |
+| `<C-n>/<Down>` | Preview next colorscheme                                          |
+| `<C-p>/<Up>`   | Preview previous colorscheme                                      |
+| `<j>/<k>`      | Preview next/previous colorscheme respectively (normal mode)      |
+| `<esc>`        | Close the picker and load the persisted colorscheme (normal mode) |
+| `<CR>`         | Select colorscheme and persist this through neovim sessions       |
+| `<space>`      | Add the selected colorscheme to favorites                         |
 
 ##### HuezFavorites
 
@@ -177,13 +177,13 @@ When exiting the picker, this is file is wiped clean, effectively uninstalling a
 
 Note that lazy will not show that these plugins are ready to be cleaned until the next neovim reload
 
-| Mapping        | Action                                                                      |
-| -------------- | --------------------------------------------------------------------------- |
-| `<C-n>/<Down>` | Install and preview next colorscheme                                        |
-| `<C-p>/<Up>`   | Install and preview previous colorscheme                                    |
-| `<j>/<k>`      | Install and preview next/previous colorscheme respectively (in normal mode) |
-| `<esc>`        | Close the picker and unload all installed colorschemes                      |
-| `<space>`      | Install the selected colorscheme plugin (ensure installed)                  |
+| Mapping        | Action                                                                   |
+| -------------- | ------------------------------------------------------------------------ |
+| `<C-n>/<Down>` | Install and preview next colorscheme                                     |
+| `<C-p>/<Up>`   | Install and preview previous colorscheme                                 |
+| `<j>/<k>`      | Install and preview next/previous colorscheme respectively (normal mode) |
+| `<esc>`        | Close the picker and unload all installed colorschemes (normal mode)     |
+| `<space>`      | Install the selected colorscheme plugin (ensure installed)               |
 
 ##### HuezEnsured
 
@@ -193,14 +193,14 @@ The mappings are similiar to [`:Huez`](#huez) with the same characteristics desc
 
 The file that contains the list of these themes can be found in `~/.local/share/nvim/huez/huez-ensured-themes`
 
-| Mapping        | Action                                                          |
-| -------------- | --------------------------------------------------------------- |
-| `<C-n>/<Down>` | Preview next colorscheme                                        |
-| `<C-p>/<Up>`   | Preview previous colorscheme                                    |
-| `<j>/<k>`      | Preview next/previous colorscheme respectively (in normal mode) |
-| `<esc>`        | Close the picker and load the persisted colorscheme             |
-| `<CR>`         | Select colorscheme and persist this through neovim sessions     |
-| `<space>`      | Uninstall the selected colorscheme plugin                       |
+| Mapping        | Action                                                       |
+| -------------- | ------------------------------------------------------------ |
+| `<C-n>/<Down>` | Preview next colorscheme                                     |
+| `<C-p>/<Up>`   | Preview previous colorscheme                                 |
+| `<j>/<k>`      | Preview next/previous colorscheme respectively (normal mode) |
+| `<esc>`        | Close the picker and load the persisted colorscheme (normal) |
+| `<CR>`         | Select colorscheme and persist this through neovim sessions  |
+| `<space>`      | Uninstall the selected colorscheme plugin                    |
 
 ## License
 

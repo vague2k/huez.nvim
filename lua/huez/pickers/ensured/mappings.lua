@@ -7,7 +7,6 @@ M.attach = function(attach_map, actions)
   attach_map("i", "<C-p>", actions.prev_theme)
   attach_map("i", "<Up>", actions.prev_theme)
   attach_map("i", "<Down>", actions.next_theme)
-  attach_map("i", "<esc>", actions.unload_on_quit)
 
   attach_map("n", "j", actions.next_theme)
   attach_map("n", "k", actions.prev_theme)

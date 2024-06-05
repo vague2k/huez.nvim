@@ -42,11 +42,17 @@ https://github.com/vague2k/huez.nvim/assets/121782036/98cdbc8d-9fef-4238-a386-1d
     "vague2k/huez.nvim",
     -- if you want registry related features, uncomment this
     -- import = "huez-manager.import"
+    branch = "stable",
+    event = "UIEnter",
     config = function()
         require("huez").setup({})
     end,
 }
 ```
+
+#### Help
+
+To get help use `:h huez.txt`
 
 ## Configuration
 

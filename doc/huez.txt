@@ -1,4 +1,4 @@
-*huez.txt*             For Neovim >= 0.8.0            Last change: 2024 May 29
+*huez.txt*            For Neovim >= 0.8.0            Last change: 2024 June 05
 
 ==============================================================================
 Table of Contents                                     *huez-table-of-contents*
@@ -65,11 +65,18 @@ INSTALLATION                                     *huez-huez.nvim-installation*
         "vague2k/huez.nvim",
         -- if you want registry related features, uncomment this
         -- import = "huez-manager.import"
+        branch = "stable",
+        event = "UIEnter",
         config = function()
             require("huez").setup({})
         end,
     }
 <
+
+
+HELP
+
+To get help use |huez.txt|
 
 
 CONFIGURATION                                   *huez-huez.nvim-configuration*

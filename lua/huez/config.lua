@@ -1,5 +1,13 @@
 local M = {}
 
+---@param msg string
+---@param level string
+local logger = function(msg, level)
+  if not M.current.suppress_messages then
+    vim.notify(msg, vim.log.levels[level:upper()], { title = "Huez.nvim" })
+  end
+end
+
 ---@class Huez.Config.PickersOpts
 ---@field layout "left"|"top"|"right"|"bottom"|nil
 ---@field opts table
@@ -14,7 +22,7 @@ local M = {}
 ---@field path? string
 ---@field fallback? string
 ---@field suppress_messages? boolean
----@field theme_config_dir? string
+---@field theme_config_module? string
 ---@field exclude? string[]
 ---@field picker? Huez.Config.Pickers
 
@@ -34,7 +42,7 @@ local DEFAULT_SETTINGS = {
   ---@type boolean
   suppress_messages = true,
   ---@type string
-  theme_config_dir = nil,
+  theme_config_module = nil,
   ---@type string[]
   exclude = {
     "desert",
@@ -102,11 +110,21 @@ M.theme_setters = {}
 
 -- Will load all the theme configs into memory.
 M.load_theme_configs = function()
-  local theme_config_dir = M.current.theme_config_dir
+  local theme_config_module = M.current.theme_config_module
+
+  local config_path = vim.fn.stdpath("config")
+
+  -- Convert module string to dir path string to check if dir exists
+  -- TODO: find a better way to check this
+  local theme_config_dir = config_path .. "/lua/" .. vim.fn.substitute(theme_config_module, ".", "/", "g")
 
   -- check if config dir is non null and exists
   -- if it does not, then just return
-  if theme_config_dir == nil or vim.fn.isdirectory(theme_config_dir) == 0 then
+  if theme_config_module == nil then
+    return
+  end
+  if vim.fn.isdirectory(theme_config_dir) == 0 then
+    logger("directory not found to load themes from", "ERROR")
     return
   end
 
@@ -119,13 +137,15 @@ M.load_theme_configs = function()
     ---@type Huez.ThemeConfig
     local conf
 
-    ok, conf = pcall(require, theme_config_dir .. "/" .. theme)
+    ok, conf = pcall(require, theme_config_module .. "." .. theme)
     -- if cannot load config, means no config found => continue
     if not ok then
       goto continue
     end
 
+    logger("found configs for " .. theme, "INFO")
     for _, theme_style in pairs(conf.styles) do
+      logger("Loading config for " .. theme .. " " .. theme_style, "INFO")
       M.theme_setters[theme .. "-" .. theme_style] = conf.set_theme
     end
 
@@ -142,6 +162,7 @@ M.set_theme = function(theme)
   end
 
   if M.theme_setters[theme] ~= nil then
+    logger("Found setter for theme " .. theme, "INFO")
     return M.theme_setters[theme](theme)
   end
 

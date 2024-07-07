@@ -1,5 +1,7 @@
 local M = {}
 
+--- Implement logger instead of importing from huez-manager to
+--- prevent circular imports
 ---@param msg string
 ---@param level string
 local logger = function(msg, level)
@@ -29,7 +31,7 @@ end
 ---@alias ThemeSetter fun(theme: string): boolean
 
 ---@class Huez.ThemeConfig
----@field styles string[] -- this denotes the styles like moon, night, day, etc.
+---@field styles? string[] -- this denotes the styles like moon, night, day, etc.
 ---@field set_theme ThemeSetter
 
 ---@class Huez.InternalConfig
@@ -115,7 +117,7 @@ M.load_theme_configs = function()
   local config_path = vim.fn.stdpath("config")
 
   -- Convert module string to dir path string to check if dir exists
-  -- TODO: find a better way to check this
+  -- TODO: find a better way to check this [pref like Lazy.nvim]
   local theme_config_dir = config_path .. "/lua/" .. vim.fn.substitute(theme_config_module, ".", "/", "g")
 
   -- check if config dir is non null and exists
@@ -140,10 +142,19 @@ M.load_theme_configs = function()
     ok, conf = pcall(require, theme_config_module .. "." .. theme)
     -- if cannot load config, means no config found => continue
     if not ok then
+      logger("Cannot load theme " .. theme, "WARN")
       goto continue
     end
 
     logger("found configs for " .. theme, "INFO")
+    -- For cases where styles is empty/ Styles are shipped as separate schemes
+    M.theme_setters[theme] = conf.set_theme
+
+    -- If no styles configured, just move on
+    if conf.styles == nil then
+      goto continue
+    end
+
     for _, theme_style in pairs(conf.styles) do
       logger("Loading config for " .. theme .. " " .. theme_style, "INFO")
       M.theme_setters[theme .. "-" .. theme_style] = conf.set_theme
@@ -158,6 +169,7 @@ end
 ---@return boolean
 M.set_theme = function(theme)
   if theme == nil then
+    logger("No theme selected", "INFO")
     return false
   end
 
@@ -166,6 +178,7 @@ M.set_theme = function(theme)
     return M.theme_setters[theme](theme)
   end
 
+  logger("No theme custom setter found for " .. theme, "WARN")
   local ok, _ = pcall(vim.cmd.colorscheme, theme)
 
   return ok

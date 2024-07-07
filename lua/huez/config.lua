@@ -148,7 +148,6 @@ M.load_theme_configs = function()
 
     ::continue::
   end
-  print(vim.inspect(M.theme_setters))
 end
 
 --- Set the chosen colorscheme. Keeps in mind any theme config the user has made.

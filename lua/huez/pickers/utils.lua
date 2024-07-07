@@ -64,8 +64,9 @@ end
 
 --- Builds a picker
 ---@param opts Huez.PickerBuilder
-M.picker_builder = function(opts)
-  local telescope_opts = M.layout_builder(opts.picker)
+---@param any table
+M.picker_builder = function(opts, any)
+  local telescope_opts = vim.tbl_deep_extend("force", M.layout_builder(opts.picker), any)
   opts.default_action = opts.default_action or function() end
 
   pickers

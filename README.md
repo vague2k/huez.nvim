@@ -5,6 +5,7 @@
 https://github.com/vague2k/huez.nvim/assets/121782036/98cdbc8d-9fef-4238-a386-1dab798f41bc
 
 ## Read the wiki!
+
 If you'd like more indepth information, or confused about something, see the Huez [wiki](https://github.com/vague2k/huez.nvim/wiki)! If you're still having an problem, submit an issue!
 
 ## Features
@@ -17,6 +18,7 @@ If you'd like more indepth information, or confused about something, see the Hue
 - 💾 Persistent colorschemes selection through Neovim sessions.
 - 🌟 Mark themes as favorites!
 - 🔌 Automatic handling of installed colorschemes through the registry!
+- 🔗 Customize theme configurations as per your liking!
 
 ## Requires
 
@@ -53,6 +55,7 @@ Huez comes with the following defaults
   path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
   fallback = "default",
   suppress_messages = true,
+  theme_config_module = nil,
   exclude = { "desert", "evening", "industry", "koehler", "morning", "murphy", "pablo", "peachpuff", "ron", "shine", "slate", "torte", "zellner", "blue", "darkblue", "delek", "quiet", "elflord", "habamax", "lunaperche", "zaibatsu", "wildcharm", "sorbet", "vim", },
   picker = {
     themes = {

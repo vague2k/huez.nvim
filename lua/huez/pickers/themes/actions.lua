@@ -2,6 +2,7 @@ local telescope_actions = require("telescope.actions")
 local telescope_actions_state = require("telescope.actions.state")
 local api = require("huez-manager.api")
 local log = require("huez-manager.utils.log")
+local conf = require("huez.config")
 
 local M = {}
 
@@ -10,7 +11,7 @@ local M = {}
 M.next_theme = function(bufnr)
   telescope_actions.move_selection_next(bufnr)
   local selected = telescope_actions_state.get_selected_entry()
-  vim.cmd.colorscheme(selected[1])
+  conf.set_theme(selected[1])
 end
 
 ---Preview previous theme in the picker
@@ -18,7 +19,7 @@ end
 M.prev_theme = function(bufnr)
   telescope_actions.move_selection_previous(bufnr)
   local selected = telescope_actions_state.get_selected_entry()
-  vim.cmd.colorscheme(selected[1])
+  conf.set_theme(selected[1])
 end
 
 -- Resets the colorscheme preview to the previously selected colorscheme if the telescope prompt was quit
@@ -26,7 +27,7 @@ end
 M.unload_on_quit = function(bufnr)
   telescope_actions.close(bufnr)
   local prev_color = api.colorscheme.get()
-  vim.cmd.colorscheme(prev_color)
+  conf.set_theme(prev_color)
 end
 
 --- Saves the selected colorscheme to `huez-theme`
@@ -41,7 +42,7 @@ M.save_on_select = function(action_state)
 
   local theme = selection.value
   api.colorscheme.save(theme)
-  vim.cmd.colorscheme(theme)
+  conf.set_theme(theme)
   log.notify("Selected " .. theme, "info")
 end
 

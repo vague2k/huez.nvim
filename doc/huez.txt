@@ -1,4 +1,4 @@
-*huez.txt*            For Neovim >= 0.8.0            Last change: 2024 June 16
+*huez.txt*            For Neovim >= 0.8.0            Last change: 2024 July 07
 
 ==============================================================================
 Table of Contents                                     *huez-table-of-contents*
@@ -38,6 +38,7 @@ FEATURES                                             *huez-huez.nvim-features*
 - Persistent colorschemes selection through Neovim sessions.
 - Mark themes as favorites!
 - Automatic handling of installed colorschemes through the registry!
+- Customize theme configurations as per your liking!
 
 
 REQUIRES                                             *huez-huez.nvim-requires*
@@ -79,6 +80,7 @@ Huez comes with the following defaults
       path = vim.fs.normalize(vim.fn.stdpath("data") --[[@as string]]) .. "/huez",
       fallback = "default",
       suppress_messages = true,
+      theme_config_module = nil,
       exclude = { "desert", "evening", "industry", "koehler", "morning", "murphy", "pablo", "peachpuff", "ron", "shine", "slate", "torte", "zellner", "blue", "darkblue", "delek", "quiet", "elflord", "habamax", "lunaperche", "zaibatsu", "wildcharm", "sorbet", "vim", },
       picker = {
         themes = {

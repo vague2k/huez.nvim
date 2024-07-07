@@ -1,6 +1,7 @@
 local api = require("huez-manager.api")
 local selected = require("huez-manager.api.selected")
 local log = require("huez-manager.utils.log")
+local conf = require("huez.config")
 local M = {}
 
 ---@param entry ThemeRegistryEntry
@@ -12,7 +13,7 @@ M.load_currently_installed = function(entry)
   api.live.add(entry.pkgname)
   selected.lazy_flush()
 
-  vim.cmd.colorscheme(entry.colorscheme or entry.pkgname)
+  conf.set_theme(entry.colorscheme or entry.pkgname)
 end
 
 return M

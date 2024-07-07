@@ -1,10 +1,9 @@
 local M = {}
 
---- Implement logger instead of importing from huez-manager to
---- prevent circular imports
+--- Same thing as log from utils, but implemented here to prevent circular imports
 ---@param msg string
 ---@param level string
-local logger = function(msg, level)
+local log = function(msg, level)
   if not M.current.suppress_messages then
     vim.notify(msg, vim.log.levels[level:upper()], { title = "Huez.nvim" })
   end
@@ -29,7 +28,6 @@ end
 ---@field picker? Huez.Config.Pickers
 
 ---@alias ThemeSetter fun(theme: string): boolean
-
 ---@class Huez.ThemeConfig
 ---@field styles? string[] -- this denotes the styles like moon, night, day, etc.
 ---@field set_theme ThemeSetter
@@ -113,72 +111,61 @@ M.theme_setters = {}
 -- Will load all the theme configs into memory.
 M.load_theme_configs = function()
   local theme_config_module = M.current.theme_config_module
-
-  local config_path = vim.fn.stdpath("config")
-
-  -- Convert module string to dir path string to check if dir exists
-  -- TODO: find a better way to check this [pref like Lazy.nvim]
-  local theme_config_dir = config_path .. "/lua/" .. vim.fn.substitute(theme_config_module, ".", "/", "g")
-
-  -- check if config dir is non null and exists
-  -- if it does not, then just return
   if theme_config_module == nil then
     return
   end
+  -- Convert import string to dir path string to check if dir exists
+  -- TODO: find a better way to check this [pref like Lazy.nvim]
+  local theme_config_dir = vim.fn.stdpath("config") .. "/lua/" .. vim.fn.substitute(theme_config_module, ".", "/", "g")
   if vim.fn.isdirectory(theme_config_dir) == 0 then
-    logger("directory not found to load themes from", "ERROR")
+    log("directory not found to load themes from", "ERROR")
     return
   end
 
-  local theme_manager = require("huez-manager.api")
-
-  -- if it does exist, load them into memory
-  for _, theme in pairs(theme_manager.colorscheme.installed(M.current.exclude)) do
-    ---@type boolean
+  local api = require("huez-manager.api")
+  for _, theme in pairs(api.colorscheme.installed(M.current.exclude)) do
     local ok
     ---@type Huez.ThemeConfig
     local conf
 
     ok, conf = pcall(require, theme_config_module .. "." .. theme)
-    -- if cannot load config, means no config found => continue
+    -- if cannot load/find config, move on
     if not ok then
-      logger("Cannot load theme " .. theme, "WARN")
+      log("Cannot load theme " .. theme, "WARN")
       goto continue
     end
 
-    logger("found configs for " .. theme, "INFO")
     -- For cases where styles is empty/ Styles are shipped as separate schemes
     M.theme_setters[theme] = conf.set_theme
 
-    -- If no styles configured, just move on
     if conf.styles == nil then
       goto continue
     end
 
     for _, theme_style in pairs(conf.styles) do
-      logger("Loading config for " .. theme .. " " .. theme_style, "INFO")
       M.theme_setters[theme .. "-" .. theme_style] = conf.set_theme
     end
 
     ::continue::
   end
+  print(vim.inspect(M.theme_setters))
 end
 
--- Use this to set the theme instead of manually setting
+--- Set the chosen colorscheme. Keeps in mind any theme config the user has made.
+---
+--- If no explicit config is found, pcall to :colorscheme
 ---@param theme? string
 ---@return boolean
 M.set_theme = function(theme)
   if theme == nil then
-    logger("No theme selected", "INFO")
+    log("No theme selected", "INFO")
     return false
   end
 
   if M.theme_setters[theme] ~= nil then
-    logger("Found setter for theme " .. theme, "INFO")
     return M.theme_setters[theme](theme)
   end
 
-  logger("No theme custom setter found for " .. theme, "WARN")
   local ok, _ = pcall(vim.cmd.colorscheme, theme)
 
   return ok

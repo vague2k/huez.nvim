@@ -164,6 +164,7 @@ M.set_theme = function(theme)
     return M.theme_setters[theme](theme)
   end
 
+  vim.cmd("set background=dark")
   local ok, _ = pcall(vim.cmd.colorscheme, theme)
 
   return ok

@@ -6,6 +6,7 @@ local mappings = require("huez.pickers.themes.mappings")
 local api = require("huez-manager.api")
 
 local function render(opts)
+  opts = opts or {}
   local themes = api.colorscheme.installed()
 
   local current_scheme = vim.g.colors_name or "default"

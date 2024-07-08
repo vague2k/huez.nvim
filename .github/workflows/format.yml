@@ -21,7 +21,7 @@ jobs:
 
       - name: Install
         if: steps.cache.outputs.cache-hit != 'true'
-        run: cargo install stylua
+        run: cargo install stylua --features lua54
 
       - name: Format
         run: stylua --check lua/ --config-path=stylua.toml

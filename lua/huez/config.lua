@@ -131,7 +131,6 @@ M.load_theme_configs = function()
     ok, conf = pcall(require, theme_config_module .. "." .. theme)
     -- if cannot load/find config, move on
     if not ok then
-      log("Cannot load theme " .. theme, "WARN")
       goto continue
     end
 

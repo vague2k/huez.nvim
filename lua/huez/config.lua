@@ -131,14 +131,14 @@ M.load_theme_configs = function()
     ok, conf = pcall(require, theme_config_module .. "." .. theme)
     -- if cannot load/find config, move on
     if not ok then
-      goto continue
+      goto continue --stylua: ignore
     end
 
     -- For cases where styles is empty/ Styles are shipped as separate schemes
     M.theme_setters[theme] = conf.set_theme
 
     if conf.styles == nil then
-      goto continue
+      goto continue --stylua: ignore
     end
 
     for _, theme_style in pairs(conf.styles) do

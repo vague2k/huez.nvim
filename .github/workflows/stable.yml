@@ -1,0 +1,33 @@
+name: Rebase stable on release
+
+on:
+  release:
+    types: [published]
+  push:
+    tags:
+      - '*'
+
+jobs:
+  rebase-stable:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        ref: stable
+        fetch-depth: 0
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Rebase stable onto main
+      run: |
+        git fetch origin main
+        git rebase origin/main
+
+    - name: Push changes
+      run: |
+        git push origin stable

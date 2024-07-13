@@ -382,6 +382,11 @@ R = {
     pkgname = "neomodern",
     colorscheme = "roseprime",
   },
+  ["vague"] = {
+    url = "https://github.com/vague2k/vague.nvim",
+    pkgname = "vague",
+    colorscheme = "vague",
+  },
 }
 
 return R

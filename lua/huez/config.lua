@@ -73,7 +73,6 @@ M.set_user_opts = function(opts)
 
   local err = M.validate_user_config(M.user)
   if err ~= "" then
-    M.user = M._DEFAULTS
     return err
   end
 

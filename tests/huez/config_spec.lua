@@ -28,17 +28,4 @@ describe("CONFIG: ", function()
     local err = config.validate_user_config(mock_user_conf)
     assert(err == "Huez.Config.path: expected string, got number")
   end)
-
-  it("errors if validatation fails and falls back to default value", function()
-    local config = require("huez.config")
-    local mock_user_conf = { ---@diagnostic disable-line
-      path = "somepath",
-      fallback = 1,
-      exclude = { "this", "that", "third" },
-    }
-    local err = config.validate_user_config(mock_user_conf)
-    config.set_user_opts(mock_user_conf)
-    assert(err == "Huez.Config.fallback: expected string, got number")
-    assert(config.user.fallback == "default")
-  end)
 end)

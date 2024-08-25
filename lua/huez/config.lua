@@ -42,6 +42,7 @@ M._DEFAULTS = {
 }
 
 M.user = vim.deepcopy(M._DEFAULTS)
+M.user.huez_colorscheme_file = M.user.path .. "/huez_colorscheme"
 
 --- validates a user's config and returns an error if validation fails.
 ---@param user Huez.Config

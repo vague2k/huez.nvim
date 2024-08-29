@@ -1,4 +1,5 @@
 local config = require("huez.config")
+local commands = require("huez.commands")
 local M = {}
 
 ---@param msg string
@@ -9,12 +10,13 @@ end
 
 ---@param opts? Huez.Config
 M.setup = function(opts)
-  if opts then
-    local err = config.set_user_opts(opts)
-    if err ~= "" then
-      log(err, "error")
-    end
+  opts = opts or {}
+  local err = config.set_user_opts(opts)
+  if err ~= "" then
+    log(err, "error")
   end
+
+  commands.setup()
 end
 
 return M

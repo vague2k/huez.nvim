@@ -5,7 +5,7 @@ local M = {}
 
 ---@class HuezSubcmd
 ---@field impl fun(args:string[], opts: table) The command implementation
----@field complete? fun(subcmd_arg_lead: string): string[] (optional) Command completions callback, taking the lead of the subcommand's arguments
+---@field complete? fun(subcmd_arg_lead: string): string[] (optional) Command completions callback
 
 ---@type table<string, HuezSubcmd>
 M.subcmds = {

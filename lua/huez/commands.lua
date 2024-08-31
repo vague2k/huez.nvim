@@ -19,10 +19,6 @@ M.subcmds = {
         return utils.notify("Huez: colorscheme command only takes 1 argument", "warn")
       end
       local c = args[1]
-      local ok, _ = pcall(vim.cmd.colorscheme, c)
-      if not ok then
-        return utils.notify("Huez: could not find the colorscheme " .. c, "error")
-      end
       colorscheme.save(c)
     end,
     complete = function(subcmd_arg_lead)

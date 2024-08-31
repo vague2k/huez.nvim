@@ -3,20 +3,27 @@ local c = require("huez-manager.api.colorscheme")
 describe("COLORSCHEME API:", function()
   it("can write to a huez-colorscheme file with no errors", function()
     local test_file = vim.fs.normalize("/tmp/huez-colorscheme-test")
-    local written = c.save("test", test_file)
-    assert(written ~= nil)
+    local written = c.save("default", test_file)
+    assert(written == true)
+    os.remove(test_file)
+  end)
+
+  it("can error if colorscheme attempted to be written is not valid", function()
+    local test_file = vim.fs.normalize("/tmp/huez-colorscheme-test")
+    local written = c.save("colorscheme_does_not_exist", test_file)
+    assert(written == false)
     os.remove(test_file)
   end)
 
   it("can read from a huez-colorscheme file with no errors", function()
     -- test setup
     local test_file = vim.fs.normalize("/tmp/huez-colorscheme-test")
-    local written = c.save("test", test_file)
-    assert(written ~= nil)
+    local written = c.save("default", test_file)
+    assert(written == true)
 
     -- actual test case
     local read = c.get(test_file)
-    assert(read == "test")
+    assert(read == "default")
     os.remove(test_file)
   end)
 

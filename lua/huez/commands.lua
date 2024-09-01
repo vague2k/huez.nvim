@@ -7,6 +7,18 @@ local M = {}
 ---@field impl fun(args:string[], opts: table) The command implementation
 ---@field complete? fun(subcmd_arg_lead: string): string[] (optional) Command completions callback
 
+---@param subcmd_arg_lead string
+---@param args string[]
+---@return string[]
+local completions = function(subcmd_arg_lead, args)
+  return vim
+    .iter(args)
+    :filter(function(arg)
+      return arg:find(subcmd_arg_lead) ~= nil
+    end)
+    :totable()
+end
+
 ---@type table<string, HuezSubcmd>
 M.subcmds = {
   colorscheme = {
@@ -16,19 +28,14 @@ M.subcmds = {
         return
       end
       if #args > 1 then
-        return utils.notify("Huez: colorscheme command only takes 1 argument", "warn")
+        return utils.notify("Huez: colorscheme command only takes 1 or less arguments", "error")
       end
       local c = args[1]
       colorscheme.save(c)
     end,
     complete = function(subcmd_arg_lead)
       local args = colorscheme.installed(config.user.exclude)
-      return vim
-        .iter(args)
-        :filter(function(arg)
-          return arg:find(subcmd_arg_lead) ~= nil
-        end)
-        :totable()
+      return completions(subcmd_arg_lead, args)
     end,
   },
 }

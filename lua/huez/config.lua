@@ -1,3 +1,4 @@
+local utils = require("huez-manager.utils.general")
 local M = {}
 
 --- Same thing as log from utils, but implemented here to prevent circular imports
@@ -100,9 +101,39 @@ M.current = M._DEFAULT_SETTINGS
 ---@type string
 M.current.huez_theme_file = M.current.path .. "/huez-theme" -- If you're seeing this note, this value exists
 
+--- validates a user's config and returns an error if validation fails.
+---@param user Huez.Config
+---@return string
+M.validate_user_config = function(user)
+  -- check cases where nothing (nil) or empty table is passed to the setup func
+  -- in each case the defaults will be used, thus no need to validating
+  if not user or vim.tbl_isempty(user) then
+    return ""
+  end
+
+  -- wrapping vim.validate in a protected call to capture the error for use later
+  local ok, err = pcall(vim.validate, {
+    path = { user.path, "string" },
+    fallback = { user.fallback, "string" },
+    exclude = { user.exclude, "table" },
+  })
+  if not ok and err ~= nil then
+    return "Huez.Config." .. err
+  end
+
+  return ""
+end
+
 ---@param user_opts Huez.Config
-M.set = function(user_opts)
-  M.current = vim.tbl_deep_extend("force", vim.deepcopy(M.current), user_opts)
+---@return string
+M.set_user_opts = function(user_opts)
+  M.current = vim.tbl_deep_extend("force", M.current, user_opts)
+  local err = M.validate_user_config(M.user)
+  if err ~= "" then
+    return err
+  end
+
+  return ""
 end
 
 ---@type table<string, ThemeSetter>
@@ -170,71 +201,61 @@ M.set_theme = function(theme)
   return ok
 end
 
---- setup the specific files according to path,
--- currently not supporting windows cuz I'm not tryna deal with it lol
--- someone will make a PR eventually
+-- if falling back to a user fallback colorscheme fails, ultimately fallback to neovim's default
+local fallback = function()
+  local fb = M.current.fallback
+  local notify_opts = { title = "Huez.nvim" }
+  if not utils.colorscheme_exists(fb) then
+    local no_fallback = string.format("Config: the fallback '%s' can't be loaded or found. Using 'default' instead", fb)
+    vim.notify(no_fallback, 4, notify_opts)
+    vim.cmd.colorscheme("default")
+    return
+  end
 
--- REFACTOR: in DIRE need of a refactor, this shit's getting disgustingly hard to follow
+  local file, err = io.open(M.current.huez_theme_file, "w")
+  if not file then
+    vim.notify("Issue occured with Huez trying to fallback", 4, notify_opts)
+    if err then
+      local err_msg = string.format("Can't open huez_colorscheme for writing. Got the following error: %s", err)
+      vim.notify(err_msg, 4, notify_opts)
+      return
+    end
+    vim.notify("Unknown error attempting to open huez_colorscheme for writing.", 4, notify_opts)
+    return
+  end
+  file:write(fb)
+  file:close()
+end
+
 M.handle_theme_on_setup = function()
   local path = M.current.path
   local huez_file = M.current.huez_theme_file
-  local fallback = M.current.fallback
-  local notify_opts = { title = "Huez.nvim" }
-  -- check if the plugin's cache dir exists, if not create it
+
   if vim.fn.isdirectory(path) == 0 then
     os.execute("mkdir " .. path)
   end
-  -- check if the file exists for persist the theme
-  local file = io.open(huez_file, "r+")
 
-  if file then
-    local theme_name = file:read("*line") -- read first line
-    file:close()
-
-    -- if the theme does not exist, resort to fallback, and write fallback to file
-    if theme_name then
-      local ok = M.set_theme(theme_name)
-
-      if not ok then
-        file = io.open(huez_file, "w")
-
-        if file then
-          ok = M.set_theme(fallback)
-
-          if not ok then
-            file:write("default")
-            M.set_theme("default")
-            vim.notify("The theme " .. theme_name .. " does not exist, fell back to " .. fallback, 3, notify_opts)
-            vim.notify("The theme " .. fallback .. " does not exist, fell back to nvim's default theme", 3, notify_opts)
-            return
-          end
-
-          file:write(fallback)
-          M.set_theme(fallback)
-          vim.notify("The theme " .. theme_name .. " does not exist, fell back to " .. fallback, 3, notify_opts)
-        end
-        return
-      end
-      return
-    end
+  -- if the file doesn't exist, fallback
+  -- this is essentially making sure the file always exists
+  local file = io.open(huez_file, "r")
+  if not file then
+    return fallback()
   end
 
-  -- if file doesn't exist or couldn't be read, create it with fallback theme
-  file = io.open(huez_file, "w")
-  if file then
-    file:write(fallback)
-    file:close()
-    vim.cmd("colorscheme " .. fallback)
-    vim.notify(
-      "No 'huez-theme' file was found, so one was created at\n '"
-        .. huez_file
-        .. "' with the theme '"
-        .. fallback
-        .. "' as a fallback.",
-      3,
-      notify_opts
-    )
+  -- if what is read is nil or an emtpy string, fallback
+  local colorscheme = file:read("*l")
+  file:close()
+  if colorscheme == nil or colorscheme == "" then
+    return fallback()
   end
+
+  -- if the colorscheme that was read can't be loaded or found, fallback
+  if not utils.colorscheme_exists(colorscheme) then
+    return fallback()
+  end
+
+  -- otherwise, success!
+  vim.cmd.colorscheme(colorscheme)
 end
 
 return M

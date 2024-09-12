@@ -1,4 +1,5 @@
 local log = require("huez-manager.utils.log")
+local utils = require("huez-manager.utils.general")
 local config = require("huez.config")
 local M = {}
 
@@ -11,10 +12,10 @@ local M = {}
 M.get = function(path)
   path = path or config.current.huez_theme_file
 
-  local file, err = io.open(path, "r")
+  local file, _ = io.open(path, "r")
 
   if file == nil then
-    return nil, log.notify("From colorscheme.get() - Error reading file: \n" .. err, "error")
+    return nil, log.notify("Huez: could not read the huez_colorscheme file.", "error")
   end
 
   local line = file:read()
@@ -51,12 +52,18 @@ end
 ---@param path? string
 ---@return boolean
 M.save = function(colorscheme, path)
+  if not utils.colorscheme_exists(colorscheme) then
+    local msg = string.format("Huez: could not find colorscheme '%s'", colorscheme)
+    log.notify(msg, "warn")
+    return false
+  end
+
   path = path or config.current.huez_theme_file
 
-  local file, err = io.open(path, "w+")
+  local file, _ = io.open(path, "w+")
 
   if file == nil then
-    return false, log.notify("From colorscheme.save() - Error writing to file: \n" .. err, "error")
+    return false, log.notify("Huez: could not write to the huez_colorscheme file.", "error")
   end
 
   file:write(colorscheme)

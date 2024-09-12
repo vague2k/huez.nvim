@@ -14,9 +14,10 @@ end
 
 ---@param user_opts Huez.Config?
 M.setup = function(user_opts)
-  -- this ensures that if a user calls setup without explicit config, the default will be used
-  if user_opts then
-    config.set(user_opts)
+  user_opts = user_opts or {}
+  local err = config.set_user_opts(user_opts)
+  if err ~= "" then
+    error(err, 4)
   end
 
   config.load_theme_configs()

@@ -1,3 +1,4 @@
+local utils = require("huez-manager.utils.general")
 local config = require("huez.config")
 local log = require("huez-manager.utils.log")
 
@@ -33,6 +34,11 @@ end
 ---@param path? string
 ---@return boolean
 M.add = function(theme, path)
+  if not utils.colorscheme_exists(theme) then
+    local msg = string.format("Huez: could not find colorscheme '%s'", theme)
+    log.notify(msg, "warn")
+    return false
+  end
   path = path or M.file
   local favorites = M.list()
 

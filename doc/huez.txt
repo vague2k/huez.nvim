@@ -1,4 +1,4 @@
-*huez.txt*          For Neovim >= 0.8.0         Last change: 2024 September 08
+*huez.txt*          For Neovim >= 0.8.0         Last change: 2024 September 12
 
 ==============================================================================
 Table of Contents                                     *huez-table-of-contents*

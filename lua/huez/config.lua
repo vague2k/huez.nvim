@@ -27,6 +27,7 @@ end
 ---@field theme_config_module? string
 ---@field exclude? string[]
 ---@field picker? Huez.Config.Pickers
+---@field background? "dark"|"light" -- preferred background setting
 
 ---@alias ThemeSetter fun(theme: string): boolean
 ---@class Huez.ThemeConfig
@@ -71,6 +72,9 @@ local DEFAULT_SETTINGS = {
     "sorbet",
     "vim",
   },
+
+  ---@type "dark"|"light"
+  background = "dark",
 
   ---@type Huez.Config.Pickers
   picker = {
@@ -195,7 +199,7 @@ M.set_theme = function(theme)
     return M.theme_setters[theme](theme)
   end
 
-  vim.cmd("set background=dark")
+  vim.cmd("set background=" .. M.current.background)
   local ok, _ = pcall(vim.cmd.colorscheme, theme)
 
   return ok

@@ -57,6 +57,7 @@ Huez comes with the following defaults
   suppress_messages = true,
   theme_config_module = nil,
   exclude = { "desert", "evening", "industry", "koehler", "morning", "murphy", "pablo", "peachpuff", "ron", "shine", "slate", "torte", "zellner", "blue", "darkblue", "delek", "quiet", "elflord", "habamax", "lunaperche", "zaibatsu", "wildcharm", "sorbet", "vim", },
+  background = "dark",
   picker = {
     themes = {
       layout = "right",

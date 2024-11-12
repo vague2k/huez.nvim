@@ -1,4 +1,4 @@
-*huez.txt*          For Neovim >= 0.8.0         Last change: 2024 September 12
+*huez.txt*          For Neovim >= 0.8.0          Last change: 2024 November 12
 
 ==============================================================================
 Table of Contents                                     *huez-table-of-contents*
@@ -82,6 +82,7 @@ Huez comes with the following defaults
       suppress_messages = true,
       theme_config_module = nil,
       exclude = { "desert", "evening", "industry", "koehler", "morning", "murphy", "pablo", "peachpuff", "ron", "shine", "slate", "torte", "zellner", "blue", "darkblue", "delek", "quiet", "elflord", "habamax", "lunaperche", "zaibatsu", "wildcharm", "sorbet", "vim", },
+      background = "dark",
       picker = {
         themes = {
           layout = "right",
